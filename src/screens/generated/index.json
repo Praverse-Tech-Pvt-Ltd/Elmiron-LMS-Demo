@@ -1,0 +1,248 @@
+[
+ {
+  "id": "A1",
+  "name": "ScreenA1",
+  "label": "A1 Learning home",
+  "minH": "900px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "A2",
+  "name": "ScreenA2",
+  "label": "A2 Browse courses",
+  "minH": "900px",
+  "vals": [
+   "go",
+   "q",
+   "onQ",
+   "cats",
+   "hasCourses",
+   "courseList",
+   "noCourses",
+   "emptyTitle",
+   "emptyBody",
+   "clearFilters"
+  ]
+ },
+ {
+  "id": "A3",
+  "name": "ScreenA3",
+  "label": "A3 Course detail",
+  "minH": "900px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "A4",
+  "name": "ScreenA4",
+  "label": "A4 Video lesson",
+  "minH": "900px",
+  "vals": [
+   "go",
+   "outlineClosed",
+   "toggleOutline",
+   "watchedPct",
+   "watched",
+   "locked",
+   "unlocked",
+   "skipWatch",
+   "outlineOpen"
+  ]
+ },
+ {
+  "id": "A5",
+  "name": "ScreenA5",
+  "label": "A5 Document lesson",
+  "minH": "900px",
+  "vals": [
+   "go",
+   "prevPage",
+   "page",
+   "nextPage",
+   "pagePct",
+   "ackPending",
+   "toggleAck",
+   "notEnd",
+   "ackReady",
+   "ackCan",
+   "confirmAck",
+   "ackDone",
+   "toEnd"
+  ]
+ },
+ {
+  "id": "A6",
+  "name": "ScreenA6",
+  "label": "A6 Assessment single choice",
+  "minH": "900px",
+  "vals": [
+   "go",
+   "opts7",
+   "nav"
+  ]
+ },
+ {
+  "id": "A6b",
+  "name": "ScreenA6b",
+  "label": "A6 Assessment multiple choice",
+  "minH": "900px",
+  "vals": [
+   "go",
+   "opts8",
+   "q8count",
+   "nav8"
+  ]
+ },
+ {
+  "id": "A6c",
+  "name": "ScreenA6c",
+  "label": "A6 Submit confirmation",
+  "minH": "900px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "A7",
+  "name": "ScreenA7",
+  "label": "A7 Result passed",
+  "minH": "900px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "A7b",
+  "name": "ScreenA7b",
+  "label": "A7 Result not cleared",
+  "minH": "900px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "A8",
+  "name": "ScreenA8",
+  "label": "A8 Certificate",
+  "minH": "900px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "A9",
+  "name": "ScreenA9",
+  "label": "A9 Training history",
+  "minH": "900px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "B1",
+  "name": "ScreenB1",
+  "label": "B1 Team training",
+  "minH": "840px",
+  "vals": [
+   "go",
+   "b1rows"
+  ]
+ },
+ {
+  "id": "B2",
+  "name": "ScreenB2",
+  "label": "B2 MR training record",
+  "minH": "840px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "C1",
+  "name": "ScreenC1",
+  "label": "C1 Admin dashboard",
+  "minH": "840px",
+  "vals": [
+   "go"
+  ]
+ },
+ {
+  "id": "C2",
+  "name": "ScreenC2",
+  "label": "C2 Course builder",
+  "minH": "840px",
+  "vals": [
+   "go",
+   "ltVideo",
+   "setVideo",
+   "ltPdf",
+   "setPdf",
+   "ltText",
+   "setText",
+   "isVideo",
+   "isPdf",
+   "isText",
+   "toggleSkip",
+   "skipOn",
+   "skipOff",
+   "toggleAckReq",
+   "ackReqOn",
+   "ackReqOff"
+  ]
+ },
+ {
+  "id": "C3",
+  "name": "ScreenC3",
+  "label": "C3 Question bank",
+  "minH": "840px",
+  "vals": [
+   "go",
+   "activeCount",
+   "bank",
+   "toggleSq",
+   "sqOn",
+   "sqOff",
+   "toggleSo",
+   "soOn",
+   "soOff",
+   "toggleSa",
+   "saOn",
+   "saOff"
+  ]
+ },
+ {
+  "id": "C4",
+  "name": "ScreenC4",
+  "label": "C4 Assign course",
+  "minH": "840px",
+  "vals": [
+   "go",
+   "audCount",
+   "audTabs",
+   "areas",
+   "toggleMand",
+   "mandOn",
+   "mandOff",
+   "rems",
+   "hasAud",
+   "audAreas",
+   "audMgrs",
+   "noAud"
+  ]
+ },
+ {
+  "id": "C5",
+  "name": "ScreenC5",
+  "label": "C5 Reports",
+  "minH": "840px",
+  "vals": [
+   "go",
+   "repTabs",
+   "rep",
+   "repRows"
+  ]
+ }
+]
