@@ -1,0 +1,351 @@
+import type { Persona, ProductPack, Scenario, Specialty } from './types';
+
+/* ---------------------------------------------------------------------------
+   Doctor personas (brief §2, §24). Fictional training personas only — never
+   a replica of a real doctor. Always professional: no abuse, no humiliation.
+--------------------------------------------------------------------------- */
+export const PERSONAS: Persona[] = [
+  {
+    id: 'friendly', name: 'Friendly doctor', tone: 'Interested', wordBudget: 140, patience: 6, challenge: 0.2,
+    traits: ['Interested', 'Gives time', 'Asks basic questions', 'Suitable for beginners'],
+    greetings: ['Come in, please. What would you like to discuss today?', 'Good to see you. I have a few minutes — go ahead.', 'Hello, have a seat. What brings you in?'],
+    acknowledgements: ['That is helpful, thank you.', 'Okay, that makes sense.', 'Good, I follow.'],
+    interruptions: ['Let me stop you there for a second — could you summarise that?'],
+    closings: ['Thank you, this was useful. Do leave the approved material with me.', 'Thanks for coming by. Let us continue next time.'],
+  },
+  {
+    id: 'busy', name: 'Busy doctor', tone: 'Impatient', wordBudget: 45, patience: 3, challenge: 0.4,
+    traits: ['Gives only 30–60 seconds', 'Interrupts long explanations', 'Wants concise information', 'Tests prioritisation of key messages'],
+    greetings: ['I have patients waiting. You have one minute.', 'Quickly please — I am between consultations.', 'Yes? I only have a moment.'],
+    acknowledgements: ['Fine.', 'Okay, noted.', 'Right.'],
+    interruptions: ['I only have a minute. What is the key point?', 'Please, the short version.', 'I need to go soon — what exactly do you want me to know?'],
+    closings: ['Leave the leaflet. I have to see my next patient.', 'Okay, thank you. I have to go now.'],
+  },
+  {
+    id: 'skeptical', name: 'Skeptical doctor', tone: 'Skeptical', wordBudget: 110, patience: 4, challenge: 0.85,
+    traits: ['Questions claims', 'Requests evidence', 'Challenges differentiation', 'Asks scientific questions'],
+    greetings: ['Go ahead, but I have heard a lot of product claims this week.', 'All right. What is it you want to tell me?'],
+    acknowledgements: ['Hm. And the evidence for that?', 'All right, that is at least accurate.', 'Okay. Go on.'],
+    interruptions: ['You are saying a lot — what is actually supported by data?'],
+    closings: ['I will look at the prescribing information myself. Thank you.', 'Send me the reference and we can talk again.'],
+  },
+  {
+    id: 'specialist', name: 'Experienced specialist', tone: 'Curious', wordBudget: 150, patience: 5, challenge: 0.75,
+    traits: ['Strong clinical knowledge', 'Expects scientific accuracy', 'Challenges superficial answers', 'May ask about published evidence'],
+    greetings: ['I see a fair number of these patients. What is new that I should know?', 'Please sit. Let us keep it scientific.'],
+    acknowledgements: ['Correct.', 'Yes, that is consistent with the label.', 'Fair point.'],
+    interruptions: ['That is fairly superficial. Can you be more specific?'],
+    closings: ['Good discussion. Please send me the references you mentioned.', 'Thank you. Keep it evidence-based and we will keep talking.'],
+  },
+  {
+    id: 'new', name: 'New doctor', tone: 'Neutral', wordBudget: 120, patience: 5, challenge: 0.3,
+    traits: ['Has never interacted with the company', 'Expects a professional introduction', 'Tests relationship-opening skills'],
+    greetings: ['Hello — I do not think we have met. Which company are you from?', 'Yes? I am not sure I know your company.'],
+    acknowledgements: ['I see.', 'Okay, thank you for explaining.', 'Understood.'],
+    interruptions: ['Sorry — before the product, tell me who you are.'],
+    closings: ['Thank you for the introduction. You can book time through my assistant.', 'Nice to meet you. Let us see how it goes.'],
+  },
+  {
+    id: 'competitor', name: 'Doctor using a competitor product', tone: 'Neutral', wordBudget: 110, patience: 4, challenge: 0.6,
+    traits: ['Currently prefers another product', 'Questions why a change should be considered', 'Tests competitor objection handling'],
+    greetings: ['Just so you know, I am happy with what I use at the moment. But go ahead.', 'I already have a therapy I use for these patients.'],
+    acknowledgements: ['Okay, fair.', 'I will think about that.', 'Hm, all right.'],
+    interruptions: ['I have heard this before — why should I change anything?'],
+    closings: ['I will keep it in mind for the right patient.', 'Thank you. My current approach works for now, but I will read the material.'],
+  },
+  {
+    id: 'price', name: 'Price-conscious doctor', tone: 'Concerned', wordBudget: 110, patience: 4, challenge: 0.5,
+    traits: ['Raises affordability concerns', 'Questions value for patients'],
+    greetings: ['Most of my patients pay out of pocket, so keep that in mind.', 'Go ahead. Cost matters a lot in my practice.'],
+    acknowledgements: ['Okay, that is useful to know.', 'Right.', 'Fine.'],
+    interruptions: ['But what does the patient actually pay over three months?'],
+    closings: ['Thank you. Share any approved patient information you have.', 'Okay. I will consider it where it is affordable for the patient.'],
+  },
+  {
+    id: 'evidence', name: 'Evidence-focused doctor', tone: 'Curious', wordBudget: 140, patience: 5, challenge: 0.9,
+    traits: ['Requests clinical evidence', 'Asks about study design', 'Questions efficacy and safety claims'],
+    greetings: ['Before anything else — what is the evidence base?', 'Go ahead. I will want references.'],
+    acknowledgements: ['Good, that is referenced.', 'Okay, and what was the study population?', 'That is reasonable.'],
+    interruptions: ['Please do not summarise the conclusions for me — what did the study actually measure?'],
+    closings: ['Send me the publication and the label. Thank you.', 'Fine. Evidence first, always.'],
+  },
+  {
+    id: 'difficult', name: 'Difficult doctor', tone: 'Impatient', wordBudget: 50, patience: 3, challenge: 0.8,
+    traits: ['Gives very little time', 'Challenges repeatedly', 'May interrupt', 'Needs calm, professional handling'],
+    greetings: ['I really do not have time for this today.', 'Another rep. Be quick.'],
+    acknowledgements: ['Hm.', 'If you say so.', 'Fine.'],
+    interruptions: ['No, stop — what is the point?', 'You are not answering my question.'],
+    closings: ['That is enough for today.', 'Okay. Leave it there.'],
+  },
+];
+
+/* ---------------------------------------------------------------------------
+   Specialties (brief §25–26). Admin controls which apply to each product.
+--------------------------------------------------------------------------- */
+export const SPECIALTIES: Specialty[] = [
+  { id: 'gp', name: 'General physician', depth: 'practical', questions: ['Which patients would this be for, practically?', 'How is it taken, and for how long?', 'What side effects should I watch for in general practice?', 'When should I refer instead?'] },
+  { id: 'urology', name: 'Urologist', depth: 'clinical', questions: ['Where does this fit alongside the other options I use for bladder pain?', 'What monitoring does the label require?', 'How long before I should reassess response?', 'What do you have on the retinal findings?'] },
+  { id: 'gynaecology', name: 'Gynaecologist', depth: 'clinical', questions: ['Many of my patients have pelvic pain from several causes — which patients are appropriate?', 'Any considerations around pregnancy? Only what is on the label, please.', 'How would I monitor these patients?'] },
+  { id: 'nephrology', name: 'Nephrologist', depth: 'clinical', questions: ['Anything on renal or hepatic considerations in the label?', 'Any interaction concerns with anticoagulants?'] },
+  { id: 'cardiology', name: 'Cardiologist', depth: 'clinical', questions: ['Many of my patients are on anticoagulants or aspirin — what does the label say?'] },
+  { id: 'dermatology', name: 'Dermatologist', depth: 'practical', questions: ['I have heard about hair loss with some therapies — anything on the label?'] },
+  { id: 'diabetology', name: 'Diabetologist', depth: 'practical', questions: ['How does dosing work alongside other daily medicines?'] },
+  { id: 'gastro', name: 'Gastroenterologist', depth: 'clinical', questions: ['What gastrointestinal side effects are listed?', 'How should it be taken relative to meals?'] },
+  { id: 'oncology', name: 'Oncologist', depth: 'clinical', questions: ['Is there anything on the label about bleeding risk?'] },
+  { id: 'psychiatry', name: 'Psychiatrist', depth: 'practical', questions: ['Chronic pain patients often come to me — what is the approved indication exactly?'] },
+];
+
+/* ---------------------------------------------------------------------------
+   Product grounding (brief §7, §38). The ONLY facts the doctor and the scorer
+   treat as correct. Demo pack built from the publicly available US prescribing
+   information — replace with the approved PI for your market before use.
+--------------------------------------------------------------------------- */
+export const PRODUCTS: ProductPack[] = [
+  {
+    id: 'elmiron',
+    name: 'Elmiron',
+    molecule: 'Pentosan polysulfate sodium',
+    therapyArea: 'Urology · Interstitial cystitis / bladder pain syndrome',
+    version: 'Demo pack v0.3 · 24 Sep 2026',
+    status: 'Demo grounding — verify against current approved PI',
+    specialties: ['urology', 'gynaecology', 'gp', 'nephrology', 'cardiology', 'dermatology', 'gastro', 'psychiatry'],
+    facts: [
+      { id: 'ind', topic: 'Indication', text: 'Indicated for the relief of bladder pain or discomfort associated with interstitial cystitis.', keywords: ['interstitial cystitis', 'bladder pain', 'bladder discomfort', 'ic/bps', 'bps'], source: 'PI §1 Indications' },
+      { id: 'dose', topic: 'Dosage', text: 'The recommended dose is 100 mg orally three times daily.', keywords: ['100 mg', '100mg', 'three times', 'thrice', 'tid', 't.i.d'], source: 'PI §2 Dosage' },
+      { id: 'admin', topic: 'Administration', text: 'Take with water at least 1 hour before meals or 2 hours after meals.', keywords: ['with water', 'before meals', 'after meals', 'empty stomach', 'hour before', 'hours after'], source: 'PI §2 Dosage' },
+      { id: 'reassess', topic: 'Monitoring', text: 'Patients should be reassessed after 3 months of treatment.', keywords: ['3 months', 'three months', 'reassess', 'review at'], source: 'PI §2 Dosage' },
+      { id: 'mech', topic: 'Mechanism', text: 'The mechanism in interstitial cystitis is not fully established; it is thought to adhere to the bladder wall mucosa and act as a buffer.', keywords: ['bladder wall', 'bladder lining', 'mucosa', 'mucosal', 'glycosaminoglycan', 'gag layer', 'buffer', 'urothel'], source: 'PI §12 Clinical pharmacology' },
+      { id: 'retina', topic: 'Warnings', text: 'Retinal pigmentary changes (pigmentary maculopathy) have been reported; baseline and periodic detailed eye examinations are recommended.', keywords: ['retina', 'retinal', 'maculopathy', 'eye exam', 'ophthalm', 'eye check', 'vision'], source: 'PI §5 Warnings' },
+      { id: 'bleed', topic: 'Warnings', text: 'It is a weak anticoagulant; bleeding events have been reported. Evaluate patients on anticoagulants or aspirin, and before invasive procedures.', keywords: ['bleeding', 'anticoagul', 'blood thinner', 'aspirin', 'heparin', 'warfarin'], source: 'PI §5 Warnings' },
+      { id: 'liver', topic: 'Warnings', text: 'Use with caution in hepatic insufficiency; mild transaminase elevations have been reported.', keywords: ['liver', 'hepatic', 'transaminase'], source: 'PI §5 Warnings' },
+      { id: 'ae', topic: 'Adverse effects', text: 'Reported adverse reactions include alopecia, diarrhoea, nausea, headache, rash, dyspepsia, abdominal pain, abnormal liver function tests and dizziness.', keywords: ['alopecia', 'hair loss', 'diarrh', 'nausea', 'headache', 'rash', 'dyspepsia', 'dizziness'], source: 'PI §6 Adverse reactions' },
+      { id: 'contra', topic: 'Contraindications', text: 'Contraindicated in patients with known hypersensitivity to the drug or its components.', keywords: ['hypersensitivity', 'allerg'], source: 'PI §4 Contraindications' },
+    ],
+    approvedClaims: [
+      'Elmiron is indicated for the relief of bladder pain or discomfort associated with interstitial cystitis.',
+      'The recommended dose is 100 mg orally three times daily, with water, 1 hour before or 2 hours after meals.',
+      'Patients should be reassessed after 3 months of treatment.',
+      'Baseline and periodic eye examinations are recommended.',
+    ],
+    prohibitedClaims: [
+      'Cures interstitial cystitis',
+      'Works for all / every patient',
+      'No side effects, or completely safe',
+      'Better than, or superior to, any other therapy (no approved comparative claim)',
+      'Any efficacy percentage not in approved material',
+      'Use in any condition other than the approved indication',
+    ],
+    objections: [
+      { category: 'Efficacy', line: 'My patients give up before they see any benefit.', responsePoints: ['Acknowledge the concern', 'The label recommends reassessment after 3 months', 'Offer approved patient-counselling material'] },
+      { category: 'Safety', line: 'I am worried about the eye findings I have read about.', responsePoints: ['Acknowledge; do not minimise', 'State the label warning on retinal pigmentary changes', 'Baseline and periodic eye examinations are recommended', 'Offer to connect with Medical Information for more detail'] },
+      { category: 'Price', line: 'It is expensive for my patients over several months.', responsePoints: ['Clarify the concern', 'Share only approved, factual information (pack, availability, any approved patient programme)', 'No discounts or inducements linked to prescribing'] },
+      { category: 'Competitor preference', line: 'I already use another therapy for these patients.', responsePoints: ['Respect the current choice', 'Do not disparage the competitor', 'Share approved indication and product information for appropriate patients'] },
+      { category: 'Evidence', line: 'What evidence is this based on?', responsePoints: ['Refer to the prescribing information and approved references', 'Do not invent figures', 'Offer the publication via Medical Information'] },
+    ],
+    faqs: [
+      { q: 'How should it be taken?', a: '100 mg three times daily with water, at least 1 hour before or 2 hours after meals.' },
+      { q: 'When should response be reviewed?', a: 'Reassess after 3 months of treatment, per the label.' },
+      { q: 'Is eye monitoring needed?', a: 'Yes — baseline and periodic detailed eye examinations are recommended.' },
+    ],
+    references: ['Elmiron prescribing information (demo reference — replace with the approved PI for your market)', 'Company-approved detail aid ELM-DA-2026-01 (placeholder)'],
+  },
+];
+
+/* ---------------------------------------------------------------------------
+   Scenario library (brief §4, §10–12). Beats fire at a given MR turn;
+   the conversation engine adapts around them.
+--------------------------------------------------------------------------- */
+export const SCENARIOS: Scenario[] = [
+  {
+    id: 'first-meeting', number: 1, title: 'First meeting', group: 'core', defaultPersona: 'new', seconds: 300,
+    summary: 'You are meeting this doctor for the first time.',
+    goal: 'Introduce yourself and the company professionally, understand the doctor’s practice, then open a relevant product discussion.',
+    opening: [],
+    beats: [
+      { atTurn: 2, event: 'question', lines: ['What does your company actually focus on?', 'Why would this be relevant to my practice?'] },
+      { atTurn: 4, event: 'question', lines: ['Which of my patients would this be for?', 'And how is it taken?'] },
+    ],
+    goodSigns: ['Greets and introduces self and company', 'States a clear purpose', 'Asks about the doctor’s patients before pitching', 'Closes with an agreed follow-up'],
+    weakSigns: ['Launches into the product before introducing the company', 'No questions about the practice'],
+    critical: ['offlabel', 'fabricated', 'superiority', 'inducement'],
+    hints: ['Start with who you are and why you are here — keep it to two sentences.', 'Ask one question about the patients the doctor sees before you talk product.', 'Close by agreeing a specific, appropriate follow-up.'],
+    recommend: ['doctor-engagement', 'new-doctor', 'call-planning'],
+  },
+  {
+    id: 'sixty-second', number: 2, title: '60-second detailing', group: 'quick', defaultPersona: 'busy', seconds: 60,
+    summary: 'The doctor says: "I only have one minute."',
+    goal: 'Deliver the single most relevant approved message concisely and close professionally.',
+    opening: ['I only have one minute. Go.', 'One minute, please — what is it?'],
+    beats: [{ atTurn: 2, event: 'question', lines: ['And who is it for?', 'So what is the key point?'] }],
+    goodSigns: ['One clear approved message', 'Mentions the indication', 'Under ~45 words per turn', 'Professional close'],
+    weakSigns: ['Long product history', 'Several messages at once'],
+    critical: ['offlabel', 'fabricated', 'superiority', 'inducement'],
+    hints: ['Lead with the approved indication in one sentence.', 'Pick one fact that matters to this doctor — dosing or monitoring.', 'Offer to leave approved material and ask for a better time.'],
+    recommend: ['product-detailing', 'doctor-cabin'],
+  },
+  {
+    id: 'efficacy-objection', number: 3, title: 'Product objection', group: 'objection', defaultPersona: 'skeptical', seconds: 240,
+    summary: 'The doctor questions whether the product works.',
+    goal: 'Listen, clarify, respond with approved information, support it and confirm the answer helped.',
+    opening: [],
+    beats: [{ atTurn: 2, event: 'objection', category: 'Efficacy', lines: ['Honestly, my patients give up before they see any benefit.', 'I am not convinced it does much for my patients.', 'I tried it once and did not see a difference.'] }],
+    goodSigns: ['Asks a clarifying question', 'Refers to label guidance (reassess at 3 months)', 'Offers approved material', 'Checks the response helped'],
+    weakSigns: ['Argues with the doctor', 'Claims it works for everyone'],
+    critical: ['fabricated', 'superiority', 'offlabel', 'inducement'],
+    hints: ['Clarify first: what happened with those patients?', 'Use approved guidance — for example, when the label says to reassess.', 'Close the loop: ask whether that answers the concern.'],
+    recommend: ['objection-handling', 'scientific-communication'],
+  },
+  {
+    id: 'safety-question', number: 4, title: 'Safety question', group: 'scientific', defaultPersona: 'specialist', seconds: 300,
+    summary: 'The doctor asks about adverse effects and safety.',
+    goal: 'Answer accurately from the approved safety information, without minimising risk.',
+    opening: [],
+    beats: [
+      { atTurn: 2, event: 'objection', category: 'Safety', lines: ['What about the eye findings I have read about?', 'Tell me about the safety profile — honestly.'] },
+      { atTurn: 4, event: 'question', lines: ['Any bleeding concerns with patients on anticoagulants?', 'What are the common side effects?'] },
+    ],
+    goodSigns: ['States the label warning accurately', 'Mentions recommended eye examinations', 'Does not minimise', 'Offers Medical Information for detail'],
+    weakSigns: ['Says it is completely safe', 'Guesses at rates'],
+    critical: ['fabricated', 'superiority', 'offlabel', 'inducement'],
+    hints: ['Quote the warning as it appears in the prescribing information.', 'Do not reassure beyond the label — accuracy builds trust.'],
+    recommend: ['elmiron-masterclass', 'scientific-communication', 'ae-reporting'],
+  },
+  {
+    id: 'competitor-preference', number: 5, title: 'Competitor preference', group: 'objection', defaultPersona: 'competitor', seconds: 300,
+    summary: 'The doctor already uses another product.',
+    goal: 'Respect the doctor’s current choice and share approved information for appropriate patients — no disparagement.',
+    opening: [],
+    beats: [
+      { atTurn: 1, event: 'objection', category: 'Competitor preference', lines: ['I already prescribe another product. Why should I consider yours?', 'What I use works fine. Why change?'] },
+      { atTurn: 3, event: 'question', lines: ['So is yours better?', 'What makes it different, then?'] },
+    ],
+    goodSigns: ['Acknowledges the current choice', 'Asks which patients are not well served', 'Uses approved product characteristics', 'No comparative claim without approval'],
+    weakSigns: ['Criticises the competitor', 'Claims superiority'],
+    critical: ['superiority', 'fabricated', 'offlabel', 'inducement'],
+    hints: ['Acknowledge that their current approach works for many patients.', 'Ask whether there are patients for whom they would like another option.', 'Stick to approved characteristics — never "better than".'],
+    recommend: ['objection-handling', 'positioning'],
+  },
+  {
+    id: 'price-objection', number: 6, title: 'Price objection', group: 'objection', defaultPersona: 'price', seconds: 240,
+    summary: 'The doctor raises cost concerns for patients.',
+    goal: 'Clarify the concern and respond only with approved, factual information.',
+    opening: [],
+    beats: [{ atTurn: 2, event: 'objection', category: 'Price', lines: ['It is expensive for my patients over several months.', 'Most of my patients cannot afford long courses. What do you suggest?'] }],
+    goodSigns: ['Clarifies the concern', 'Uses approved, factual information', 'Mentions reassessment at 3 months', 'No discount linked to prescribing'],
+    weakSigns: ['Offers discounts or incentives', 'Dismisses the concern'],
+    critical: ['inducement', 'fabricated', 'superiority', 'offlabel'],
+    hints: ['Ask what the specific concern is — duration, total cost, access?', 'Share only approved information; anything commercial goes through the proper channel.'],
+    recommend: ['cost-objections', 'objection-handling'],
+  },
+  {
+    id: 'scientific-discussion', number: 7, title: 'Scientific discussion', group: 'scientific', defaultPersona: 'evidence', seconds: 480,
+    summary: 'The doctor requests supporting clinical evidence.',
+    goal: 'Discuss evidence accurately, cite approved sources, and never exaggerate conclusions.',
+    opening: [],
+    beats: [
+      { atTurn: 1, event: 'objection', category: 'Evidence', lines: ['What is the evidence base for this?', 'Which studies support that indication?'] },
+      { atTurn: 3, event: 'question', lines: ['What was the primary endpoint?', 'And how long were patients followed up?'] },
+    ],
+    goodSigns: ['Refers to the prescribing information and approved references', 'Does not invent numbers', 'Offers the publication via Medical Information'],
+    weakSigns: ['Quotes percentages from memory', 'Overstates conclusions'],
+    critical: ['fabricated', 'superiority', 'offlabel', 'inducement'],
+    hints: ['If you are not sure of a figure, do not say it — offer the publication.', 'Separate what the study measured from what it concluded.'],
+    recommend: ['scientific-communication', 'elmiron-masterclass'],
+  },
+  {
+    id: 'not-interested', number: 8, title: 'Doctor is not interested', group: 'objection', defaultPersona: 'difficult', seconds: 180,
+    summary: 'The doctor repeatedly says they are satisfied with what they already prescribe.',
+    goal: 'Stay calm and professional, respect the doctor’s time, and leave the door open appropriately.',
+    opening: ['I am satisfied with what I already prescribe.'],
+    beats: [
+      { atTurn: 1, event: 'dismissal', lines: ['As I said, I am satisfied with what I use.', 'I do not need anything new.'] },
+      { atTurn: 3, event: 'dismissal', lines: ['I really am not interested.', 'Is there anything else?'] },
+    ],
+    goodSigns: ['Stays calm', 'Respects the doctor’s position', 'Asks permission for a brief point or a future visit', 'Closes politely'],
+    weakSigns: ['Pushes on regardless', 'Argues'],
+    critical: ['inducement', 'superiority', 'fabricated', 'offlabel'],
+    hints: ['Acknowledge — you do not need to win this call.', 'Ask whether you may leave approved material or come back another time.'],
+    recommend: ['doctor-relationships', 'communication-skills'],
+  },
+  {
+    id: 'follow-up', number: 9, title: 'Follow-up visit', group: 'core', defaultPersona: 'friendly', seconds: 240,
+    summary: 'You discussed the product last time and are returning for follow-up.',
+    goal: 'Reference the last discussion, answer the open question, and agree the next step.',
+    opening: ['Ah, you came back. Last time I asked about monitoring — did you find out?'],
+    beats: [{ atTurn: 2, event: 'question', lines: ['And how often would the eye checks be?', 'What about patients on aspirin?'] }],
+    goodSigns: ['Recalls the previous discussion', 'Answers the open question from approved information', 'Agrees a next step'],
+    weakSigns: ['Starts the pitch from scratch', 'Ignores the open question'],
+    critical: ['fabricated', 'superiority', 'offlabel', 'inducement'],
+    hints: ['Open with the question the doctor asked last time.', 'Answer it from the label, then ask whether anything else came up.'],
+    recommend: ['call-planning', 'doctor-relationships'],
+  },
+  {
+    id: 'product-recall', number: 10, title: 'Product recall test', group: 'quick', defaultPersona: 'specialist', seconds: 300,
+    summary: 'The doctor asks specific product questions.',
+    goal: 'Answer precise product questions accurately from approved information.',
+    opening: ['Let me test you a little. What exactly is the approved indication?'],
+    beats: [
+      { atTurn: 1, event: 'recall', lines: ['What is the dose?', 'And how should it be taken relative to meals?'] },
+      { atTurn: 2, event: 'recall', lines: ['What monitoring is recommended?', 'When should I reassess?'] },
+      { atTurn: 3, event: 'recall', lines: ['Contraindications?', 'Which side effects are most commonly reported?'] },
+    ],
+    goodSigns: ['Accurate indication wording', 'Correct dose and administration', 'Correct monitoring and warnings'],
+    weakSigns: ['Wrong dose', 'Vague answers'],
+    critical: ['fabricated', 'offlabel', 'superiority', 'inducement'],
+    hints: ['Quote the indication exactly as approved.', 'Dose, administration and reassessment are all in the dosage section.'],
+    recommend: ['elmiron-masterclass', 'elmiron-product'],
+  },
+  {
+    id: 'outside-knowledge', number: 11, title: 'Difficult scientific question', group: 'scientific', defaultPersona: 'specialist', seconds: 300,
+    summary: 'The doctor asks something outside your approved knowledge.',
+    goal: 'Recognise the limit of approved information and offer to follow up through the medical team — do not guess.',
+    opening: [],
+    beats: [{ atTurn: 2, event: 'outside', lines: ['What is the long-term data beyond five years in patients with renal impairment?', 'How does it perform in patients who also have endometriosis? Any subgroup data?'] }],
+    goodSigns: ['Says they will confirm with the medical team', 'Does not guess', 'Offers a specific follow-up'],
+    weakSigns: ['Improvises an answer', 'Quotes numbers from memory'],
+    critical: ['fabricated', 'offlabel', 'superiority', 'inducement'],
+    hints: ['It is correct to say you will confirm with Medical Information and get back to the doctor.'],
+    recommend: ['scientific-communication', 'objection-handling'],
+  },
+  {
+    id: 'off-label', number: 12, title: 'Off-label question', group: 'compliance', defaultPersona: 'friendly', seconds: 240,
+    summary: 'The doctor asks whether the product can be used for another condition.',
+    goal: 'Do not promote an unapproved use. Recognise the unsolicited question and refer it to Medical Information.',
+    opening: [],
+    beats: [{ atTurn: 2, event: 'offlabel', lines: ['Can I use this for my patients with recurrent urinary tract infections?', 'Would it help my patients with overactive bladder?', 'Could I use it in chronic prostatitis?'] }],
+    goodSigns: ['States the approved indication', 'Does not discuss unapproved use', 'Offers a Medical Information referral'],
+    weakSigns: ['Speculates about other uses'],
+    critical: ['offlabel', 'fabricated', 'superiority', 'inducement'],
+    hints: ['Keep to the approved indication.', 'Unsolicited questions about other uses go to Medical Information.'],
+    recommend: ['ethical-marketing', 'ucpmp-2024'],
+  },
+  {
+    id: 'adverse-event', number: 13, title: 'Adverse event mention', group: 'compliance', defaultPersona: 'friendly', seconds: 240,
+    summary: 'The doctor mentions a patient who developed an unexpected reaction.',
+    goal: 'Recognise potentially reportable safety information, capture what the process requires, and escalate — do not investigate.',
+    opening: [],
+    beats: [{ atTurn: 2, event: 'safety', lines: ['By the way, I had a patient who developed an unexpected reaction after starting it.', 'One of my patients noticed blurred vision a few weeks after starting it.', 'A patient of mine had some unusual bruising on it last month.'] }],
+    goodSigns: ['Listens and acknowledges', 'Recognises it as reportable', 'Says it will be reported to pharmacovigilance within the company timeline', 'Does not investigate or conclude causality'],
+    weakSigns: ['Moves back to the pitch', 'Says it is probably unrelated'],
+    critical: ['ignored-ae', 'fabricated', 'offlabel', 'inducement'],
+    hints: ['Any mention of a reaction may be reportable — acknowledge and say you will report it.', 'Do not judge whether the product caused it.'],
+    recommend: ['ae-reporting'],
+  },
+  {
+    id: 'product-complaint', number: 14, title: 'Product complaint', group: 'compliance', defaultPersona: 'friendly', seconds: 180,
+    summary: 'The doctor says a patient’s tablet packaging was damaged.',
+    goal: 'Recognise a product complaint, gather only what is required, and escalate without unsupported commitments.',
+    opening: [],
+    beats: [{ atTurn: 1, event: 'complaint', lines: ['A patient brought back a strip — the packaging was damaged.', 'The tablets in one pack looked discoloured, according to my patient.'] }],
+    goodSigns: ['Recognises a product complaint', 'Asks for batch/lot if available', 'Escalates through the complaint process', 'No promises of replacement or conclusions'],
+    weakSigns: ['Blames transport', 'Promises a replacement'],
+    critical: ['ignored-ae', 'fabricated', 'offlabel', 'inducement'],
+    hints: ['Treat it as a product complaint: note the batch number if the doctor has it and escalate.', 'Do not guess the cause or promise an outcome.'],
+    recommend: ['ae-reporting', 'sample-sop'],
+  },
+];
+
+export const scenarioById = (id: string) => SCENARIOS.find(s => s.id === id)!;
+export const personaById = (id: string) => PERSONAS.find(p => p.id === id)!;
+export const productById = (id: string) => PRODUCTS.find(p => p.id === id)!;
+export const specialtyById = (id: string) => SPECIALTIES.find(s => s.id === id)!;

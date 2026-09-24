@@ -19,16 +19,18 @@ function ScreenHost({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  const [screen, go] = useRoute();
+  const [screen, go, params] = useRoute();
   const v = useDemo(go);
 
-  useLayoutEffect(() => { window.scrollTo(0, 0); }, [screen]);
+  useLayoutEffect(() => { window.scrollTo(0, 0); }, [screen, params.join('/')]);
   useEffect(() => {
     document.title = screen ? `Elmiron Learning · ${screen.toUpperCase()}` : 'Elmiron Learning';
   }, [screen]);
 
   const Screen = screen ? SCREENS[screen] : null;
-  const flow = (screen?.[0] ?? 'a') as 'a' | 'b' | 'c';
+  // l* (learn) and p* (practice) screens belong to the MR flow
+  const letter = screen?.[0] ?? 'a';
+  const flow = (letter === 'l' || letter === 'p' ? 'a' : letter) as 'a' | 'b' | 'c';
 
   return (
     <>
@@ -57,7 +59,7 @@ export default function App() {
             exit={{ opacity: 0, scale: 0.99, y: -10 }}
             transition={{ duration: 0.35, ease }}
           >
-            <ScreenHost key={screen}><Screen v={v} /></ScreenHost>
+            <ScreenHost key={screen + '/' + params.join('/')}><Screen v={v} params={params} /></ScreenHost>
           </motion.div>
         )}
       </AnimatePresence>

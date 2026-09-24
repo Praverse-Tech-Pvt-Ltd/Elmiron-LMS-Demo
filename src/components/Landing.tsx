@@ -121,7 +121,7 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
           <nav className="l-links">
             <a href="#statuses" onClick={e => { e.preventDefault(); document.getElementById('statuses')?.scrollIntoView({ behavior: 'smooth' }); }}>Statuses</a>
             <a href="#flows" onClick={e => { e.preventDefault(); document.getElementById('flows')?.scrollIntoView({ behavior: 'smooth' }); }}>Flows</a>
-            <button type="button" className="btn btn-primary btn-sm" onClick={() => go('a1')}>Start demo</button>
+            <button type="button" className="btn btn-primary btn-sm" onClick={() => go('l1')}>Start demo</button>
           </nav>
         </div>
       </motion.header>
@@ -130,7 +130,7 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
         <motion.div className="hero-blob" style={{ y: blobY }} aria-hidden />
         <div className="hero-copy">
           <motion.div className="eyebrow" variants={rise} initial="hidden" animate="show">
-            Phase 1 tokens · Phase 4 console · 19 screens
+            36 courses · 14 AI Doctor scenarios · 32 screens
           </motion.div>
           <h1 className="hero-title">
             {words.map((w, i) => (
@@ -150,17 +150,17 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
             ))}
           </h1>
           <motion.p className="hero-lead" variants={rise} initial="hidden" animate="show" custom={4}>
-            A clickable demo of the Elmiron Learning module for MRs, their managers and a training admin. The MR sees what they have to
-            finish and by when; the manager sees who needs help; the admin gets the complexity.
+            A capability-development platform for Medical Representatives: from "I know very little about pharmaceutical selling" to
+            certified in product, doctor engagement, territory, compliance and global markets — then practising safely with an AI Doctor.
           </motion.p>
           <motion.div className="hero-card" variants={rise} initial="hidden" animate="show" custom={5}>
             <div style={{ fontSize: 13.5, fontWeight: 500, color: '#585B52', marginBottom: 10 }}>Presenting this</div>
             <p style={{ margin: '0 0 16px', fontSize: 15, lineHeight: 1.6 }}>
-              Demo mode shows one screen at a time at full size. The core loops are wired:{' '}
-              <strong>A1 → A3 → A4 → A5 → A6 → A7 → A8</strong> and <strong>C2 → C4 → B1</strong>.
+              Demo mode shows one screen at a time at full size. Try the loop{' '}
+              <strong>Learn → course → lesson → AI Doctor → coaching → certification</strong>, then switch to the manager and admin views.
             </p>
             <div className="hero-actions">
-              <button type="button" className="btn btn-primary" onClick={() => go('a1')}>
+              <button type="button" className="btn btn-primary" onClick={() => go('l1')}>
                 Start as MR
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="btn-arrow"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </button>
@@ -186,9 +186,34 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
         </motion.div>
       </section>
 
+      <section id="whats-new" className="l-wrap l-section">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} variants={rise}>
+          <div className="section-kicker">01 — Capability, not just product training</div>
+          <h2 className="section-title">Learn → practise → get coached → certify.</h2>
+          <p className="section-lead">Every course follows one template, every score comes from a defined assessment, and every piece of doctor-engagement training stays inside approved information and compliance.</p>
+        </motion.div>
+        <div className="feature-grid">
+          {[
+            { k: 'Curriculum', t: '36 courses, Beginner → Certification', d: 'Industry, Indian and global markets, doctor engagement, detailing, objections, scientific communication, territory, channel, digital, compliance and leadership.', to: 'a2' as ScreenId },
+            { k: 'AI Doctor', t: 'Practise with a realistic doctor', d: 'Nine personas, fourteen scenarios, four difficulty levels, voice or text. The doctor challenges you; the AI Coach scores you on an eight-part rubric.', to: 'p1' as ScreenId },
+            { k: 'Compliance', t: 'Critical errors override the score', d: 'Off-label promotion, invented evidence, unsupported superiority, ignored adverse events and inducements mean "Requires retraining".', to: 'p2' as ScreenId },
+            { k: 'Paths', t: 'Paths, onboarding and certification', d: 'New MR, senior MR, international business and manager paths; an 8-week onboarding; four certification levels.', to: 'l4' as ScreenId },
+            { k: 'Manager', t: 'Coaching, not surveillance', d: 'Team practice trends, compliance flags and assignment reviews, with transcript access set by company policy.', to: 'b3' as ScreenId },
+            { k: 'Admin', t: 'Change content without code', d: 'Publish courses from a template, assign paths, edit approved claims, tune AI cost controls and run benchmark QA.', to: 'c7' as ScreenId },
+          ].map((f, i) => (
+            <motion.button key={f.k} type="button" className="feature" onClick={() => go(f.to)} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={rise} custom={i % 3} whileHover={{ y: -4 }}>
+              <span className="feature-k">{f.k}</span>
+              <span className="feature-t">{f.t}</span>
+              <span className="feature-d">{f.d}</span>
+              <span className="feature-go">Open <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
+            </motion.button>
+          ))}
+        </div>
+      </section>
+
       <section id="flows" className="l-wrap l-section">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} variants={rise}>
-          <div className="section-kicker">01 — The screens</div>
+          <div className="section-kicker">02 — The screens</div>
           <h2 className="section-title">Three roles, one module.</h2>
           <p className="section-lead">Jump into any screen. Everything inside is clickable, and the demo bar at the bottom moves you between screens.</p>
         </motion.div>

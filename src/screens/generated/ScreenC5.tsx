@@ -2,22 +2,13 @@
 import { Fragment } from 'react';
 import type { DemoValues } from '../../state';
 import CountUp from '../../components/CountUp';
+import Sidebar from '../../components/Sidebar';
 
 export default function ScreenC5({ v }: { v: DemoValues }) {
   void Fragment; void CountUp;
   return (
     <div className="screen-frame" style={{ background: "#FBFAF7", overflow: "hidden", display: "flex" }}>
-    <div style={{ width: "224px", background: "#F1EFE8", padding: "22px 0", flex: "none", display: "flex", flexDirection: "column" }}>
-      <div style={{ padding: "0 20px 24px", display: "flex", alignItems: "center", gap: "9px" }}><span style={{ width: "22px", height: "22px", borderRadius: "7px", background: "#35593A" }}></span><span style={{ fontSize: "14.5px", fontWeight: "600" }}>Elmiron Field</span></div>
-      <div style={{ padding: "0 20px 6px", fontSize: "13px", fontWeight: "500", color: "#585B52" }}>Training admin</div>
-      <div className="tap h0" style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52", cursor: "pointer" }} onClick={v.go.c1}>Dashboard</div>
-      <div className="tap h0" style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52", cursor: "pointer" }} onClick={v.go.c2}>Courses</div>
-      <div className="tap h0" style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52", cursor: "pointer" }} onClick={v.go.c3}>Question bank</div>
-      <div className="tap h0" style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52", cursor: "pointer" }} onClick={v.go.c4}>Assign</div>
-      <div className="tap" style={{ padding: "9px 20px", fontSize: "14.5px", fontWeight: "600", color: "#35593A", background: "#E4EAE3", boxShadow: "inset 3px 0 0 #35593A", cursor: "pointer" }} onClick={v.go.c5}>Reports</div>
-      <div style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52" }}>Users &amp; roles</div>
-      <div style={{ marginTop: "auto", padding: "0 20px" }}><div style={{ fontSize: "13px", lineHeight: "1.5", color: "#585B52", borderTop: "1px solid #E1DFD7", paddingTop: "14px" }}><strong style={{ color: "#1F211C", fontWeight: "600" }}>S. Pillai</strong><br  />Training admin · all regions</div></div>
-    </div>
+    <Sidebar role="admin" active="c5" />
     <div className="screen-main" style={{ flex: "1", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ height: "52px", padding: "0 30px", display: "flex", alignItems: "center", justifyContent: "space-between", flex: "none" }}>
         <div style={{ fontSize: "14px", color: "#585B52" }}>Reports</div>

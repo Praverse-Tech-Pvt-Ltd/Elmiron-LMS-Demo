@@ -2,26 +2,19 @@
 import { Fragment } from 'react';
 import type { DemoValues } from '../../state';
 import CountUp from '../../components/CountUp';
+import Sidebar from '../../components/Sidebar';
 
 export default function ScreenA2({ v }: { v: DemoValues }) {
   void Fragment; void CountUp;
   return (
     <div className="screen-frame" style={{ background: "#FBFAF7", overflow: "hidden", display: "flex" }}>
-    <div style={{ width: "240px", background: "#F1EFE8", padding: "24px 0", flex: "none", display: "flex", flexDirection: "column" }}>
-      <div style={{ padding: "0 22px 28px", display: "flex", alignItems: "center", gap: "10px" }}><span style={{ width: "24px", height: "24px", borderRadius: "8px", background: "#35593A" }}></span><span style={{ fontSize: "15px", fontWeight: "600", letterSpacing: "-.01em" }}>Elmiron Field</span></div>
-      <div style={{ padding: "0 22px 8px", fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Learning</div>
-      <div className="tap h0" style={{ padding: "10px 22px", fontSize: "15px", color: "#585B52", cursor: "pointer" }} onClick={v.go.a1}>Learning home</div>
-      <div className="tap" style={{ padding: "10px 22px", fontSize: "15px", fontWeight: "600", color: "#35593A", background: "#E4EAE3", boxShadow: "inset 3px 0 0 #35593A", cursor: "pointer" }} onClick={v.go.a2}>Browse courses</div>
-      <div className="tap h0" style={{ padding: "10px 22px", fontSize: "15px", color: "#585B52", cursor: "pointer" }} onClick={v.go.a9}>Training history</div>
-      <div className="tap h0" style={{ padding: "10px 22px", fontSize: "15px", color: "#585B52", cursor: "pointer" }} onClick={v.go.a8}>Certificates</div>
-      <div style={{ marginTop: "auto", padding: "0 22px" }}><div style={{ borderTop: "1px solid #E1DFD7", paddingTop: "14px", display: "flex", gap: "10px", alignItems: "center" }}><span style={{ width: "34px", height: "34px", borderRadius: "50%", background: "#E4EAE3", color: "#35593A", fontSize: "13px", fontWeight: "600", display: "flex", alignItems: "center", justifyContent: "center", flex: "none" }}>RM</span><div><div style={{ fontSize: "14.5px", fontWeight: "600" }}>Rahul More</div><div style={{ fontSize: "13px", color: "#585B52" }}>MR · South Mumbai</div><div style={{ fontFamily: "'DM Mono',monospace", fontSize: "12px", color: "#585B52" }}>EMP-40218</div></div></div></div>
-    </div>
+    <Sidebar role="mr" active="a2" />
     <div className="screen-main" style={{ flex: "1", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ height: "64px", padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flex: "none" }}>
         <div style={{ fontSize: "14.5px", color: "#585B52" }}><span className="tap" style={{ cursor: "pointer", color: "#35593A", fontWeight: "500" }} onClick={v.go.a1}>Learning home</span> / Browse courses</div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px", border: "1px dashed #8B8E84", borderRadius: "999px", padding: "4px 4px 4px 14px" }}><span style={{ fontSize: "13px", fontWeight: "500", color: "#585B52" }}>Demo control · Viewing as</span><div style={{ display: "flex", gap: "2px" }}><button className="tap" style={{ height: "28px", padding: "0 12px", border: "none", borderRadius: "999px", background: "#1F211C", color: "#FFFFFF", fontSize: "13px", fontWeight: "600", cursor: "pointer" }} type="button" onClick={v.go.a1}>MR</button><button className="tap h1" style={{ height: "28px", padding: "0 12px", border: "none", borderRadius: "999px", background: "transparent", color: "#1F211C", fontSize: "13px", fontWeight: "500", cursor: "pointer" }} type="button" onClick={v.go.b1}>Manager</button><button className="tap h1" style={{ height: "28px", padding: "0 12px", border: "none", borderRadius: "999px", background: "transparent", color: "#1F211C", fontSize: "13px", fontWeight: "500", cursor: "pointer" }} type="button" onClick={v.go.c1}>Admin</button></div></div>
       </div>
-      <div style={{ flex: "1", padding: "4px 40px 32px", display: "flex", flexDirection: "column", gap: "18px", overflow: "hidden" }}>
+      <div style={{ flex: "1", padding: "4px 40px 32px", display: "flex", flexDirection: "column", gap: "18px", overflowY: "auto" }}>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px" }}>
           <div><div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.035em", lineHeight: "1.15" }}>Browse courses</div><div style={{ fontSize: "16px", color: "#585B52", marginTop: "4px" }}>Everything open to you. Assigned courses also sit on your home screen with their due dates.</div></div>
           <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "340px" }}><label style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Search courses</label><input className="f5" style={{ height: "46px", background: "#FFFFFF", border: "1px solid #8B8E84", borderRadius: "14px", color: "#1F211C", fontFamily: "'DM Sans',sans-serif", fontSize: "16px", padding: "0 14px", outline: "none", boxSizing: "border-box" }} type="text" value={v.q} onChange={v.onQ} placeholder="Course name" /></div>
@@ -31,10 +24,15 @@ export default function ScreenA2({ v }: { v: DemoValues }) {
             <button className="tap" style={{ height: "36px", padding: "0 15px", border: "none", borderRadius: "999px", background: c.bg, color: c.fg, fontSize: "14px", fontWeight: "600", cursor: "pointer" }} type="button" onClick={c.pick}>{c.name}</button>
           </Fragment>))}
         </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center", marginTop: "-8px" }}>
+          <span style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52", marginRight: "4px" }}>Level</span>
+          {v.levels.map(l => (<button key={l.name} className="tap" type="button" onClick={l.pick} style={{ height: "30px", padding: "0 12px", border: l.on ? "1.5px solid #1F211C" : "1.5px solid #E1DFD7", borderRadius: "999px", background: "#FFFFFF", color: "#1F211C", fontSize: "13px", fontWeight: l.on ? "600" : "500", cursor: "pointer" }}>{l.name}</button>))}
+          <span style={{ fontSize: "13.5px", color: "#585B52", marginLeft: "auto" }}>{v.courseList.length} courses</span>
+        </div>
         {v.hasCourses && (<>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: "18px" }}>
           {v.courseList.map((c, c_i) => (<Fragment key={c.title}>
-            <div className="tap card h4 row-in" style={{ animationDelay: c_i * 0.035 + "s", background: "#FFFFFF", borderRadius: "20px", overflow: "hidden", boxShadow: "0 1px 2px rgba(20,21,15,.04),0 16px 40px -22px rgba(20,21,15,.35)", cursor: "pointer", display: "flex", flexDirection: "column" }} onClick={v.go.a3}>
+            <div className="tap card h4 row-in" style={{ animationDelay: c_i * 0.035 + "s", background: "#FFFFFF", borderRadius: "20px", overflow: "hidden", boxShadow: "0 1px 2px rgba(20,21,15,.04),0 16px 40px -22px rgba(20,21,15,.35)", cursor: "pointer", display: "flex", flexDirection: "column" }} onClick={c.open}>
               <div style={{ height: "108px", background: "repeating-linear-gradient(135deg,#F1EFE8 0 8px,#EAE7DF 8px 16px)", display: "flex", alignItems: "flex-end", padding: "10px 12px", boxSizing: "border-box" }}><span style={{ fontSize: "12px", color: "#585B52" }}>course thumbnail</span></div>
               <div style={{ padding: "14px 16px 16px", display: "flex", flexDirection: "column", gap: "4px", flex: "1" }}>
                 <div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>{c.cat}</div>

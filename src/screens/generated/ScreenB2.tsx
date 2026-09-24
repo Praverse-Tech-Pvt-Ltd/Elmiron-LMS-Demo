@@ -2,20 +2,13 @@
 import { Fragment } from 'react';
 import type { DemoValues } from '../../state';
 import CountUp from '../../components/CountUp';
+import Sidebar from '../../components/Sidebar';
 
 export default function ScreenB2({ v }: { v: DemoValues }) {
   void Fragment; void CountUp;
   return (
     <div className="screen-frame" style={{ background: "#FBFAF7", overflow: "hidden", display: "flex" }}>
-    <div style={{ width: "224px", background: "#F1EFE8", padding: "22px 0", flex: "none", display: "flex", flexDirection: "column" }}>
-      <div style={{ padding: "0 20px 24px", display: "flex", alignItems: "center", gap: "9px" }}><span style={{ width: "22px", height: "22px", borderRadius: "7px", background: "#35593A" }}></span><span style={{ fontSize: "14.5px", fontWeight: "600" }}>Elmiron Field</span></div>
-      <div style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52" }}>Team today</div>
-      <div style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52" }}>Coaching queue</div>
-      <div className="tap h0" style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52", cursor: "pointer" }} onClick={v.go.b1}>Team training</div>
-      <div className="tap" style={{ padding: "9px 20px", fontSize: "14.5px", fontWeight: "600", color: "#35593A", background: "#E4EAE3", boxShadow: "inset 3px 0 0 #35593A", cursor: "pointer" }} onClick={v.go.b2}>MR records</div>
-      <div style={{ padding: "9px 20px", fontSize: "14.5px", color: "#585B52" }}>Approvals</div>
-      <div style={{ marginTop: "auto", padding: "0 20px" }}><div style={{ fontSize: "13px", lineHeight: "1.5", color: "#585B52", borderTop: "1px solid #E1DFD7", paddingTop: "14px" }}><strong style={{ color: "#1F211C", fontWeight: "600" }}>R. Deshpande</strong><br  />Area manager · Mumbai · 12 MRs</div></div>
-    </div>
+    <Sidebar role="manager" active="b2" />
     <div className="screen-main" style={{ flex: "1", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ height: "52px", padding: "0 30px", display: "flex", alignItems: "center", justifyContent: "space-between", flex: "none" }}>
         <div style={{ fontSize: "14px", color: "#585B52" }}><span className="tap" style={{ cursor: "pointer", color: "#35593A", fontWeight: "500" }} onClick={v.go.b1}>Team training</span> / Rahul More</div>

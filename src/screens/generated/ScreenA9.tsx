@@ -2,20 +2,13 @@
 import { Fragment } from 'react';
 import type { DemoValues } from '../../state';
 import CountUp from '../../components/CountUp';
+import Sidebar from '../../components/Sidebar';
 
 export default function ScreenA9({ v }: { v: DemoValues }) {
   void Fragment; void CountUp;
   return (
     <div className="screen-frame" style={{ background: "#FBFAF7", overflow: "hidden", display: "flex" }}>
-    <div style={{ width: "240px", background: "#F1EFE8", padding: "24px 0", flex: "none", display: "flex", flexDirection: "column" }}>
-      <div style={{ padding: "0 22px 28px", display: "flex", alignItems: "center", gap: "10px" }}><span style={{ width: "24px", height: "24px", borderRadius: "8px", background: "#35593A" }}></span><span style={{ fontSize: "15px", fontWeight: "600", letterSpacing: "-.01em" }}>Elmiron Field</span></div>
-      <div style={{ padding: "0 22px 8px", fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Learning</div>
-      <div className="tap h0" style={{ padding: "10px 22px", fontSize: "15px", color: "#585B52", cursor: "pointer" }} onClick={v.go.a1}>Learning home</div>
-      <div className="tap h0" style={{ padding: "10px 22px", fontSize: "15px", color: "#585B52", cursor: "pointer" }} onClick={v.go.a2}>Browse courses</div>
-      <div className="tap" style={{ padding: "10px 22px", fontSize: "15px", fontWeight: "600", color: "#35593A", background: "#E4EAE3", boxShadow: "inset 3px 0 0 #35593A", cursor: "pointer" }} onClick={v.go.a9}>Training history</div>
-      <div className="tap h0" style={{ padding: "10px 22px", fontSize: "15px", color: "#585B52", cursor: "pointer" }} onClick={v.go.a8}>Certificates</div>
-      <div style={{ marginTop: "auto", padding: "0 22px" }}><div style={{ borderTop: "1px solid #E1DFD7", paddingTop: "14px", display: "flex", gap: "10px", alignItems: "center" }}><span style={{ width: "34px", height: "34px", borderRadius: "50%", background: "#E4EAE3", color: "#35593A", fontSize: "13px", fontWeight: "600", display: "flex", alignItems: "center", justifyContent: "center", flex: "none" }}>RM</span><div><div style={{ fontSize: "14.5px", fontWeight: "600" }}>Rahul More</div><div style={{ fontSize: "13px", color: "#585B52" }}>MR · South Mumbai</div><div style={{ fontFamily: "'DM Mono',monospace", fontSize: "12px", color: "#585B52" }}>EMP-40218</div></div></div></div>
-    </div>
+    <Sidebar role="mr" active="a9" />
     <div className="screen-main" style={{ flex: "1", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ height: "64px", padding: "0 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flex: "none" }}>
         <div style={{ fontSize: "14.5px", color: "#585B52" }}>Training history</div>

@@ -1,23 +1,37 @@
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react';
+import { BESPOKE, allCourses, progressOf } from './content';
+import { getLearn } from './content/learnStore';
+import { CATEGORIES, LEVELS } from './content/types';
 
 export type ScreenId =
   | 'a1' | 'a2' | 'a3' | 'a4' | 'a5' | 'a6' | 'a6b' | 'a6c' | 'a7' | 'a7b' | 'a8' | 'a9'
-  | 'b1' | 'b2' | 'c1' | 'c2' | 'c3' | 'c4' | 'c5';
+  | 'l1' | 'l2' | 'l3' | 'l4' | 'l5'
+  | 'p1' | 'p2' | 'p3' | 'p4' | 'p5'
+  | 'b1' | 'b2' | 'b3'
+  | 'c1' | 'c2' | 'c3' | 'c4' | 'c5' | 'c6' | 'c7';
 
 export const SCREEN_NAMES: Record<ScreenId, string> = {
-  a1: 'A1 Learning home', a2: 'A2 Browse courses', a3: 'A3 Course detail', a4: 'A4 Video lesson',
+  l1: 'L1 Learn', a1: 'A1 Learning home', a2: 'A2 Browse courses', l2: 'L2 Course', l3: 'L3 Lesson', l4: 'L4 Paths & certification', l5: 'L5 Role-play & cases',
+  a3: 'A3 Course detail', a4: 'A4 Video lesson',
   a5: 'A5 Document lesson', a6: 'A6 Assessment · Q7', a6b: 'A6 Assessment · Q8', a6c: 'A6 Submit',
   a7: 'A7 Result · passed', a7b: 'A7 Result · not cleared', a8: 'A8 Certificate', a9: 'A9 Training history',
-  b1: 'B1 Team training', b2: 'B2 MR record', c1: 'C1 Admin dashboard', c2: 'C2 Course builder',
-  c3: 'C3 Question bank', c4: 'C4 Assign course', c5: 'C5 Reports',
+  p1: 'P1 Practice with AI Doctor', p2: 'P2 Session setup', p3: 'P3 Live session', p4: 'P4 Session feedback', p5: 'P5 My progress',
+  b1: 'B1 Team training', b2: 'B2 MR record', b3: 'B3 AI practice & assignments',
+  c1: 'C1 Admin dashboard', c2: 'C2 Course builder',
+  c3: 'C3 Question bank', c4: 'C4 Assign course', c5: 'C5 Reports', c6: 'C6 Curriculum & paths', c7: 'C7 AI Doctor admin',
 };
 export const SCREEN_IDS = Object.keys(SCREEN_NAMES) as ScreenId[];
 
 export const FLOWS: { key: 'A' | 'B' | 'C'; title: string; role: string; blurb: string; screens: ScreenId[] }[] = [
-  { key: 'A', title: 'The MR learner', role: 'MR', blurb: 'Home → course → video → document → assessment → result → certificate.', screens: ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a6b', 'a6c', 'a7', 'a7b', 'a8', 'a9'] },
-  { key: 'B', title: 'The manager', role: 'Manager', blurb: 'Exception-first. The landing page lists who needs help.', screens: ['b1', 'b2'] },
-  { key: 'C', title: 'The training admin', role: 'Admin', blurb: 'Build, assign and report on courses across every area.', screens: ['c1', 'c2', 'c3', 'c4', 'c5'] },
+  { key: 'A', title: 'The MR learner', role: 'MR', blurb: 'Learn → course → lesson → assessment → certificate, then practise with the AI Doctor.', screens: ['l1', 'a1', 'a2', 'l2', 'l3', 'l4', 'l5', 'a3', 'a4', 'a5', 'a6', 'a6b', 'a6c', 'a7', 'a7b', 'a8', 'a9', 'p1', 'p2', 'p3', 'p4', 'p5'] },
+  { key: 'B', title: 'The manager', role: 'Manager', blurb: 'Exception-first. Who needs help, how practice is going, what to review.', screens: ['b1', 'b2', 'b3'] },
+  { key: 'C', title: 'The training admin', role: 'Admin', blurb: 'Build courses and paths, configure the AI Doctor, report on everything.', screens: ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'] },
 ];
+
+/** Screens that need a parameter get a sensible default when opened from a menu. */
+export const DEFAULT_PARAMS: Partial<Record<ScreenId, string>> = {
+  l2: 'product-detailing', l3: 'product-detailing', p4: 'latest',
+};
 
 type PillKey = 'ns' | 'ip' | 'ds' | 'od' | 'fr' | 'fx' | 'cp' | 'ex';
 export type Pill = { label: string; bg: string; fg: string; ring: boolean; part: boolean; bang: boolean; cross: boolean; tick: boolean; dash: boolean };
@@ -31,29 +45,38 @@ function pill(k: PillKey, label: string): Pill {
 }
 
 const INITIAL = {
-  outline: true, watched: 62, playing: false, page: 6, ack: false, ackDone: false, q7: 1, q8: [0] as number[], cat: 'All', q: '',
+  outline: true, watched: 62, playing: false, page: 6, ack: false, ackDone: false, q7: 1, q8: [0] as number[], cat: 'All', lvl: 'All levels', q: '',
   sent: {} as Record<string, boolean>, aud: { mu: 1, ms: 1, pu: 1, na: 1, ng: 0, go: 0 } as Record<string, number>, audTab: 'Area',
   ltype: 'video', ackReq: false, skipAhead: false, active: { 'Q-0107': false, 'Q-0233': false } as Record<string, boolean>, tab: 'Course',
   rem: { b7: 1, b3: 1, b1: 1, a1: 1, a3: 1, a7: 1 } as Record<string, number>, mand: true, sq: true, so: true, sa: false,
 };
 type S = typeof INITIAL;
 
-/** Hash routing: '#/' is the landing page, '#/a1' etc. are screens. */
-export function useRoute(): [ScreenId | null, (s: ScreenId | null) => void] {
-  const read = () => {
-    const h = window.location.hash.replace(/^#\/?/, '') as ScreenId;
-    return SCREEN_IDS.includes(h) ? h : null;
-  };
-  const [screen, setScreen] = useState<ScreenId | null>(read);
+/** Hash routing: '#/' is the landing page, '#/a1' a screen, '#/l2/<course>' a screen with parameters. */
+function readHash(): { screen: ScreenId | null; params: string[] } {
+  const parts = window.location.hash.replace(/^#\/?/, '').split('/').filter(Boolean).map(decodeURIComponent);
+  const id = parts[0] as ScreenId;
+  return SCREEN_IDS.includes(id) ? { screen: id, params: parts.slice(1) } : { screen: null, params: [] };
+}
+
+/** Navigate to a screen with optional parameters from anywhere. */
+export function navTo(screen: ScreenId | null, ...params: string[]) {
+  const path = screen ? [screen, ...params].map(encodeURIComponent).join('/') : '';
+  window.location.hash = '/' + path;
+}
+
+export function useRoute(): [ScreenId | null, (s: ScreenId | null) => void, string[]] {
+  const [route, setRoute] = useState(readHash);
   useEffect(() => {
-    const on = () => setScreen(read());
+    const on = () => setRoute(readHash());
     window.addEventListener('hashchange', on);
     return () => window.removeEventListener('hashchange', on);
   }, []);
   const go = useCallback((s: ScreenId | null) => {
-    window.location.hash = s ? '/' + s : '/';
+    const def = s ? DEFAULT_PARAMS[s] : undefined;
+    if (def) navTo(s, ...def.split('/')); else navTo(s);
   }, []);
-  return [screen, go];
+  return [route.screen, go, route.params];
 }
 
 export function useDemo(go: (s: ScreenId | null) => void) {
@@ -78,23 +101,31 @@ export function useDemo(go: (s: ScreenId | null) => void) {
     const goMap = Object.fromEntries(SCREEN_IDS.map(i => [i, () => go(i)])) as Record<ScreenId, () => void>;
     const P = pill;
 
-    // A2
-    const COURSES: [string, string, string, string, Pill][] = [
-      ['Elmiron — Product Training', 'Product Training', '2 h 40 min · 4 modules', 'Mandatory', P('ip', 'In progress · 45%')],
-      ['Interstitial Cystitis / Bladder Pain Syndrome — Disease Awareness', 'Disease Awareness', '1 h 20 min · 3 modules', 'Mandatory', P('ns', 'Not started')],
-      ['UCPMP 2024 — Ethical Promotion', 'Compliance', '1 h 10 min · 3 modules', 'Mandatory', P('ds', 'Due in 2 days')],
-      ['Adverse Event Reporting for Field Staff', 'Compliance', '45 min · 2 modules', 'Mandatory', P('od', 'Overdue by 3 days')],
-      ['Sample Distribution SOP', 'SOP Training', '40 min · 2 modules', 'Mandatory', P('fr', 'Failed · 2 retakes left')],
-      ['Handling Cost Objections', 'Selling Skills', '50 min · 3 modules', 'Optional', P('ns', 'Not started')],
-      ["Listening in the Doctor's Cabin", 'Communication', '35 min · 2 modules', 'Optional', P('cp', 'Completed')],
-      ['New MR Induction', 'Induction', '6 h · 8 modules', 'Mandatory', P('cp', 'Completed')],
-    ];
-    const CATS = ['All', 'Product Training', 'Disease Awareness', 'Compliance', 'SOP Training', 'Selling Skills', 'Communication', 'Induction', 'Refresher'];
+    // A2 — the full capability catalogue. The design's eight courses keep their statuses; the rest come from progress.
+    const DESIGN_STATUS: Record<string, Pill> = {
+      'elmiron-product': P('ip', 'In progress · 45%'), 'ic-bps-awareness': P('ns', 'Not started'), 'ucpmp-2024': P('ds', 'Due in 2 days'),
+      'ae-reporting': P('od', 'Overdue by 3 days'), 'sample-sop': P('fr', 'Failed · 2 retakes left'), 'cost-objections': P('ns', 'Not started'),
+      'doctor-cabin': P('cp', 'Completed'), 'mr-induction': P('cp', 'Completed'),
+    };
+    const ORDER = Object.keys(DESIGN_STATUS);
+    const learn = getLearn();
+    const catName = (id: string) => CATEGORIES.find(c => c.id === id)?.name ?? id;
+    const COURSES = allCourses()
+      .slice()
+      .sort((a, b) => (ORDER.indexOf(a.id) + 1 || 99) - (ORDER.indexOf(b.id) + 1 || 99))
+      .map(c => {
+        const pct = progressOf(c);
+        const fin = learn.finals[c.id];
+        const status = DESIGN_STATUS[c.id] ?? (fin?.passed || pct >= 100 ? P('cp', 'Completed') : fin && !fin.passed ? P('fr', 'Not cleared · retake') : pct > 0 ? P('ip', `In progress · ${pct}%`) : P('ns', 'Not started'));
+        return { id: c.id, title: c.title, cat: catName(c.category), level: c.level, meta: `${c.duration} · ${c.modules.length} modules · ${c.level}`, req: c.mandatory ? 'Mandatory' : 'Optional', p: status };
+      });
+    const CATS = ['All', ...CATEGORIES.map(c => c.name), 'Refresher'];
     const ql = s.q.trim().toLowerCase();
-    const courseList = COURSES.filter(c => (s.cat === 'All' || c[1] === s.cat) && (!ql || c[0].toLowerCase().includes(ql)))
-      .map(c => ({ title: c[0], cat: c[1], meta: c[2], req: c[3], p: c[4] }));
+    const courseList = COURSES.filter(c => (s.cat === 'All' || c.cat === s.cat) && (s.lvl === 'All levels' || c.level === s.lvl) && (!ql || c.title.toLowerCase().includes(ql)))
+      .map(c => ({ ...c, open: () => (BESPOKE[c.id] ? go(BESPOKE[c.id]) : navTo('l2', c.id)) }));
     const cats = CATS.map(n => ({ name: n, bg: n === s.cat ? '#1F211C' : '#F1EFE8', fg: n === s.cat ? '#FFFFFF' : '#1F211C', pick: () => setState({ cat: n }) }));
-    const emptyTitle = ql ? `No courses match “${s.q.trim()}”` : `No courses in ${s.cat} yet`;
+    const levels = ['All levels', ...LEVELS].map(n => ({ name: n, on: n === s.lvl, pick: () => setState({ lvl: n }) }));
+    const emptyTitle = ql ? `No courses match “${s.q.trim()}”` : `No courses in ${s.cat === 'All' ? s.lvl : s.cat} yet`;
     const emptyBody = ql
       ? (s.cat === 'All' ? 'Check the spelling, or try a shorter word.' : `You're searching inside ${s.cat} only. Clear the filter to search every category.`)
       : 'The training team hasn’t published anything in this category. Assigned courses will also appear on your home screen.';
@@ -173,7 +204,8 @@ export function useDemo(go: (s: ScreenId | null) => void) {
       // A2
       cats, courseList, hasCourses: courseList.length > 0, noCourses: courseList.length === 0, emptyTitle, emptyBody, q: s.q,
       onQ: (e: ChangeEvent<HTMLInputElement>) => setState({ q: e.target.value }),
-      clearFilters: () => setState({ q: '', cat: 'All' }),
+      clearFilters: () => setState({ q: '', cat: 'All', lvl: 'All levels' }),
+      levels,
       // A4
       outlineOpen: s.outline, outlineClosed: !s.outline, toggleOutline: () => setState(st => ({ outline: !st.outline })),
       watched: Math.floor(s.watched), watchedPct: s.watched + '%', locked: !unlocked, unlocked,
