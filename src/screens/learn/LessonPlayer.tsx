@@ -4,7 +4,7 @@ import { navTo } from '../../state';
 import { allCourses, courseById } from '../../content';
 import { markDone, seedIfNeeded, submitAssignment, useLearn } from '../../content/learnStore';
 import type { Lesson } from '../../content/types';
-import { Button, C, Card, Crumb, Empty, Shell, Tag } from '../../components/ui';
+import { Button, C, Card, Crumb, Empty, Shell, Tag, useSaving } from '../../components/ui';
 import QuestionCard from '../../components/QuestionCard';
 import { presetFor, setPendingConfig } from '../../ai/session';
 import { SCENARIOS } from '../../ai/content';
@@ -54,8 +54,9 @@ function FlowBlock({ steps }: { steps: string[] }) {
 
 function AssignmentBlock({ lesson, courseId }: { lesson: Lesson; courseId: string }) {
   const { assignments } = useLearn();
-  const mine = assignments.find(a => a.lessonId === lesson.id && a.learner === 'Rahul More');
+  const mine = assignments.find(a => a.lessonId === lesson.id && a.learner === 'Pratham Shrivastav');
   const [text, setText] = useState('');
+  const [sending, runSend] = useSaving(650);
   const a = lesson.assignment!;
   return (
     <div className="stack" style={{ gap: 14 }}>
@@ -70,13 +71,13 @@ function AssignmentBlock({ lesson, courseId }: { lesson: Lesson; courseId: strin
           <Card style={{ padding: '14px 18px' }}>
             <div className="row" style={{ justifyContent: 'space-between' }}><Tag tone={mine.review ? 'green' : 'blue'}>{mine.review ? `Reviewed · ${mine.review.score}/5` : 'Submitted · awaiting manager review'}</Tag><span className="muted" style={{ fontSize: 13 }}>{new Date(mine.submittedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}</span></div>
             <p style={{ fontSize: 14.5, lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>{mine.text}</p>
-            {mine.review && <div className="example-quote">{mine.review.comment} — {mine.review.by}</div>}
+            {mine.review && <div className="example-quote">{mine.review.comment} ({mine.review.by})</div>}
           </Card>
         </motion.div>
       ) : (
         <>
           <textarea className="textarea" value={text} onChange={e => setText(e.target.value)} placeholder="Write your response. Do not include identifiable patient information." rows={6} />
-          <div className="row"><Button kind="primary" disabled={text.trim().length < 20} onClick={() => { submitAssignment({ courseId, lessonId: lesson.id, title: a.brief, learner: 'Rahul More', text: text.trim() }); markDone(courseId, lesson.id); }}>Submit for review</Button><span className="muted" style={{ fontSize: 13.5 }}>Your manager reviews and scores it.</span></div>
+          <div className="row"><Button kind="primary" disabled={text.trim().length < 20} loading={sending} onClick={() => runSend(() => { submitAssignment({ courseId, lessonId: lesson.id, title: a.brief, learner: 'Pratham Shrivastav', text: text.trim() }); markDone(courseId, lesson.id); })}>{sending ? 'Submitting' : 'Submit for review'}</Button><span className="muted" style={{ fontSize: 13.5 }}>Your manager reviews and scores it.</span></div>
         </>
       )}
     </div>

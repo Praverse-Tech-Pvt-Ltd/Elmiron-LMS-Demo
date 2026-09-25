@@ -17,7 +17,7 @@ export default function ScreenC2({ v }: { v: DemoValues }) {
       </div>
       <div style={{ flex: "1", padding: "0 30px 24px", overflow: "hidden", display: "flex", flexDirection: "column", gap: "14px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div style={{ fontSize: "24px", fontWeight: "600", letterSpacing: "-.03em" }}>Elmiron — Product Training</div>
+          <div style={{ fontSize: "24px", fontWeight: "600", letterSpacing: "-.015em" }}>Elmiron — Product Training</div>
           <span style={{ background: "#F1EFE8", borderRadius: "999px", padding: "3px 10px", fontSize: "12.5px", fontWeight: "600" }}>v2.1</span>
           <div style={{ flex: "1" }}></div>
           <button className="tap h0" style={{ height: "36px", padding: "0 14px", background: "#F1EFE8", border: "none", borderRadius: "10px", color: "#1F211C", fontSize: "13.5px", fontWeight: "600", cursor: "pointer" }} type="button" onClick={v.go.a3}>Preview as learner</button>

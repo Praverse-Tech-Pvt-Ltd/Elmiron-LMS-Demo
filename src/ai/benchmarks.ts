@@ -24,7 +24,7 @@ export const BENCHMARKS: Benchmark[] = [
   {
     id: 'bm-first-strong', scenarioId: 'first-meeting', personaId: 'new', label: 'First meeting — strong',
     mr: [
-      'Good morning, doctor. My name is Rahul More and I am from Elmiron Field. I would like to discuss a treatment option for some of your patients.',
+      'Good morning, doctor. My name is Pratham Shrivastav and I am from Elmiron Field. I would like to discuss a treatment option for some of your patients.',
       'We focus on urology. May I ask how often you see patients with chronic bladder pain, and what challenges you find in managing them?',
       'I understand. Elmiron is indicated for the relief of bladder pain or discomfort associated with interstitial cystitis, as per the prescribing information.',
       'The recommended dose is 100 mg three times daily with water, one hour before or two hours after meals, and patients should be reassessed after 3 months.',
@@ -50,7 +50,7 @@ export const BENCHMARKS: Benchmark[] = [
   {
     id: 'bm-competitor-good', scenarioId: 'competitor-preference', personaId: 'competitor', label: 'Competitor — respectful, approved info',
     mr: [
-      'Good morning doctor, I am Rahul from Elmiron Field. I would like to share approved information briefly.',
+      'Good morning doctor, I am Pratham from Elmiron Field. I would like to share approved information briefly.',
       'That is fair, and I understand your current therapy works for many patients. Are there patients who still have symptoms?',
       'I see. For appropriate patients, Elmiron is indicated for bladder pain or discomfort associated with interstitial cystitis. I can share the prescribing information.',
       'The label recommends reassessment after 3 months. Would that help for the patients you mentioned?',
@@ -70,7 +70,7 @@ export const BENCHMARKS: Benchmark[] = [
   {
     id: 'bm-offlabel-handled', scenarioId: 'off-label', personaId: 'friendly', label: 'Off-label — referred to Medical Information',
     mr: [
-      'Good morning doctor, I am Rahul from Elmiron Field. I would like to share a brief update.',
+      'Good morning doctor, I am Pratham from Elmiron Field. I would like to share a brief update.',
       'Elmiron is indicated for the relief of bladder pain or discomfort associated with interstitial cystitis, as per the prescribing information.',
       'It is approved only for that indication. For any other use, I can ask our Medical Information team to contact you directly.',
       'Thank you for your time, doctor.',
@@ -90,7 +90,7 @@ export const BENCHMARKS: Benchmark[] = [
   {
     id: 'bm-ae-reported', scenarioId: 'adverse-event', personaId: 'friendly', label: 'Adverse event — recognised and reported',
     mr: [
-      'Good morning doctor, I am Rahul from Elmiron Field. I would like to share a brief update on Elmiron.',
+      'Good morning doctor, I am Pratham from Elmiron Field. I would like to share a brief update on Elmiron.',
       'It is indicated for bladder pain or discomfort associated with interstitial cystitis.',
       'Thank you for telling me, doctor. I need to report this to our pharmacovigilance team within 24 hours. Could I note a few details without the patient identity?',
       'Thank you for your time, doctor. I will follow up.',
@@ -105,7 +105,7 @@ export const BENCHMARKS: Benchmark[] = [
   {
     id: 'bm-outside', scenarioId: 'outside-knowledge', personaId: 'specialist', label: 'Outside knowledge — defers correctly',
     mr: [
-      'Good morning doctor, I am Rahul from Elmiron Field. I would like to discuss Elmiron briefly.',
+      'Good morning doctor, I am Pratham from Elmiron Field. I would like to discuss Elmiron briefly.',
       'It is indicated for bladder pain or discomfort associated with interstitial cystitis, per the prescribing information.',
       'That is a good question. I would like to confirm that with our medical team and get back to you.',
       'Thank you for your time, doctor. I will follow up by Friday.',

@@ -17,11 +17,11 @@ export default function ScreenA7b({ v }: { v: DemoValues }) {
       <div style={{ flex: "1", display: "flex", justifyContent: "center", padding: "40px 40px 32px" }}>
         <div style={{ width: "640px", display: "flex", flexDirection: "column", gap: "20px" }}>
           <span style={{ width: "56px", height: "56px", borderRadius: "50%", background: "#F7EFDD", color: "#7A5510", fontSize: "26px", fontWeight: "700", display: "flex", alignItems: "center", justifyContent: "center" }}>!</span>
-          <div><div style={{ fontSize: "14.5px", fontWeight: "500", color: "#585B52" }}>Final assessment · Elmiron — Product Training · v2.0</div><div style={{ fontSize: "30px", fontWeight: "600", letterSpacing: "-.035em" }}>Not cleared this time</div></div>
+          <div><div style={{ fontSize: "14.5px", fontWeight: "500", color: "#585B52" }}>Final assessment · Elmiron — Product Training · v2.0</div><div style={{ fontSize: "30px", fontWeight: "600", letterSpacing: "-.018em" }}>Not cleared this time</div></div>
           <div className="card" style={{ background: "#FFFFFF", borderRadius: "20px", padding: "24px 26px", boxShadow: "0 1px 2px rgba(20,21,15,.04),0 16px 40px -22px rgba(20,21,15,.35)" }}>
             <div style={{ display: "flex", gap: "40px", alignItems: "flex-end", paddingBottom: "18px", borderBottom: "1px solid #F2F0E9" }}>
-              <div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Your score</div><div style={{ fontSize: "40px", fontWeight: "600", letterSpacing: "-.045em", lineHeight: "1.05" }}><CountUp to="64%" /></div></div>
-              <div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Pass mark</div><div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.035em", lineHeight: "1.1" }}><CountUp to="80%" /></div></div>
+              <div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Your score</div><div style={{ fontSize: "40px", fontWeight: "600", letterSpacing: "-.022em", lineHeight: "1.05" }}><CountUp to="64%" /></div></div>
+              <div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Pass mark</div><div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.018em", lineHeight: "1.1" }}><CountUp to="80%" /></div></div>
               <div style={{ flex: "1" }}></div>
               <span className="pill" style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "#F7EFDD", color: "#7A5510", borderRadius: "999px", padding: "5px 12px 5px 9px", fontSize: "13.5px", fontWeight: "600" }}><span style={{ width: "14px", height: "14px", borderRadius: "50%", background: "#7A5510", color: "#FFFFFF", fontSize: "10px", fontWeight: "700", display: "flex", alignItems: "center", justifyContent: "center" }}>!</span>2 of 3 attempts left</span>
             </div>

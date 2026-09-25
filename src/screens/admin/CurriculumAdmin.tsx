@@ -4,7 +4,7 @@ import { navTo } from '../../state';
 import { CERT_LEVELS, ONBOARDING, PATHS, allCourses, lessonCount } from '../../content';
 import { addCourse, assignPath, removeCourse, useLearn } from '../../content/learnStore';
 import { CATEGORIES, LEVELS, MARKET_NAMES, type CategoryId, type Course, type Lesson, type LessonKind, type Level, type Market } from '../../content/types';
-import { Button, C, Card, Crumb, LevelTag, Shell, Tabs, Tag } from '../../components/ui';
+import { Button, C, Card, Crumb, LevelTag, Shell, Tabs, Tag, useSaving } from '../../components/ui';
 import Switch from '../../components/Switch';
 
 const TABS = ['Course catalogue', 'New course', 'Assign learning paths', 'Certification'] as const;
@@ -23,6 +23,7 @@ const blank: Draft = {
 
 function NewCourse({ onDone }: { onDone: () => void }) {
   const [d, setD] = useState<Draft>(blank);
+  const [publishing, runPublish] = useSaving(700);
   const set = (p: Partial<Draft>) => setD(x => ({ ...x, ...p }));
   const valid = d.title.trim().length > 3 && d.objective.trim().length > 10 && d.modules.every(m => m.title && m.lessons.every(l => l.title));
   const save = () => {
@@ -97,11 +98,11 @@ function NewCourse({ onDone }: { onDone: () => void }) {
       <div className="sticky-col">
         <Card className="raised" style={{ padding: 20 }}>
           <div className="muted" style={{ fontSize: 13.5 }}>Preview</div>
-          <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-.02em', margin: '4px 0 8px' }}>{d.title || 'Untitled course'}</div>
+          <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-.01em', margin: '4px 0 8px' }}>{d.title || 'Untitled course'}</div>
           <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}><LevelTag level={d.level} /><Tag>{CATEGORIES.find(c => c.id === d.category)?.name}</Tag>{d.mandatory && <Tag tone="ink">Mandatory</Tag>}</div>
           <div className="muted" style={{ fontSize: 14, margin: '10px 0' }}>{d.modules.length} modules · {d.modules.reduce((a, m) => a + m.lessons.length, 0)} lessons · pass {d.passMark}%</div>
-          <Button kind="primary" disabled={!valid} onClick={save} style={{ width: '100%' }}>Publish course</Button>
-          <div className="muted" style={{ fontSize: 13, marginTop: 8 }}>Publishes to the catalogue immediately — no code change or release needed.</div>
+          <Button kind="primary" disabled={!valid} loading={publishing} onClick={() => runPublish(save)} style={{ width: '100%' }}>{publishing ? 'Publishing' : 'Publish course'}</Button>
+          <div className="muted" style={{ fontSize: 13, marginTop: 8 }}>Publishes to the catalogue immediately. No code change or release needed.</div>
         </Card>
       </div>
     </div>
@@ -117,6 +118,7 @@ export default function CurriculumAdmin() {
   const [aud, setAud] = useState('New joiners · all regions');
   const [due, setDue] = useState('2026-12-31');
   const [auto, setAuto] = useState(true);
+  const [assigning, runAssign] = useSaving(600);
   const courses = useMemo(() => allCourses(), [customCourses]); // eslint-disable-line react-hooks/exhaustive-deps
   const list = courses.filter(c => c.title.toLowerCase().includes(q.toLowerCase()));
   const note = (m: string) => { setFlash(m); setTimeout(() => setFlash(''), 2600); };
@@ -126,7 +128,7 @@ export default function CurriculumAdmin() {
       <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
         <div>
           <h1 className="page-title">Curriculum &amp; paths</h1>
-          <div className="page-sub">{courses.length} courses · {courses.reduce((a, c) => a + lessonCount(c), 0)} lessons · {PATHS.length} learning paths. Everything here is data — add modules without code changes.</div>
+          <div className="page-sub">{courses.length} courses · {courses.reduce((a, c) => a + lessonCount(c), 0)} lessons · {PATHS.length} learning paths. Everything here is data, add modules without code changes.</div>
         </div>
         <AnimatePresence>{flash && <motion.span className="done-chip" initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>✓ {flash}</motion.span>}</AnimatePresence>
       </div>
@@ -178,7 +180,7 @@ export default function CurriculumAdmin() {
                       <motion.span key={pathId + i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }} className="pp-step">{s.label}{i < arr.length - 1 && <span className="pp-arrow">→</span>}</motion.span>
                     ))}
                   </div>
-                  <Button kind="primary" onClick={() => { assignPath({ pathId, audience: aud, due, assignedAt: new Date().toISOString(), learners: aud.includes('all regions') ? 412 : aud.includes('Mumbai') ? 12 : aud.includes('West') ? 96 : aud.includes('International') ? 18 : 64 }); note('Learning path assigned'); }}>Assign path</Button>
+                  <Button kind="primary" loading={assigning} onClick={() => runAssign(() => { assignPath({ pathId, audience: aud, due, assignedAt: new Date().toISOString(), learners: aud.includes('all regions') ? 412 : aud.includes('Mumbai') ? 12 : aud.includes('West') ? 96 : aud.includes('International') ? 18 : 64 }); note('Learning path assigned'); })}>{assigning ? 'Assigning' : 'Assign path'}</Button>
                 </Card>
                 <Card style={{ padding: '16px 20px' }}>
                   <div className="row" style={{ justifyContent: 'space-between' }}>

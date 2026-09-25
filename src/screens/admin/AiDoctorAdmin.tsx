@@ -35,7 +35,7 @@ function ContentTab() {
           </div>
           <div className="upload-drop">
             <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M8 11V2M4.5 5.5L8 2l3.5 3.5M2 11v3h12v-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            <span>Upload approved material — prescribing information, detail aid, FAQs, objection handlers. Each upload is versioned; the AI only retrieves from approved versions.</span>
+            <span>Upload approved material: prescribing information, detail aids, FAQs and objection handlers. Each upload is versioned; the AI only retrieves from approved versions.</span>
           </div>
         </Card>
         <Card style={{ padding: '6px 0' }}>
@@ -178,7 +178,7 @@ function AnalyticsTab() {
     <div className="stack" style={{ gap: 14 }}>
       <div className="grid-4">
         {[{ l: 'Simulations', v: String(a.sessions) }, { l: 'Average AI Doctor score', v: String(a.avg) }, { l: 'Critical compliance failures', v: String(a.criticalFailures), red: true }, { l: 'Improvement after practice', v: a.improvement }].map(k => (
-          <Card key={k.l} style={{ padding: '14px 18px' }}><div style={{ fontSize: 13.5, color: k.red ? C.red : C.ink2 }}>{k.l}</div><div style={{ fontSize: k.v.length > 6 ? 20 : 30, fontWeight: 600, letterSpacing: '-.03em', color: k.red ? C.red : C.ink }}>{/^\d+$/.test(k.v) ? <CountUp to={k.v} /> : k.v}</div></Card>
+          <Card key={k.l} style={{ padding: '14px 18px' }}><div style={{ fontSize: 13.5, color: k.red ? C.red : C.ink2 }}>{k.l}</div><div style={{ fontSize: k.v.length > 6 ? 20 : 30, fontWeight: 600, letterSpacing: '-.015em', color: k.red ? C.red : C.ink }}>{/^\d+$/.test(k.v) ? <CountUp to={k.v} /> : k.v}</div></Card>
         ))}
       </div>
       <div className="split">
@@ -221,7 +221,7 @@ function UsageTab() {
       <div className="stack" style={{ gap: 14 }}>
         <div className="grid-4">
           {[{ l: 'AI calls', v: String(usage.length) }, { l: 'Input tokens', v: inT.toLocaleString('en-US') }, { l: 'Output tokens', v: outT.toLocaleString('en-US') }, { l: 'Estimated cost', v: `$${cost.toFixed(4)}` }].map(k => (
-            <Card key={k.l} style={{ padding: '14px 18px' }}><div style={{ fontSize: 13.5, color: C.ink2 }}>{k.l}</div><div style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-.03em' }}>{k.v}</div></Card>
+            <Card key={k.l} style={{ padding: '14px 18px' }}><div style={{ fontSize: 13.5, color: C.ink2 }}>{k.l}</div><div style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-.015em' }}>{k.v}</div></Card>
           ))}
         </div>
         <div className="table-wrap">
@@ -233,7 +233,7 @@ function UsageTab() {
             </tbody>
           </table>
         </div>
-        {fails > 0 && <div className="muted" style={{ fontSize: 13.5 }}>{fails} call{fails === 1 ? '' : 's'} fell back to the built-in engine (timeout or service error) — sessions were not interrupted.</div>}
+        {fails > 0 && <div className="muted" style={{ fontSize: 13.5 }}>{fails} call{fails === 1 ? '' : 's'} fell back to the built-in engine (timeout or service error), sessions were not interrupted.</div>}
       </div>
       <div className="stack" style={{ gap: 14 }}>
         <Card style={{ padding: '14px 18px' }}>
@@ -306,7 +306,7 @@ export default function AiDoctorAdmin() {
   return (
     <Shell role="admin" active="c7" crumbs={<><Crumb to={() => navTo('c1')}>Training admin</Crumb> / AI Doctor</>}>
       <h1 className="page-title">AI Doctor</h1>
-      <div className="page-sub">Approved grounding, scenarios, rules, analytics, cost and quality checks — all configurable without code changes.</div>
+      <div className="page-sub">Approved grounding, scenarios, rules, analytics, cost and quality checks, all configurable without code changes.</div>
       <div style={{ margin: '16px 0 14px' }}><Tabs tabs={TABS} value={tab} onChange={setTab} /></div>
       <AnimatePresence mode="wait">
         <motion.div key={tab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>

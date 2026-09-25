@@ -66,8 +66,9 @@ This is a front-end demo. Progress, sessions, reviews, admin settings and publis
 
 ## Motion
 
-Motion is kept calm, per the design notes ("no confetti, no badge"):
+Type is Source Sans 3 (UI) with Source Code Pro (IDs), tuned for comfortable reading on a laptop. Motion is kept calm, per the design notes ("no confetti, no badge"):
 
+- **Loading:** a start-up screen waits for the typeface, and each screen loads on demand behind a skeleton of its layout.
 - **Navigation:** switching role moves the whole shell, while moving within a flow cascades only the content. A green sweep runs across the top on every navigation.
 - **Content:** cards, rows and pills stage in, bars grow, numbers count up and score rings fill.
 - **AI Doctor:** the doctor's tone ring changes colour, a typing indicator runs while the doctor replies, and coaching chips pop in. At the end there is a handover to the AI Coach.

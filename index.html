@@ -3,14 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Elmiron Learning — a clickable demo of the learning module for MRs, their managers and a training admin." />
+    <meta name="description" content="Elmiron Learning: capability development and AI Doctor practice for medical representatives, their managers and training admins." />
+    <meta name="theme-color" content="#E9E7E0" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
     <title>Elmiron Learning</title>
+    <style>
+      /* Start-up screen: shown until the app has mounted and the typeface is ready,
+         so the first thing the client sees is never unstyled or reflowing text. */
+      html, body { margin: 0; background: #E9E7E0; }
+      #boot {
+        position: fixed; inset: 0; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+        background: #E9E7E0; color: #1F211C; font: 500 15px/1.4 "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+        transition: opacity .32s cubic-bezier(.22, 1, .36, 1), visibility 0s linear .32s;
+      }
+      #boot.is-done { opacity: 0; visibility: hidden; }
+      #boot .mark { width: 44px; height: 44px; border-radius: 13px; background: #35593A; animation: boot-in .6s cubic-bezier(.22, 1, .36, 1) both; }
+      #boot .name { font-size: 18px; font-weight: 600; letter-spacing: -.005em; animation: boot-in .6s cubic-bezier(.22, 1, .36, 1) .08s both; }
+      #boot .name span { color: #585B52; font-weight: 400; }
+      #boot .track { width: 168px; height: 3px; border-radius: 2px; background: #D6D4CB; overflow: hidden; animation: boot-in .6s cubic-bezier(.22, 1, .36, 1) .16s both; }
+      #boot .track i { display: block; width: 40%; height: 100%; border-radius: 2px; background: #35593A; animation: boot-slide 1.1s cubic-bezier(.65, 0, .35, 1) infinite; }
+      @keyframes boot-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+      @keyframes boot-slide { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+      @media (prefers-reduced-motion: reduce) { #boot * { animation: none !important; } #boot .track i { width: 100%; } }
+    </style>
   </head>
   <body>
+    <div id="boot" role="status" aria-live="polite" aria-label="Loading Elmiron Learning">
+      <span class="mark"></span>
+      <div class="name">Elmiron Field <span>· Learning</span></div>
+      <div class="track"><i></i></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

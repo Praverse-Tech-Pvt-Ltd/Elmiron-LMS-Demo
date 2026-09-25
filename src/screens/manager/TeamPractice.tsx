@@ -4,7 +4,7 @@ import { navTo } from '../../state';
 import { TEAM_PRACTICE, useAiStore } from '../../ai/store';
 import { allCourses } from '../../content';
 import { reviewAssignment, seedIfNeeded, useLearn, type Assignment } from '../../content/learnStore';
-import { Bar, Button, C, Card, Crumb, Shell, Sparkline, Tabs, Tag } from '../../components/ui';
+import { Bar, Button, C, Card, Crumb, Shell, Sparkline, Tabs, Tag, useSaving } from '../../components/ui';
 import { scenarioById } from '../../ai/content';
 import CountUp from '../../components/CountUp';
 
@@ -14,6 +14,7 @@ function ReviewCard({ a }: { a: Assignment }) {
   const [score, setScore] = useState(a.review?.score ?? 0);
   const [comment, setComment] = useState(a.review?.comment ?? '');
   const [saved, setSaved] = useState(false);
+  const [saving, runSave] = useSaving(500);
   return (
     <Card style={{ padding: '16px 18px' }}>
       <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
@@ -34,7 +35,7 @@ function ReviewCard({ a }: { a: Assignment }) {
           <span className="field-label">Feedback for the MR</span>
           <input className="input" value={comment} onChange={e => setComment(e.target.value)} placeholder="One strength and one thing to improve" />
         </div>
-        <Button kind="primary" disabled={!score} onClick={() => { reviewAssignment(a.id, score, comment || 'Reviewed.'); setSaved(true); setTimeout(() => setSaved(false), 1800); }}>{a.review ? 'Update review' : 'Save review'}</Button>
+        <Button kind="primary" disabled={!score} loading={saving} onClick={() => runSave(() => { reviewAssignment(a.id, score, comment || 'Reviewed.'); setSaved(true); setTimeout(() => setSaved(false), 1800); })}>{saving ? 'Saving' : a.review ? 'Update review' : 'Save review'}</Button>
         <AnimatePresence>{saved && <motion.span className="done-chip" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>✓ Saved</motion.span>}</AnimatePresence>
       </div>
     </Card>
@@ -47,7 +48,7 @@ export default function TeamPractice() {
   const [tab, setTab] = useState<(typeof TABS)[number]>('AI Doctor practice');
   useEffect(() => { seedIfNeeded(allCourses()); }, []);
 
-  // Merge Rahul's live sessions into the seeded team view.
+  // Merge Pratham's live sessions into the seeded team view.
   const team = TEAM_PRACTICE.map(m => {
     if (m.id !== 'rm' || !sessions.length) return m;
     const live = [...sessions].reverse().map(s => s.feedback.total);
@@ -72,7 +73,7 @@ export default function TeamPractice() {
         ].map(k => (
           <Card key={k.l} style={{ padding: '14px 18px' }}>
             <div style={{ fontSize: 13.5, color: k.red ? C.red : C.ink2, fontWeight: 500 }}>{k.l}</div>
-            <div style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-.04em', color: k.red ? C.red : C.ink }}><CountUp to={String(k.v)} /></div>
+            <div style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-.02em', color: k.red ? C.red : C.ink }}><CountUp to={String(k.v)} /></div>
           </Card>
         ))}
       </div>
@@ -110,17 +111,17 @@ export default function TeamPractice() {
                 <Card style={{ padding: '16px 18px' }}>
                   <div style={{ fontSize: 15.5, fontWeight: 600, marginBottom: 8 }}>Coaching focus this week</div>
                   <ul className="fb-list">
-                    <li><strong>Imran Qureshi</strong> — critical flag on an adverse-event scenario. Book a joint field visit and assign <button className="link" onClick={() => navTo('l2', 'ae-reporting')}>Adverse Event Reporting</button>.</li>
-                    <li><strong>Priya Sethi</strong> — objection handling at 67%. Suggest the price objection scenario.</li>
-                    <li><strong>Team</strong> — need identification is the lowest dimension across the area.</li>
+                    <li><strong>Imran Qureshi</strong>: critical flag on an adverse-event scenario. Book a joint field visit and assign <button className="link" onClick={() => navTo('l2', 'ae-reporting')}>Adverse Event Reporting</button>.</li>
+                    <li><strong>Priya Sethi</strong>: objection handling at 67%. Suggest the price objection scenario.</li>
+                    <li><strong>Team</strong>: need identification is the lowest dimension across the area.</li>
                   </ul>
                 </Card>
                 <Card style={{ padding: '16px 18px' }}>
-                  <div style={{ fontSize: 15.5, fontWeight: 600, marginBottom: 8 }}>Latest from Rahul More</div>
+                  <div style={{ fontSize: 15.5, fontWeight: 600, marginBottom: 8 }}>Latest from Pratham Shrivastav</div>
                   {sessions[0] ? (
                     <div style={{ fontSize: 14.5, lineHeight: 1.6 }}>{scenarioById(sessions[0].config.scenarioId).title} · <strong>{sessions[0].feedback.total}</strong> · {sessions[0].feedback.result}<div className="muted" style={{ fontSize: 13.5 }}>{sessions[0].feedback.strengths[0] ?? ''}</div></div>
                   ) : <div className="muted" style={{ fontSize: 14 }}>Scientific discussion · 86 · Good performance (22 Sep)</div>}
-                  <div className="muted" style={{ fontSize: 12.5, marginTop: 10 }}>Transcript access: {config.transcriptAccess === 'all' ? 'all sessions' : config.transcriptAccess === 'flagged' ? 'only sessions with compliance flags' : 'scores only'} — set by the training admin per company policy.</div>
+                  <div className="muted" style={{ fontSize: 12.5, marginTop: 10 }}>Transcript access: {config.transcriptAccess === 'all' ? 'all sessions' : config.transcriptAccess === 'flagged' ? 'only sessions with compliance flags' : 'scores only'}, set by the training admin per company policy.</div>
                 </Card>
               </div>
             </>

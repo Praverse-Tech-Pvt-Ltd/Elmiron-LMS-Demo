@@ -44,7 +44,7 @@ export default function PathsPage() {
                 <div>
                   <Card style={{ padding: '18px 20px' }}>
                     <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-                      <div><div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-.02em' }}>{path.title}</div><div className="muted" style={{ fontSize: 14 }}>{path.audience} · leads to {path.certification}</div></div>
+                      <div><div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-.01em' }}>{path.title}</div><div className="muted" style={{ fontSize: 14 }}>{path.audience} · leads to {path.certification}</div></div>
                       {pathId === 'senior-mr' && <Tag tone="blue">Assigned to you · due 31 Dec 2026</Tag>}
                     </div>
                     <p style={{ fontSize: 15, color: C.ink2, margin: '10px 0 16px' }}>{path.summary}</p>
@@ -63,7 +63,7 @@ export default function PathsPage() {
                                   const p = passed(id) ? 100 : progressOf(c);
                                   return <button key={id} type="button" className={'course-chip' + (p >= 100 ? ' done' : p > 0 ? ' part' : '')} onClick={() => openCourse(id)}>{p >= 100 ? '✓ ' : ''}{c.title}{p > 0 && p < 100 ? ` · ${p}%` : ''}</button>;
                                 })}
-                                {!s.courseIds.length && <span className="muted" style={{ fontSize: 13.5 }}>{path.certification} — awarded when every step is complete</span>}
+                                {!s.courseIds.length && <span className="muted" style={{ fontSize: 13.5 }}>{path.certification}, awarded when every step is complete</span>}
                               </div>
                             </div>
                           </motion.div>
@@ -124,7 +124,7 @@ export default function PathsPage() {
                         <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
                           <div className="row" style={{ gap: 12 }}>
                             <span className={'badge-seal lg' + (status === 'Certified' ? '' : ' dim')}>{l.level}</span>
-                            <div><div className="muted" style={{ fontSize: 13 }}>Level {l.level}</div><div style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-.02em' }}>{l.title}</div></div>
+                            <div><div className="muted" style={{ fontSize: 13 }}>Level {l.level}</div><div style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-.01em' }}>{l.title}</div></div>
                           </div>
                           <Tag tone={status === 'Certified' ? 'green' : status === 'In progress' ? 'blue' : 'wash'}>{status}</Tag>
                         </div>

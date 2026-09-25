@@ -103,12 +103,12 @@ export default function LiveSession() {
       }
     }
     const record: SessionRecord = {
-      id: 's-' + Date.now().toString(36), user: 'Rahul More', config: cfg, startedAt: new Date(started.current).toISOString(),
+      id: 's-' + Date.now().toString(36), user: 'Pratham Shrivastav', config: cfg, startedAt: new Date(started.current).toISOString(),
       durationSec: elapsed(), attempt: attemptsFor(cfg.scenarioId, cfg.mode) + 1, turns: finalTurns, feedback: fb,
       engine: live ? 'claude' : 'built-in', usage: live ? usage.current : undefined,
     };
     saveSession(record);
-    setTimeout(() => navTo('p4', record.id), 1400);
+    setTimeout(() => navTo('p4', record.id), 1500);
   }, [cfg, live]);
 
   // Time up
@@ -147,7 +147,7 @@ export default function LiveSession() {
       const t0 = performance.now();
       const ai = await liveDoctor(cfg, next, note);
       usage.current.calls++;
-      if (ai) reply = ai; else setNotice('Live AI unavailable — continuing with the built-in doctor.');
+      if (ai) reply = ai; else setNotice('Live AI unavailable, so the built-in doctor is continuing the call.');
       await new Promise(r => setTimeout(r, Math.max(0, 500 - (performance.now() - t0))));
     } else {
       await new Promise(r => setTimeout(r, 650 + Math.min(1400, reply.length * 14)));
@@ -164,7 +164,7 @@ export default function LiveSession() {
   const toggleMic = () => {
     const Ctor = (window as unknown as { SpeechRecognition?: new () => SR; webkitSpeechRecognition?: new () => SR }).SpeechRecognition
       || (window as unknown as { webkitSpeechRecognition?: new () => SR }).webkitSpeechRecognition;
-    if (!Ctor) { setNotice('Voice input is not supported in this browser — type instead.'); return; }
+    if (!Ctor) { setNotice('Voice input is not supported in this browser. Type your answer instead.'); return; }
     if (listening) { rec.current?.stop(); return; }
     const r = new Ctor();
     r.lang = 'en-IN'; r.interimResults = true; r.continuous = false;
@@ -236,9 +236,21 @@ export default function LiveSession() {
             )}
           </AnimatePresence>
           {scoring && (
-            <motion.div className="coach-handover" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-              <div className="coach-avatar">AI<br />Coach</div>
-              <div><strong>Session complete.</strong> The doctor has left the room — switching to your AI Coach to score the conversation…</div>
+            <motion.div className="coach-handover" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }} role="status" aria-live="polite">
+              <div className="row" style={{ gap: 12 }}>
+                <div className="coach-avatar">AI<br />Coach</div>
+                <div><strong>Session complete.</strong> The doctor has left the room. Your AI Coach is scoring the conversation.</div>
+              </div>
+              <ol className="scoring-list">
+                {RUBRIC.map((r, i) => (
+                  <motion.li key={r.id} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.13, duration: 0.24, ease: [0.22, 1, 0.36, 1] }}>
+                    <motion.span className="scoring-check" initial={{ backgroundColor: 'rgba(255,255,255,0.12)' }} animate={{ backgroundColor: '#B8CDB8' }} transition={{ delay: 0.3 + i * 0.13, duration: 0.2 }}>
+                      <svg width="9" height="9" viewBox="0 0 16 16" fill="none"><path d="M3 8.4L6.2 11.6L13 4.8" stroke="#1F211C" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    </motion.span>
+                    {r.name}
+                  </motion.li>
+                ))}
+              </ol>
             </motion.div>
           )}
         </div>

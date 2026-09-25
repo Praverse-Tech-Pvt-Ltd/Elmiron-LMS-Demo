@@ -50,12 +50,12 @@ export default function Sidebar({ role, active }: { role: Role; active: ScreenId
     <div className="sidebar" style={{ width: mr ? '240px' : '224px', background: '#F1EFE8', padding: mr ? '24px 0' : '22px 0', flex: 'none', display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: mr ? '0 22px 28px' : '0 20px 24px', display: 'flex', alignItems: 'center', gap: mr ? '10px' : '9px', cursor: 'pointer' }} onClick={() => navTo(null)} title="Back to overview">
         <span style={{ width: mr ? 24 : 22, height: mr ? 24 : 22, borderRadius: mr ? 8 : 7, background: '#35593A' }} />
-        <span style={{ fontSize: mr ? '15px' : '14.5px', fontWeight: 600, letterSpacing: '-.01em' }}>Elmiron Field</span>
+        <span style={{ fontSize: mr ? '15px' : '14.5px', fontWeight: 600, letterSpacing: '-.005em' }}>Elmiron Field</span>
       </div>
       <div className="sidebar-scroll">
         {nav.groups.map((g, gi) => (
-          <div key={gi} style={{ marginBottom: gi < nav.groups.length - 1 ? 14 : 0 }}>
-            {g.label && <div style={{ padding: mr ? '0 22px 8px' : '0 20px 6px', fontSize: mr ? '13.5px' : '13px', fontWeight: 500, color: '#585B52' }}>{g.label}</div>}
+          <div key={gi} role="group" aria-labelledby={g.label ? `nav-group-${role}-${gi}` : undefined} style={{ marginTop: gi > 0 ? 22 : 0 }}>
+            {g.label && <div id={`nav-group-${role}-${gi}`} className="nav-group-label" style={{ padding: mr ? '0 22px 6px' : '0 20px 6px' }}>{g.label}</div>}
             {g.items.map(it => {
               const on = it.to === active;
               const style = on
@@ -74,8 +74,8 @@ export default function Sidebar({ role, active }: { role: Role; active: ScreenId
       {mr && (
         <div style={{ marginTop: 'auto', padding: '0 22px' }}>
           <div style={{ borderTop: '1px solid #E1DFD7', paddingTop: 14, display: 'flex', gap: 10, alignItems: 'center' }}>
-            <span style={{ width: 34, height: 34, borderRadius: '50%', background: '#E4EAE3', color: '#35593A', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' }}>RM</span>
-            <div><div style={{ fontSize: '14.5px', fontWeight: 600 }}>Rahul More</div><div style={{ fontSize: 13, color: '#585B52' }}>MR · South Mumbai</div><div style={{ fontFamily: "'DM Mono',monospace", fontSize: 12, color: '#585B52' }}>EMP-40218</div></div>
+            <span style={{ width: 34, height: 34, borderRadius: '50%', background: '#E4EAE3', color: '#35593A', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' }}>PS</span>
+            <div><div style={{ fontSize: '14.5px', fontWeight: 600 }}>Pratham Shrivastav</div><div style={{ fontSize: 13, color: '#585B52' }}>MR · South Mumbai</div><div style={{ fontFamily: "'Source Code Pro',monospace", fontSize: 12, color: '#585B52' }}>EMP-40218</div></div>
           </div>
         </div>
       )}

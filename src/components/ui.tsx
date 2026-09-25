@@ -78,7 +78,7 @@ export function Ring({ value, max = 100, size = 132, stroke = 10, color = C.gree
           strokeDasharray={c} initial={{ strokeDashoffset: c }} animate={{ strokeDashoffset: c * (1 - value / max) }} transition={{ duration: 1.1, ease: [0.2, 0.8, 0.2, 1] }} />
       </svg>
       <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ fontSize: size * 0.27, fontWeight: 600, letterSpacing: '-.04em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{shown}</span>
+        <span style={{ fontSize: size * 0.27, fontWeight: 600, letterSpacing: '-.02em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{shown}</span>
         {label && <span style={{ fontSize: 12.5, color: C.ink2, marginTop: 4 }}>{label}</span>}
       </div>
     </div>
@@ -146,9 +146,19 @@ export const Card = ({ children, className = '', style, onClick }: { children: R
   <div className={'ui-card ' + (onClick ? 'is-click ' : '') + className} style={style} onClick={onClick}>{children}</div>
 );
 
-export const Button = ({ children, kind = 'wash', onClick, disabled, small, type = 'button', style }: { children: ReactNode; kind?: 'primary' | 'wash' | 'ghost' | 'danger'; onClick?: () => void; disabled?: boolean; small?: boolean; type?: 'button' | 'submit'; style?: CSSProperties }) => (
-  <button type={type} className={`ui-btn ui-btn-${kind}${small ? ' ui-btn-sm' : ''}`} onClick={onClick} disabled={disabled} style={style}>{children}</button>
+export const Button = ({ children, kind = 'wash', onClick, disabled, small, type = 'button', style, loading }: { children: ReactNode; kind?: 'primary' | 'wash' | 'ghost' | 'danger'; onClick?: () => void; disabled?: boolean; small?: boolean; type?: 'button' | 'submit'; style?: CSSProperties; loading?: boolean }) => (
+  <button type={type} className={`ui-btn ui-btn-${kind}${small ? ' ui-btn-sm' : ''}${loading ? ' is-loading' : ''}`} onClick={onClick} disabled={disabled || loading} aria-busy={loading || undefined} style={style}>
+    {loading && <span className="btn-spinner" aria-hidden />}
+    {children}
+  </button>
 );
+
+/** Runs a save-style action with a short, visible working state (as a real server round-trip would). */
+export function useSaving(ms = 550) {
+  const [saving, setSaving] = useState(false);
+  const run = (fn: () => void) => { setSaving(true); window.setTimeout(() => { fn(); setSaving(false); }, ms); };
+  return [saving, run] as const;
+}
 
 /* ---------- the page shell for new screens ---------- */
 const ROLE_HOME: Record<Role, ScreenId> = { mr: 'l1', manager: 'b1', admin: 'c1' };
@@ -190,7 +200,7 @@ export function SectionTitle({ title, sub, right }: { title: ReactNode; sub?: Re
 export const Empty = ({ title, body, action }: { title: string; body: string; action?: ReactNode }) => (
   <div className="ui-card" style={{ padding: '44px 32px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
     <span style={{ width: 36, height: 36, borderRadius: '50%', border: `2px solid ${C.ink2}`, marginBottom: 6 }} />
-    <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-.02em' }}>{title}</div>
+    <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-.01em' }}>{title}</div>
     <div style={{ fontSize: 15, color: C.ink2, maxWidth: '48ch' }}>{body}</div>
     {action}
   </div>

@@ -45,7 +45,7 @@ export default function SessionFeedback({ id }: { id?: string }) {
         <Ring value={fb.total} size={148} stroke={11} color={retrain ? C.red : fb.total >= 75 ? C.green : C.amber} label="out of 100" />
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="muted" style={{ fontSize: 14 }}>Session complete · {sc.title} · {personaById(s.config.personaId).name} ({specialtyById(s.config.specialtyId).name.toLowerCase()})</div>
-          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-.035em', margin: '4px 0 8px' }}>{fb.result}</motion.div>
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-.018em', margin: '4px 0 8px' }}>{fb.result}</motion.div>
           <div className="row" style={{ flexWrap: 'wrap', gap: 8 }}>
             <Tag tone={resultTone}>{s.config.mode === 'assessment' ? 'Assessment' : 'Practice'} · attempt {s.attempt}</Tag>
             <Tag>{s.config.difficulty}</Tag>
@@ -88,11 +88,11 @@ export default function SessionFeedback({ id }: { id?: string }) {
           <div className="grid-2" style={{ marginTop: 16 }}>
             <Card style={{ padding: '16px 18px' }}>
               <div className="fb-head good">What you did well</div>
-              <ul className="fb-list">{(fb.strengths.length ? fb.strengths : ['Keep practising — strengths will show here as you improve.']).map(x => <li key={x}>{x}</li>)}</ul>
+              <ul className="fb-list">{(fb.strengths.length ? fb.strengths : ['Keep practising. Strengths will show here as you improve.']).map(x => <li key={x}>{x}</li>)}</ul>
             </Card>
             <Card style={{ padding: '16px 18px' }}>
               <div className="fb-head improve">Areas to improve</div>
-              <ul className="fb-list">{(fb.improvements.length ? fb.improvements : ['Nothing major — try a harder difficulty next.']).map(x => <li key={x}>{x}</li>)}</ul>
+              <ul className="fb-list">{(fb.improvements.length ? fb.improvements : ['Nothing major. Try a harder difficulty next.']).map(x => <li key={x}>{x}</li>)}</ul>
             </Card>
           </div>
 

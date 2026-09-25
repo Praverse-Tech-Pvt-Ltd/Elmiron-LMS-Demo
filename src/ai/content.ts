@@ -1,24 +1,24 @@
 import type { Persona, ProductPack, Scenario, Specialty } from './types';
 
 /* ---------------------------------------------------------------------------
-   Doctor personas (brief §2, §24). Fictional training personas only — never
+   Doctor personas (brief §2, §24). Fictional training personas only, never
    a replica of a real doctor. Always professional: no abuse, no humiliation.
 --------------------------------------------------------------------------- */
 export const PERSONAS: Persona[] = [
   {
     id: 'friendly', name: 'Friendly doctor', tone: 'Interested', wordBudget: 140, patience: 6, challenge: 0.2,
     traits: ['Interested', 'Gives time', 'Asks basic questions', 'Suitable for beginners'],
-    greetings: ['Come in, please. What would you like to discuss today?', 'Good to see you. I have a few minutes — go ahead.', 'Hello, have a seat. What brings you in?'],
+    greetings: ['Come in, please. What would you like to discuss today?', 'Good to see you. I have a few minutes, go ahead.', 'Hello, have a seat. What brings you in?'],
     acknowledgements: ['That is helpful, thank you.', 'Okay, that makes sense.', 'Good, I follow.'],
-    interruptions: ['Let me stop you there for a second — could you summarise that?'],
+    interruptions: ['Let me stop you there for a second. Could you summarise that?'],
     closings: ['Thank you, this was useful. Do leave the approved material with me.', 'Thanks for coming by. Let us continue next time.'],
   },
   {
     id: 'busy', name: 'Busy doctor', tone: 'Impatient', wordBudget: 45, patience: 3, challenge: 0.4,
     traits: ['Gives only 30–60 seconds', 'Interrupts long explanations', 'Wants concise information', 'Tests prioritisation of key messages'],
-    greetings: ['I have patients waiting. You have one minute.', 'Quickly please — I am between consultations.', 'Yes? I only have a moment.'],
+    greetings: ['I have patients waiting. You have one minute.', 'Quickly please. I am between consultations.', 'Yes? I only have a moment.'],
     acknowledgements: ['Fine.', 'Okay, noted.', 'Right.'],
-    interruptions: ['I only have a minute. What is the key point?', 'Please, the short version.', 'I need to go soon — what exactly do you want me to know?'],
+    interruptions: ['I only have a minute. What is the key point?', 'Please, the short version.', 'I need to go soon. What exactly do you want me to know?'],
     closings: ['Leave the leaflet. I have to see my next patient.', 'Okay, thank you. I have to go now.'],
   },
   {
@@ -26,7 +26,7 @@ export const PERSONAS: Persona[] = [
     traits: ['Questions claims', 'Requests evidence', 'Challenges differentiation', 'Asks scientific questions'],
     greetings: ['Go ahead, but I have heard a lot of product claims this week.', 'All right. What is it you want to tell me?'],
     acknowledgements: ['Hm. And the evidence for that?', 'All right, that is at least accurate.', 'Okay. Go on.'],
-    interruptions: ['You are saying a lot — what is actually supported by data?'],
+    interruptions: ['You are saying a lot. What is actually supported by data?'],
     closings: ['I will look at the prescribing information myself. Thank you.', 'Send me the reference and we can talk again.'],
   },
   {
@@ -40,9 +40,9 @@ export const PERSONAS: Persona[] = [
   {
     id: 'new', name: 'New doctor', tone: 'Neutral', wordBudget: 120, patience: 5, challenge: 0.3,
     traits: ['Has never interacted with the company', 'Expects a professional introduction', 'Tests relationship-opening skills'],
-    greetings: ['Hello — I do not think we have met. Which company are you from?', 'Yes? I am not sure I know your company.'],
+    greetings: ['Hello. I do not think we have met. Which company are you from?', 'Yes? I am not sure I know your company.'],
     acknowledgements: ['I see.', 'Okay, thank you for explaining.', 'Understood.'],
-    interruptions: ['Sorry — before the product, tell me who you are.'],
+    interruptions: ['Sorry, before the product, tell me who you are.'],
     closings: ['Thank you for the introduction. You can book time through my assistant.', 'Nice to meet you. Let us see how it goes.'],
   },
   {
@@ -50,7 +50,7 @@ export const PERSONAS: Persona[] = [
     traits: ['Currently prefers another product', 'Questions why a change should be considered', 'Tests competitor objection handling'],
     greetings: ['Just so you know, I am happy with what I use at the moment. But go ahead.', 'I already have a therapy I use for these patients.'],
     acknowledgements: ['Okay, fair.', 'I will think about that.', 'Hm, all right.'],
-    interruptions: ['I have heard this before — why should I change anything?'],
+    interruptions: ['I have heard this before. Why should I change anything?'],
     closings: ['I will keep it in mind for the right patient.', 'Thank you. My current approach works for now, but I will read the material.'],
   },
   {
@@ -64,9 +64,9 @@ export const PERSONAS: Persona[] = [
   {
     id: 'evidence', name: 'Evidence-focused doctor', tone: 'Curious', wordBudget: 140, patience: 5, challenge: 0.9,
     traits: ['Requests clinical evidence', 'Asks about study design', 'Questions efficacy and safety claims'],
-    greetings: ['Before anything else — what is the evidence base?', 'Go ahead. I will want references.'],
+    greetings: ['Before anything else, what is the evidence base?', 'Go ahead. I will want references.'],
     acknowledgements: ['Good, that is referenced.', 'Okay, and what was the study population?', 'That is reasonable.'],
-    interruptions: ['Please do not summarise the conclusions for me — what did the study actually measure?'],
+    interruptions: ['Please do not summarise the conclusions for me. What did the study actually measure?'],
     closings: ['Send me the publication and the label. Thank you.', 'Fine. Evidence first, always.'],
   },
   {
@@ -74,7 +74,7 @@ export const PERSONAS: Persona[] = [
     traits: ['Gives very little time', 'Challenges repeatedly', 'May interrupt', 'Needs calm, professional handling'],
     greetings: ['I really do not have time for this today.', 'Another rep. Be quick.'],
     acknowledgements: ['Hm.', 'If you say so.', 'Fine.'],
-    interruptions: ['No, stop — what is the point?', 'You are not answering my question.'],
+    interruptions: ['No, stop. What is the point?', 'You are not answering my question.'],
     closings: ['That is enough for today.', 'Okay. Leave it there.'],
   },
 ];
@@ -85,20 +85,20 @@ export const PERSONAS: Persona[] = [
 export const SPECIALTIES: Specialty[] = [
   { id: 'gp', name: 'General physician', depth: 'practical', questions: ['Which patients would this be for, practically?', 'How is it taken, and for how long?', 'What side effects should I watch for in general practice?', 'When should I refer instead?'] },
   { id: 'urology', name: 'Urologist', depth: 'clinical', questions: ['Where does this fit alongside the other options I use for bladder pain?', 'What monitoring does the label require?', 'How long before I should reassess response?', 'What do you have on the retinal findings?'] },
-  { id: 'gynaecology', name: 'Gynaecologist', depth: 'clinical', questions: ['Many of my patients have pelvic pain from several causes — which patients are appropriate?', 'Any considerations around pregnancy? Only what is on the label, please.', 'How would I monitor these patients?'] },
+  { id: 'gynaecology', name: 'Gynaecologist', depth: 'clinical', questions: ['Many of my patients have pelvic pain from several causes. Which patients are appropriate?', 'Any considerations around pregnancy? Only what is on the label, please.', 'How would I monitor these patients?'] },
   { id: 'nephrology', name: 'Nephrologist', depth: 'clinical', questions: ['Anything on renal or hepatic considerations in the label?', 'Any interaction concerns with anticoagulants?'] },
-  { id: 'cardiology', name: 'Cardiologist', depth: 'clinical', questions: ['Many of my patients are on anticoagulants or aspirin — what does the label say?'] },
-  { id: 'dermatology', name: 'Dermatologist', depth: 'practical', questions: ['I have heard about hair loss with some therapies — anything on the label?'] },
+  { id: 'cardiology', name: 'Cardiologist', depth: 'clinical', questions: ['Many of my patients are on anticoagulants or aspirin. What does the label say?'] },
+  { id: 'dermatology', name: 'Dermatologist', depth: 'practical', questions: ['I have heard about hair loss with some therapies. Anything on the label?'] },
   { id: 'diabetology', name: 'Diabetologist', depth: 'practical', questions: ['How does dosing work alongside other daily medicines?'] },
   { id: 'gastro', name: 'Gastroenterologist', depth: 'clinical', questions: ['What gastrointestinal side effects are listed?', 'How should it be taken relative to meals?'] },
   { id: 'oncology', name: 'Oncologist', depth: 'clinical', questions: ['Is there anything on the label about bleeding risk?'] },
-  { id: 'psychiatry', name: 'Psychiatrist', depth: 'practical', questions: ['Chronic pain patients often come to me — what is the approved indication exactly?'] },
+  { id: 'psychiatry', name: 'Psychiatrist', depth: 'practical', questions: ['Chronic pain patients often come to me. What is the approved indication exactly?'] },
 ];
 
 /* ---------------------------------------------------------------------------
    Product grounding (brief §7, §38). The ONLY facts the doctor and the scorer
    treat as correct. Demo pack built from the publicly available US prescribing
-   information — replace with the approved PI for your market before use.
+   information, replace with the approved PI for your market before use.
 --------------------------------------------------------------------------- */
 export const PRODUCTS: ProductPack[] = [
   {
@@ -107,7 +107,7 @@ export const PRODUCTS: ProductPack[] = [
     molecule: 'Pentosan polysulfate sodium',
     therapyArea: 'Urology · Interstitial cystitis / bladder pain syndrome',
     version: 'Demo pack v0.3 · 24 Sep 2026',
-    status: 'Demo grounding — verify against current approved PI',
+    status: 'Demo grounding: verify against the current approved PI',
     specialties: ['urology', 'gynaecology', 'gp', 'nephrology', 'cardiology', 'dermatology', 'gastro', 'psychiatry'],
     facts: [
       { id: 'ind', topic: 'Indication', text: 'Indicated for the relief of bladder pain or discomfort associated with interstitial cystitis.', keywords: ['interstitial cystitis', 'bladder pain', 'bladder discomfort', 'ic/bps', 'bps'], source: 'PI §1 Indications' },
@@ -145,9 +145,9 @@ export const PRODUCTS: ProductPack[] = [
     faqs: [
       { q: 'How should it be taken?', a: '100 mg three times daily with water, at least 1 hour before or 2 hours after meals.' },
       { q: 'When should response be reviewed?', a: 'Reassess after 3 months of treatment, per the label.' },
-      { q: 'Is eye monitoring needed?', a: 'Yes — baseline and periodic detailed eye examinations are recommended.' },
+      { q: 'Is eye monitoring needed?', a: 'Yes, baseline and periodic detailed eye examinations are recommended.' },
     ],
-    references: ['Elmiron prescribing information (demo reference — replace with the approved PI for your market)', 'Company-approved detail aid ELM-DA-2026-01 (placeholder)'],
+    references: ['Elmiron prescribing information (demo reference, replace with the approved PI for your market)', 'Company-approved detail aid ELM-DA-2026-01 (placeholder)'],
   },
 ];
 
@@ -168,19 +168,19 @@ export const SCENARIOS: Scenario[] = [
     goodSigns: ['Greets and introduces self and company', 'States a clear purpose', 'Asks about the doctor’s patients before pitching', 'Closes with an agreed follow-up'],
     weakSigns: ['Launches into the product before introducing the company', 'No questions about the practice'],
     critical: ['offlabel', 'fabricated', 'superiority', 'inducement'],
-    hints: ['Start with who you are and why you are here — keep it to two sentences.', 'Ask one question about the patients the doctor sees before you talk product.', 'Close by agreeing a specific, appropriate follow-up.'],
+    hints: ['Start with who you are and why you are here, keep it to two sentences.', 'Ask one question about the patients the doctor sees before you talk product.', 'Close by agreeing a specific, appropriate follow-up.'],
     recommend: ['doctor-engagement', 'new-doctor', 'call-planning'],
   },
   {
     id: 'sixty-second', number: 2, title: '60-second detailing', group: 'quick', defaultPersona: 'busy', seconds: 60,
     summary: 'The doctor says: "I only have one minute."',
     goal: 'Deliver the single most relevant approved message concisely and close professionally.',
-    opening: ['I only have one minute. Go.', 'One minute, please — what is it?'],
+    opening: ['I only have one minute. Go.', 'One minute, please. What is it?'],
     beats: [{ atTurn: 2, event: 'question', lines: ['And who is it for?', 'So what is the key point?'] }],
     goodSigns: ['One clear approved message', 'Mentions the indication', 'Under ~45 words per turn', 'Professional close'],
     weakSigns: ['Long product history', 'Several messages at once'],
     critical: ['offlabel', 'fabricated', 'superiority', 'inducement'],
-    hints: ['Lead with the approved indication in one sentence.', 'Pick one fact that matters to this doctor — dosing or monitoring.', 'Offer to leave approved material and ask for a better time.'],
+    hints: ['Lead with the approved indication in one sentence.', 'Pick one fact that matters to this doctor, dosing or monitoring.', 'Offer to leave approved material and ask for a better time.'],
     recommend: ['product-detailing', 'doctor-cabin'],
   },
   {
@@ -192,7 +192,7 @@ export const SCENARIOS: Scenario[] = [
     goodSigns: ['Asks a clarifying question', 'Refers to label guidance (reassess at 3 months)', 'Offers approved material', 'Checks the response helped'],
     weakSigns: ['Argues with the doctor', 'Claims it works for everyone'],
     critical: ['fabricated', 'superiority', 'offlabel', 'inducement'],
-    hints: ['Clarify first: what happened with those patients?', 'Use approved guidance — for example, when the label says to reassess.', 'Close the loop: ask whether that answers the concern.'],
+    hints: ['Clarify first: what happened with those patients?', 'Use approved guidance, for example, when the label says to reassess.', 'Close the loop: ask whether that answers the concern.'],
     recommend: ['objection-handling', 'scientific-communication'],
   },
   {
@@ -201,19 +201,19 @@ export const SCENARIOS: Scenario[] = [
     goal: 'Answer accurately from the approved safety information, without minimising risk.',
     opening: [],
     beats: [
-      { atTurn: 2, event: 'objection', category: 'Safety', lines: ['What about the eye findings I have read about?', 'Tell me about the safety profile — honestly.'] },
+      { atTurn: 2, event: 'objection', category: 'Safety', lines: ['What about the eye findings I have read about?', 'Tell me about the safety profile, honestly.'] },
       { atTurn: 4, event: 'question', lines: ['Any bleeding concerns with patients on anticoagulants?', 'What are the common side effects?'] },
     ],
     goodSigns: ['States the label warning accurately', 'Mentions recommended eye examinations', 'Does not minimise', 'Offers Medical Information for detail'],
     weakSigns: ['Says it is completely safe', 'Guesses at rates'],
     critical: ['fabricated', 'superiority', 'offlabel', 'inducement'],
-    hints: ['Quote the warning as it appears in the prescribing information.', 'Do not reassure beyond the label — accuracy builds trust.'],
+    hints: ['Quote the warning as it appears in the prescribing information.', 'Do not reassure beyond the label, accuracy builds trust.'],
     recommend: ['elmiron-masterclass', 'scientific-communication', 'ae-reporting'],
   },
   {
     id: 'competitor-preference', number: 5, title: 'Competitor preference', group: 'objection', defaultPersona: 'competitor', seconds: 300,
     summary: 'The doctor already uses another product.',
-    goal: 'Respect the doctor’s current choice and share approved information for appropriate patients — no disparagement.',
+    goal: 'Respect the doctor’s current choice and share approved information for appropriate patients, no disparagement.',
     opening: [],
     beats: [
       { atTurn: 1, event: 'objection', category: 'Competitor preference', lines: ['I already prescribe another product. Why should I consider yours?', 'What I use works fine. Why change?'] },
@@ -222,7 +222,7 @@ export const SCENARIOS: Scenario[] = [
     goodSigns: ['Acknowledges the current choice', 'Asks which patients are not well served', 'Uses approved product characteristics', 'No comparative claim without approval'],
     weakSigns: ['Criticises the competitor', 'Claims superiority'],
     critical: ['superiority', 'fabricated', 'offlabel', 'inducement'],
-    hints: ['Acknowledge that their current approach works for many patients.', 'Ask whether there are patients for whom they would like another option.', 'Stick to approved characteristics — never "better than".'],
+    hints: ['Acknowledge that their current approach works for many patients.', 'Ask whether there are patients for whom they would like another option.', 'Stick to approved characteristics, never "better than".'],
     recommend: ['objection-handling', 'positioning'],
   },
   {
@@ -234,7 +234,7 @@ export const SCENARIOS: Scenario[] = [
     goodSigns: ['Clarifies the concern', 'Uses approved, factual information', 'Mentions reassessment at 3 months', 'No discount linked to prescribing'],
     weakSigns: ['Offers discounts or incentives', 'Dismisses the concern'],
     critical: ['inducement', 'fabricated', 'superiority', 'offlabel'],
-    hints: ['Ask what the specific concern is — duration, total cost, access?', 'Share only approved information; anything commercial goes through the proper channel.'],
+    hints: ['Ask what the specific concern is, duration, total cost, access?', 'Share only approved information; anything commercial goes through the proper channel.'],
     recommend: ['cost-objections', 'objection-handling'],
   },
   {
@@ -249,7 +249,7 @@ export const SCENARIOS: Scenario[] = [
     goodSigns: ['Refers to the prescribing information and approved references', 'Does not invent numbers', 'Offers the publication via Medical Information'],
     weakSigns: ['Quotes percentages from memory', 'Overstates conclusions'],
     critical: ['fabricated', 'superiority', 'offlabel', 'inducement'],
-    hints: ['If you are not sure of a figure, do not say it — offer the publication.', 'Separate what the study measured from what it concluded.'],
+    hints: ['If you are not sure of a figure, do not say it, offer the publication.', 'Separate what the study measured from what it concluded.'],
     recommend: ['scientific-communication', 'elmiron-masterclass'],
   },
   {
@@ -264,14 +264,14 @@ export const SCENARIOS: Scenario[] = [
     goodSigns: ['Stays calm', 'Respects the doctor’s position', 'Asks permission for a brief point or a future visit', 'Closes politely'],
     weakSigns: ['Pushes on regardless', 'Argues'],
     critical: ['inducement', 'superiority', 'fabricated', 'offlabel'],
-    hints: ['Acknowledge — you do not need to win this call.', 'Ask whether you may leave approved material or come back another time.'],
+    hints: ['Acknowledge, you do not need to win this call.', 'Ask whether you may leave approved material or come back another time.'],
     recommend: ['doctor-relationships', 'communication-skills'],
   },
   {
     id: 'follow-up', number: 9, title: 'Follow-up visit', group: 'core', defaultPersona: 'friendly', seconds: 240,
     summary: 'You discussed the product last time and are returning for follow-up.',
     goal: 'Reference the last discussion, answer the open question, and agree the next step.',
-    opening: ['Ah, you came back. Last time I asked about monitoring — did you find out?'],
+    opening: ['Ah, you came back. Last time I asked about monitoring, did you find out?'],
     beats: [{ atTurn: 2, event: 'question', lines: ['And how often would the eye checks be?', 'What about patients on aspirin?'] }],
     goodSigns: ['Recalls the previous discussion', 'Answers the open question from approved information', 'Agrees a next step'],
     weakSigns: ['Starts the pitch from scratch', 'Ignores the open question'],
@@ -298,7 +298,7 @@ export const SCENARIOS: Scenario[] = [
   {
     id: 'outside-knowledge', number: 11, title: 'Difficult scientific question', group: 'scientific', defaultPersona: 'specialist', seconds: 300,
     summary: 'The doctor asks something outside your approved knowledge.',
-    goal: 'Recognise the limit of approved information and offer to follow up through the medical team — do not guess.',
+    goal: 'Recognise the limit of approved information and offer to follow up through the medical team, do not guess.',
     opening: [],
     beats: [{ atTurn: 2, event: 'outside', lines: ['What is the long-term data beyond five years in patients with renal impairment?', 'How does it perform in patients who also have endometriosis? Any subgroup data?'] }],
     goodSigns: ['Says they will confirm with the medical team', 'Does not guess', 'Offers a specific follow-up'],
@@ -322,13 +322,13 @@ export const SCENARIOS: Scenario[] = [
   {
     id: 'adverse-event', number: 13, title: 'Adverse event mention', group: 'compliance', defaultPersona: 'friendly', seconds: 240,
     summary: 'The doctor mentions a patient who developed an unexpected reaction.',
-    goal: 'Recognise potentially reportable safety information, capture what the process requires, and escalate — do not investigate.',
+    goal: 'Recognise potentially reportable safety information, capture what the process requires, and escalate, do not investigate.',
     opening: [],
     beats: [{ atTurn: 2, event: 'safety', lines: ['By the way, I had a patient who developed an unexpected reaction after starting it.', 'One of my patients noticed blurred vision a few weeks after starting it.', 'A patient of mine had some unusual bruising on it last month.'] }],
     goodSigns: ['Listens and acknowledges', 'Recognises it as reportable', 'Says it will be reported to pharmacovigilance within the company timeline', 'Does not investigate or conclude causality'],
     weakSigns: ['Moves back to the pitch', 'Says it is probably unrelated'],
     critical: ['ignored-ae', 'fabricated', 'offlabel', 'inducement'],
-    hints: ['Any mention of a reaction may be reportable — acknowledge and say you will report it.', 'Do not judge whether the product caused it.'],
+    hints: ['Any mention of a reaction may be reportable, acknowledge and say you will report it.', 'Do not judge whether the product caused it.'],
     recommend: ['ae-reporting'],
   },
   {
@@ -336,7 +336,7 @@ export const SCENARIOS: Scenario[] = [
     summary: 'The doctor says a patient’s tablet packaging was damaged.',
     goal: 'Recognise a product complaint, gather only what is required, and escalate without unsupported commitments.',
     opening: [],
-    beats: [{ atTurn: 1, event: 'complaint', lines: ['A patient brought back a strip — the packaging was damaged.', 'The tablets in one pack looked discoloured, according to my patient.'] }],
+    beats: [{ atTurn: 1, event: 'complaint', lines: ['A patient brought back a strip, the packaging was damaged.', 'The tablets in one pack looked discoloured, according to my patient.'] }],
     goodSigns: ['Recognises a product complaint', 'Asks for batch/lot if available', 'Escalates through the complaint process', 'No promises of replacement or conclusions'],
     weakSigns: ['Blames transport', 'Promises a replacement'],
     critical: ['ignored-ae', 'fabricated', 'offlabel', 'inducement'],

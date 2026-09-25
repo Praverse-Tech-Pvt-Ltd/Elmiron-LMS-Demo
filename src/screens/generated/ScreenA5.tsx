@@ -26,7 +26,7 @@ export default function ScreenA5({ v }: { v: DemoValues }) {
           <div style={{ flex: "1", display: "flex", justifyContent: "center", padding: "4px 0 24px", overflow: "hidden", perspective: "1200px" }}>
             <div key={v.page} className="doc-page" style={{ width: "500px", background: "#FFFFFF", borderRadius: "6px", boxShadow: "0 1px 2px rgba(20,21,15,.05),0 16px 40px -22px rgba(20,21,15,.35)", padding: "40px 44px", display: "flex", flexDirection: "column", gap: "16px", boxSizing: "border-box" }}>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12.5px", color: "#585B52" }}><span>Elmiron — Product Training · Lesson 3.3</span><span>v2.0 · page {v.page}</span></div>
-              <div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.025em" }}>Sample content — pending medical review.</div>
+              <div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.013em" }}>Sample content — pending medical review.</div>
               <p style={{ fontSize: "15px", lineHeight: "1.6", color: "#585B52", margin: "0" }}>This page will carry the approved training material once Medical Affairs signs it off. No clinical, efficacy, dosing or safety statement is shown in this demo.</p>
               <div style={{ flex: "1", minHeight: "360px", borderRadius: "10px", background: "repeating-linear-gradient(135deg,#F1EFE8 0 8px,#EAE7DF 8px 16px)", display: "flex", alignItems: "flex-end", padding: "12px", boxSizing: "border-box" }}><span style={{ fontSize: "12px", color: "#585B52" }}>document page content</span></div>
             </div>
@@ -35,7 +35,7 @@ export default function ScreenA5({ v }: { v: DemoValues }) {
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           <div>
             <div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Lesson 3.3 of 14 · PDF · 14 pages</div>
-            <div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.025em", lineHeight: "1.25" }}>Sample content — pending medical review.</div>
+            <div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.013em", lineHeight: "1.25" }}>Sample content — pending medical review.</div>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "14px" }}><div style={{ flex: "1", height: "6px", background: "#F1EFE8", borderRadius: "3px", overflow: "hidden" }}><div className="bar-fill" style={{ width: v.pagePct, height: "100%", background: "#35593A", borderRadius: "3px" }}></div></div><span style={{ fontSize: "14px", color: "#585B52", fontVariantNumeric: "tabular-nums" }}>{v.page} / 14</span></div>
           </div>
           <div className="card" style={{ background: "#FFFFFF", borderRadius: "20px", padding: "20px 22px", boxShadow: "0 1px 2px rgba(20,21,15,.04),0 16px 40px -22px rgba(20,21,15,.35)", display: "flex", flexDirection: "column", gap: "14px" }}>

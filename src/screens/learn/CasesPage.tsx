@@ -59,7 +59,7 @@ export default function CasesPage() {
                   <Tag tone="ink">{current.kind === 'market-entry' ? 'Market entry case' : current.kind === 'roleplay' ? 'Role-play' : 'Case study'}</Tag>
                   <Tag>{SKILLS.find(s => s.id === current.skill)?.name}</Tag>
                 </div>
-                <h2 style={{ fontSize: 22, fontWeight: 600, letterSpacing: '-.025em', margin: '0 0 8px' }}>{current.title}</h2>
+                <h2 style={{ fontSize: 22, fontWeight: 600, letterSpacing: '-.013em', margin: '0 0 8px' }}>{current.title}</h2>
                 <div className="situation">{current.situation}</div>
                 <QuestionCard q={current.question} qkey={`case:${current.id}`} />
                 {current.courseId && courseById(current.courseId) && (

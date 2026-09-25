@@ -1,5 +1,5 @@
 /* Prompt architecture for the live AI Doctor and AI Coach (brief §35–38).
-   Context is assembled from separate, controlled layers — never one giant prompt,
+   Context is assembled from separate, controlled layers, never one giant prompt,
    and never the whole LMS database: only the product facts relevant to the
    current exchange are retrieved (cost control, brief §34). Shared by the
    browser (preview) and the server endpoint (which builds the real request). */
@@ -53,9 +53,9 @@ export function buildDoctorPrompt(cfg: SessionConfig, turns: Turn[], directorNot
 
   const system = [
     SYSTEM_RULES_DOCTOR,
-    `\nDOCTOR PERSONA: ${persona.name} — ${persona.traits.join('; ')}. Default tone: ${persona.tone}. Experience: ${cfg.experience}. Specialty: ${specialty.name} (${specialty.depth === 'clinical' ? 'asks deeper clinical questions' : 'focuses on practical use, patient selection, common safety concerns and dosage'}).`,
+    `\nDOCTOR PERSONA: ${persona.name}, ${persona.traits.join('; ')}. Default tone: ${persona.tone}. Experience: ${cfg.experience}. Specialty: ${specialty.name} (${specialty.depth === 'clinical' ? 'asks deeper clinical questions' : 'focuses on practical use, patient selection, common safety concerns and dosage'}).`,
     `\nPRODUCT GROUNDING (${product.name}, ${product.molecule}; ${product.version}). Treat ONLY these as true:\n${facts.map(f => `- [${f.topic}] ${f.text} (${f.source})`).join('\n')}\nClaims the MR must NOT make: ${product.prohibitedClaims.join('; ')}.`,
-    `\nSCENARIO ${scenario.number} — ${scenario.title}: ${scenario.summary} Training objective for the MR: ${scenario.goal}`,
+    `\nSCENARIO ${scenario.number}, ${scenario.title}: ${scenario.summary} Training objective for the MR: ${scenario.goal}`,
     `\nDIFFICULTY: ${cfg.difficulty}. ${cfg.difficulty === 'Beginner' ? 'Be cooperative and ask simple questions.' : cfg.difficulty === 'Intermediate' ? 'Raise practical objections.' : cfg.difficulty === 'Advanced' ? 'Challenge claims, positioning and differentiation.' : 'Behave as an experienced specialist; be less predictable and expect precise, evidence-based answers.'}`,
     learner ? `\nLEARNER CONTEXT: ${learner}` : '',
     summary ? `\nCONVERSATION SO FAR (compressed): ${summary}` : '',

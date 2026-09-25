@@ -37,7 +37,7 @@ function StatusPill({ s }: { s: St }) {
       key={s.label}
       initial={{ opacity: 0, scale: 0.85, y: 4 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ type: 'spring', stiffness: 420, damping: 24 }}
+      transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: s.bg, color: s.fg, borderRadius: 999, padding: '4px 11px 4px 8px', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}
     >
       <Glyph kind={s.kind} color={s.fg} />
@@ -74,7 +74,7 @@ function HeroQueue() {
       <div className="hq-head">
         <div>
           <div style={{ fontSize: 13.5, fontWeight: 500, color: '#585B52' }}>Mandatory and due</div>
-          <div style={{ fontSize: 22, fontWeight: 600, letterSpacing: '-.03em' }}>Rahul More · South Mumbai</div>
+          <div style={{ fontSize: 22, fontWeight: 600, letterSpacing: '-.015em' }}>Pratham Shrivastav · South Mumbai</div>
         </div>
         <div className="hq-count">
           <motion.span key={done} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.3 }}>{done}</motion.span>
@@ -113,10 +113,10 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
       <motion.header className="l-nav" style={{ boxShadow: navShadow }}>
         <div className="l-wrap l-nav-inner">
           <a className="brand" href="#/" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <motion.span className="brand-mark" initial={{ scale: 0, rotate: -45 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 18 }} />
+            <motion.span className="brand-mark" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} />
             <span className="brand-name">Elmiron Field</span>
             <span className="brand-dot" />
-            <span className="brand-sub">Learning demo</span>
+            <span className="brand-sub">Learning</span>
           </a>
           <nav className="l-links">
             <a href="#statuses" onClick={e => { e.preventDefault(); document.getElementById('statuses')?.scrollIntoView({ behavior: 'smooth' }); }}>Statuses</a>
@@ -150,13 +150,13 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
             ))}
           </h1>
           <motion.p className="hero-lead" variants={rise} initial="hidden" animate="show" custom={4}>
-            A capability-development platform for Medical Representatives: from "I know very little about pharmaceutical selling" to
-            certified in product, doctor engagement, territory, compliance and global markets — then practising safely with an AI Doctor.
+            A capability-development platform for Medical Representatives: from “I know very little about pharmaceutical selling” to
+            certified in product, doctor engagement, territory, compliance and global markets, with safe practice against an AI Doctor.
           </motion.p>
           <motion.div className="hero-card" variants={rise} initial="hidden" animate="show" custom={5}>
-            <div style={{ fontSize: 13.5, fontWeight: 500, color: '#585B52', marginBottom: 10 }}>Presenting this</div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: '#585B52', marginBottom: 8 }}>Where to start</div>
             <p style={{ margin: '0 0 16px', fontSize: 15, lineHeight: 1.6 }}>
-              Demo mode shows one screen at a time at full size. Try the loop{' '}
+              Each screen opens at full size. Follow the MR journey{' '}
               <strong>Learn → course → lesson → AI Doctor → coaching → certification</strong>, then switch to the manager and admin views.
             </p>
             <div className="hero-actions">
@@ -174,7 +174,7 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
 
       <section id="statuses" className="l-wrap l-section">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} variants={rise}>
-          <div className="section-kicker">00 — Before the screens</div>
+          <div className="section-kicker">00 · Before the screens</div>
           <h2 className="section-title">Every course status, glyph first.</h2>
           <p className="section-lead">
             One pill component carries every status in the module, on every screen and table. The glyph and the word are both mandatory;
@@ -188,34 +188,39 @@ export default function Landing({ go }: { go: (s: ScreenId | null) => void }) {
 
       <section id="whats-new" className="l-wrap l-section">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} variants={rise}>
-          <div className="section-kicker">01 — Capability, not just product training</div>
-          <h2 className="section-title">Learn → practise → get coached → certify.</h2>
+          <div className="section-kicker">01 · Capability, not just product training</div>
+          <h2 className="section-title">Learn, practise, get coached, get certified.</h2>
           <p className="section-lead">Every course follows one template, every score comes from a defined assessment, and every piece of doctor-engagement training stays inside approved information and compliance.</p>
         </motion.div>
-        <div className="feature-grid">
+        <ol className="cap-list">
           {[
-            { k: 'Curriculum', t: '36 courses, Beginner → Certification', d: 'Industry, Indian and global markets, doctor engagement, detailing, objections, scientific communication, territory, channel, digital, compliance and leadership.', to: 'a2' as ScreenId },
-            { k: 'AI Doctor', t: 'Practise with a realistic doctor', d: 'Nine personas, fourteen scenarios, four difficulty levels, voice or text. The doctor challenges you; the AI Coach scores you on an eight-part rubric.', to: 'p1' as ScreenId },
-            { k: 'Compliance', t: 'Critical errors override the score', d: 'Off-label promotion, invented evidence, unsupported superiority, ignored adverse events and inducements mean "Requires retraining".', to: 'p2' as ScreenId },
-            { k: 'Paths', t: 'Paths, onboarding and certification', d: 'New MR, senior MR, international business and manager paths; an 8-week onboarding; four certification levels.', to: 'l4' as ScreenId },
+            { k: 'Curriculum', t: '36 courses, Beginner to Certification', d: 'Industry, Indian and global markets, doctor engagement, detailing, objections, scientific communication, territory, channel, digital, compliance and leadership.', to: 'a2' as ScreenId },
+            { k: 'AI Doctor', t: 'Practise with a realistic doctor', d: 'Nine personas, fourteen scenarios, four difficulty levels, voice or text. The doctor challenges you, then the AI Coach scores you on an eight-part rubric.', to: 'p1' as ScreenId },
+            { k: 'Compliance', t: 'Critical errors override the score', d: 'Off-label promotion, invented evidence, unsupported superiority, ignored adverse events and inducements all mean "Requires retraining".', to: 'p2' as ScreenId },
+            { k: 'Paths', t: 'Paths, onboarding and certification', d: 'New MR, senior MR, international business and manager paths, an 8-week onboarding and four certification levels.', to: 'l4' as ScreenId },
             { k: 'Manager', t: 'Coaching, not surveillance', d: 'Team practice trends, compliance flags and assignment reviews, with transcript access set by company policy.', to: 'b3' as ScreenId },
-            { k: 'Admin', t: 'Change content without code', d: 'Publish courses from a template, assign paths, edit approved claims, tune AI cost controls and run benchmark QA.', to: 'c7' as ScreenId },
+            { k: 'Admin', t: 'Change content without code', d: 'Publish courses from a template, assign paths, edit approved claims, tune AI cost controls and run benchmark checks.', to: 'c7' as ScreenId },
           ].map((f, i) => (
-            <motion.button key={f.k} type="button" className="feature" onClick={() => go(f.to)} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={rise} custom={i % 3} whileHover={{ y: -4 }}>
-              <span className="feature-k">{f.k}</span>
-              <span className="feature-t">{f.t}</span>
-              <span className="feature-d">{f.d}</span>
-              <span className="feature-go">Open <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
-            </motion.button>
+            <motion.li key={f.k} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} variants={rise} custom={i % 2}>
+              <button type="button" className="cap-row" onClick={() => go(f.to)}>
+                <span className="cap-n mono">{String(i + 1).padStart(2, '0')}</span>
+                <span className="cap-body">
+                  <span className="cap-k">{f.k}</span>
+                  <span className="cap-t">{f.t}</span>
+                  <span className="cap-d">{f.d}</span>
+                </span>
+                <svg className="cap-go" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </button>
+            </motion.li>
           ))}
-        </div>
+        </ol>
       </section>
 
       <section id="flows" className="l-wrap l-section">
         <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} variants={rise}>
-          <div className="section-kicker">02 — The screens</div>
+          <div className="section-kicker">02 · The screens</div>
           <h2 className="section-title">Three roles, one module.</h2>
-          <p className="section-lead">Jump into any screen. Everything inside is clickable, and the demo bar at the bottom moves you between screens.</p>
+          <p className="section-lead">Open any screen. Everything inside is clickable, and the bar at the top of each screen moves between them.</p>
         </motion.div>
         <div className="flows">
           {FLOWS.map((f, fi) => (

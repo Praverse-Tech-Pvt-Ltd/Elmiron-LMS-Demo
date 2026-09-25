@@ -16,8 +16,8 @@ export default function ScreenA2({ v }: { v: DemoValues }) {
       </div>
       <div style={{ flex: "1", padding: "4px 40px 32px", display: "flex", flexDirection: "column", gap: "18px", overflowY: "auto" }}>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px" }}>
-          <div><div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.035em", lineHeight: "1.15" }}>Browse courses</div><div style={{ fontSize: "16px", color: "#585B52", marginTop: "4px" }}>Everything open to you. Assigned courses also sit on your home screen with their due dates.</div></div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "340px" }}><label style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Search courses</label><input className="f5" style={{ height: "46px", background: "#FFFFFF", border: "1px solid #8B8E84", borderRadius: "14px", color: "#1F211C", fontFamily: "'DM Sans',sans-serif", fontSize: "16px", padding: "0 14px", outline: "none", boxSizing: "border-box" }} type="text" value={v.q} onChange={v.onQ} placeholder="Course name" /></div>
+          <div><div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.018em", lineHeight: "1.15" }}>Browse courses</div><div style={{ fontSize: "16px", color: "#585B52", marginTop: "4px" }}>Everything open to you. Assigned courses also sit on your home screen with their due dates.</div></div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "6px", width: "340px" }}><label style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Search courses</label><input className="f5" style={{ height: "46px", background: "#FFFFFF", border: "1px solid #8B8E84", borderRadius: "14px", color: "#1F211C", fontFamily: "'Source Sans 3',sans-serif", fontSize: "16px", padding: "0 14px", outline: "none", boxSizing: "border-box" }} type="text" value={v.q} onChange={v.onQ} placeholder="Course name" /></div>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
           {v.cats.map((c, c_i) => (<Fragment key={c_i}>
@@ -36,7 +36,7 @@ export default function ScreenA2({ v }: { v: DemoValues }) {
               <div style={{ height: "108px", background: "repeating-linear-gradient(135deg,#F1EFE8 0 8px,#EAE7DF 8px 16px)", display: "flex", alignItems: "flex-end", padding: "10px 12px", boxSizing: "border-box" }}><span style={{ fontSize: "12px", color: "#585B52" }}>course thumbnail</span></div>
               <div style={{ padding: "14px 16px 16px", display: "flex", flexDirection: "column", gap: "4px", flex: "1" }}>
                 <div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>{c.cat}</div>
-                <div style={{ fontSize: "16px", fontWeight: "600", letterSpacing: "-.01em", lineHeight: "1.3" }}>{c.title}</div>
+                <div style={{ fontSize: "16px", fontWeight: "600", letterSpacing: "-.005em", lineHeight: "1.3" }}>{c.title}</div>
                 <div style={{ fontSize: "14px", color: "#585B52" }}>{c.meta}</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "auto", paddingTop: "10px" }}>
                   <span className="pill" style={{ display: "inline-flex", alignItems: "center", background: "#F1EFE8", borderRadius: "999px", padding: "4px 10px", fontSize: "13px", fontWeight: "600", color: "#1F211C" }}>{c.req}</span>
@@ -50,7 +50,7 @@ export default function ScreenA2({ v }: { v: DemoValues }) {
         {v.noCourses && (<>
           <div className="card row-in" style={{ background: "#FFFFFF", borderRadius: "20px", padding: "56px 40px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "8px", boxShadow: "0 1px 2px rgba(20,21,15,.05)" }}>
             <span style={{ width: "40px", height: "40px", borderRadius: "50%", border: "2px solid #585B52", boxSizing: "border-box", marginBottom: "8px" }}></span>
-            <div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.025em" }}>{v.emptyTitle}</div>
+            <div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.013em" }}>{v.emptyTitle}</div>
             <div style={{ fontSize: "16px", color: "#585B52", maxWidth: "52ch" }}>{v.emptyBody}</div>
             <button className="tap h0" style={{ marginTop: "12px", height: "46px", padding: "0 20px", background: "#F1EFE8", border: "none", borderRadius: "16px", color: "#1F211C", fontSize: "15.5px", fontWeight: "500", cursor: "pointer" }} type="button" onClick={v.clearFilters}>Clear search and filter</button>
           </div>

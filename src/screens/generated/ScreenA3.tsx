@@ -18,7 +18,7 @@ export default function ScreenA3({ v }: { v: DemoValues }) {
         <div style={{ display: "flex", flexDirection: "column", gap: "16px", minHeight: "0" }}>
           <div>
             <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}><span style={{ background: "#F1EFE8", borderRadius: "999px", padding: "4px 11px", fontSize: "13px", fontWeight: "600" }}>Mandatory</span><span style={{ background: "#F1EFE8", borderRadius: "999px", padding: "4px 11px", fontSize: "13px", fontWeight: "600" }}>Product Training</span><span style={{ background: "#F1EFE8", borderRadius: "999px", padding: "4px 11px", fontSize: "13px", fontWeight: "600" }}>Version 2.0</span></div>
-            <div style={{ fontSize: "30px", fontWeight: "600", letterSpacing: "-.035em", lineHeight: "1.15" }}>Elmiron — Product Training</div>
+            <div style={{ fontSize: "30px", fontWeight: "600", letterSpacing: "-.018em", lineHeight: "1.15" }}>Elmiron — Product Training</div>
             <p style={{ fontSize: "16px", lineHeight: "1.55", color: "#585B52", margin: "8px 0 0", maxWidth: "68ch" }}>Sample content — pending medical review. The course description will be supplied by Medical Affairs once approved.</p>
             <div style={{ display: "flex", gap: "28px", marginTop: "14px" }}><div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Duration</div><div style={{ fontSize: "16px", fontWeight: "600" }}>2 h 40 min</div></div><div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Modules</div><div style={{ fontSize: "16px", fontWeight: "600" }}>4 · 14 lessons</div></div><div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Due</div><div style={{ fontSize: "16px", fontWeight: "600" }}>30 Sep 2026</div></div><div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Assigned by</div><div style={{ fontSize: "16px", fontWeight: "600" }}>Training team · 01 Sep 2026</div></div></div>
           </div>
@@ -40,7 +40,7 @@ export default function ScreenA3({ v }: { v: DemoValues }) {
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           <div className="card" style={{ background: "#FFFFFF", borderRadius: "20px", padding: "22px", boxShadow: "0 1px 2px rgba(20,21,15,.04),0 16px 40px -22px rgba(20,21,15,.35)" }}>
             <span className="pill" style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "#E7EFF4", color: "#2A5570", borderRadius: "999px", padding: "4px 11px 4px 8px", fontSize: "13px", fontWeight: "600" }}><span style={{ width: "12px", height: "12px", borderRadius: "50%", border: "1.8px solid #2A5570", background: "conic-gradient(#2A5570 0 45%,transparent 0)", boxSizing: "border-box" }}></span>In progress</span>
-            <div style={{ fontSize: "40px", fontWeight: "600", letterSpacing: "-.045em", lineHeight: "1", margin: "14px 0 10px" }}><CountUp to="45%" /></div>
+            <div style={{ fontSize: "40px", fontWeight: "600", letterSpacing: "-.022em", lineHeight: "1", margin: "14px 0 10px" }}><CountUp to="45%" /></div>
             <div style={{ height: "6px", background: "#F1EFE8", borderRadius: "3px", overflow: "hidden" }}><div className="bar-fill" style={{ width: "45%", height: "100%", background: "#35593A", borderRadius: "3px" }}></div></div>
             <div style={{ fontSize: "14.5px", color: "#585B52", marginTop: "10px" }}>8 of 14 lessons · about 1 h 30 min left</div>
             <div style={{ fontSize: "14.5px", color: "#585B52" }}>Due 30 Sep 2026 · in 6 days</div>

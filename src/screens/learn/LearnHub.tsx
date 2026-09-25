@@ -15,9 +15,9 @@ function MicroSheet({ m, onClose }: { m: Micro; onClose: () => void }) {
   useEffect(() => { const k = (e: KeyboardEvent) => e.key === 'Escape' && onClose(); window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, [onClose]);
   return (
     <motion.div className="sheet-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
-      <motion.div className="sheet" role="dialog" aria-modal="true" aria-label={m.title} initial={{ y: 40, opacity: 0, scale: 0.98 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 30, opacity: 0 }} transition={{ type: 'spring', stiffness: 380, damping: 32 }} onClick={e => e.stopPropagation()}>
+      <motion.div className="sheet" role="dialog" aria-modal="true" aria-label={m.title} initial={{ y: 40, opacity: 0, scale: 0.98 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 30, opacity: 0 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }} onClick={e => e.stopPropagation()}>
         <div className="row" style={{ gap: 8, marginBottom: 8 }}><Tag tone="green">{m.kind}</Tag><Tag>{m.minutes} min</Tag></div>
-        <h2 style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-.03em', margin: '0 0 8px' }}>{m.title}</h2>
+        <h2 style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-.015em', margin: '0 0 8px' }}>{m.title}</h2>
         <p style={{ fontSize: 16, lineHeight: 1.6, color: C.ink2, margin: '0 0 14px' }}>{m.body}</p>
         <ol className="micro-points">{m.points.map((p, i) => <motion.li key={p} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.08 }}>{p}</motion.li>)}</ol>
         <div className="row" style={{ gap: 8, marginTop: 18 }}>
@@ -83,11 +83,11 @@ export default function LearnHub() {
     <Shell role="mr" active="l1" crumbs={<span>Wednesday 24 Sep 2026</span>}>
       <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
         <div>
-          <h1 className="page-title">Good morning, Rahul</h1>
+          <h1 className="page-title">Good morning, Pratham</h1>
           <div className="page-sub">Two mandatory items need you this week. Your AI Doctor score is up 25 points since September 2.</div>
         </div>
         <div className="row" style={{ gap: 8 }}>
-          <span className="streak"><motion.span animate={{ scale: [1, 1.15, 1] }} transition={{ repeat: Infinity, duration: 2.2, repeatDelay: 1 }}>●</motion.span> 6-day learning streak</span>
+          <span className="streak"><span aria-hidden>●</span> 6-day learning streak</span>
           <Tag tone="green">Level 1 · Foundation Certified</Tag>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function LearnHub() {
         <div className="continue-thumb"><span>Effective product detailing</span></div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 13.5, fontWeight: 500, color: 'rgba(255,255,255,.65)', marginBottom: 6 }}>Continue learning</div>
-          <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: '-.035em', color: '#fff', lineHeight: 1.15 }}>How to pitch to doctors</div>
+          <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: '-.018em', color: '#fff', lineHeight: 1.15 }}>How to pitch to doctors</div>
           <div style={{ fontSize: 15, color: 'rgba(255,255,255,.75)', marginTop: 4 }}>{cont.title} · next: {next?.lesson.title ?? 'Final assessment'}</div>
           <div className="row" style={{ gap: 14, marginTop: 16, maxWidth: 520 }}>
             <Bar pct={contPct} color={C.mint} track="rgba(255,255,255,.16)" />
@@ -131,7 +131,7 @@ export default function LearnHub() {
           <div className="grid-2">
             <Card onClick={() => setMicro(today)} className="today-card" style={{ padding: 18 }}>
               <div className="row" style={{ justifyContent: 'space-between' }}><Tag tone="green">Learn in 5 minutes · today</Tag><span className="muted" style={{ fontSize: 13 }}>{today.kind}</span></div>
-              <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-.02em', margin: '10px 0 4px' }}>{today.title}</div>
+              <div style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-.01em', margin: '10px 0 4px' }}>{today.title}</div>
               <div className="muted" style={{ fontSize: 14 }}>{today.body}</div>
               <div className="week-strip">{(['Mon', 'Tue', 'Wed', 'Thu', 'Fri'] as const).map((d, i, days) => <span key={d} className={d === TODAY ? 'is-today' : i < days.indexOf(TODAY) ? 'is-done' : ''}>{d}</span>)}</div>
             </Card>
@@ -169,7 +169,7 @@ export default function LearnHub() {
               <div className="doctor-avatar sm"><span>Dr</span></div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 15.5, fontWeight: 600 }}>Practice with AI Doctor</div>
-                <div className="muted" style={{ fontSize: 13.5 }}>Try the skeptical specialist — competitor preference</div>
+                <div className="muted" style={{ fontSize: 13.5 }}>Try the skeptical specialist on competitor preference</div>
               </div>
               <span style={{ color: C.green, fontSize: 18 }}>→</span>
             </div>
@@ -187,7 +187,7 @@ export default function LearnHub() {
           <SectionTitle title="Badges" />
           <div className="badges">
             {badges.map((b, i) => (
-              <motion.div key={b.t} className="badge" initial={{ opacity: 0, scale: 0.8, rotate: -6 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ delay: 0.3 + i * 0.08, type: 'spring', stiffness: 300, damping: 18 }}>
+              <motion.div key={b.t} className="badge" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.05, duration: 0.32, ease: [0.22, 1, 0.36, 1] }}>
                 <span className="badge-seal">✓</span><span className="badge-t">{b.t}</span><span className="badge-d">{b.d}</span>
               </motion.div>
             ))}

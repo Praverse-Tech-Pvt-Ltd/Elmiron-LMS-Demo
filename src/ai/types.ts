@@ -61,7 +61,7 @@ export interface Scenario {
   seconds: number;
   opening: string[];
   beats: ScenarioBeat[];
-  /** What a strong performance looks like — used by the coach and benchmarks. */
+  /** What a strong performance looks like, used by the coach and benchmarks. */
   goodSigns: string[];
   weakSigns: string[];
   critical: CriticalId[];
@@ -85,7 +85,7 @@ export interface ProductPack {
   molecule: string;
   therapyArea: string;
   version: string;
-  status: 'Demo grounding — verify against current approved PI' | 'Approved';
+  status: 'Demo grounding: verify against the current approved PI' | 'Approved';
   specialties: string[];
   facts: ApprovedFact[];
   approvedClaims: string[];

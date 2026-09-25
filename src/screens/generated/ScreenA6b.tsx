@@ -17,7 +17,7 @@ export default function ScreenA6b({ v }: { v: DemoValues }) {
     <div className="screen-main" style={{ flex: "1", display: "grid", gridTemplateColumns: "minmax(0,1fr) 300px", gap: "40px", padding: "36px 64px 32px 120px", overflow: "hidden" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "22px", maxWidth: "820px" }}>
         <div style={{ fontSize: "14.5px", fontWeight: "500", color: "#585B52" }}>Question 8 of 20 · Multiple choice · select all that apply · 3 marks</div>
-        <div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.035em", lineHeight: "1.25" }}>A doctor mentions that a patient had an unexpected reaction after starting a company product. Which of these should you do?</div>
+        <div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.018em", lineHeight: "1.25" }}>A doctor mentions that a patient had an unexpected reaction after starting a company product. Which of these should you do?</div>
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {v.opts8.map((o, o_i) => (<Fragment key={o_i}>
             <div className="tap card h6" style={{ minHeight: "62px", padding: "10px 20px", display: "flex", alignItems: "center", gap: "14px", borderRadius: "16px", cursor: "pointer", background: "#FFFFFF", boxShadow: "0 1px 2px rgba(20,21,15,.05)", boxSizing: "border-box" }} onClick={o.pick}>

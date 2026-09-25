@@ -15,12 +15,12 @@ export default function ScreenA6c({ v }: { v: DemoValues }) {
     <div style={{ height: "4px", background: "#F1EFE8", flex: "none" }}><div className="bar-fill" style={{ width: "100%", height: "100%", background: "#35593A" }}></div></div>
     <div className="screen-main" style={{ flex: "1", padding: "36px 64px 32px 120px", display: "flex", flexDirection: "column", gap: "22px", maxWidth: "900px" }}>
       <div style={{ fontSize: "14.5px", fontWeight: "500", color: "#585B52" }}>Question 20 of 20 · Single choice · choose one · 2 marks</div>
-      <div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.035em", lineHeight: "1.25" }}>Under UCPMP 2024, which of these may an MR give a doctor?</div>
+      <div style={{ fontSize: "27px", fontWeight: "600", letterSpacing: "-.018em", lineHeight: "1.25" }}>Under UCPMP 2024, which of these may an MR give a doctor?</div>
       <div style={{ height: "62px", borderRadius: "16px", background: "#FFFFFF" }}></div><div style={{ height: "62px", borderRadius: "16px", background: "#FFFFFF" }}></div><div style={{ height: "62px", borderRadius: "16px", background: "#FFFFFF" }}></div>
     </div>
     <div className="overlay-in" style={{ position: "absolute", inset: "0", background: "rgba(20,21,15,.5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div className="card" style={{ width: "520px", background: "#FFFFFF", borderRadius: "20px", padding: "28px 30px", boxShadow: "0 30px 60px -20px rgba(20,21,15,.5)", display: "flex", flexDirection: "column", gap: "14px" }}>
-        <div style={{ fontSize: "24px", fontWeight: "600", letterSpacing: "-.03em" }}>Submit your assessment?</div>
+        <div style={{ fontSize: "24px", fontWeight: "600", letterSpacing: "-.015em" }}>Submit your assessment?</div>
         <div style={{ fontSize: "16px", lineHeight: "1.55" }}>You've answered <strong style={{ fontWeight: "600" }}>19 of 20</strong> questions. Question 14 is unanswered and will score no marks.</div>
         <div style={{ background: "#F1EFE8", borderRadius: "14px", padding: "14px 16px", display: "flex", flexDirection: "column", gap: "6px", fontSize: "14.5px" }}><div style={{ display: "flex", justifyContent: "space-between" }}><span style={{ color: "#585B52" }}>Time left</span><span style={{ fontWeight: "600" }}>06:10</span></div><div style={{ display: "flex", justifyContent: "space-between" }}><span style={{ color: "#585B52" }}>Attempt</span><span style={{ fontWeight: "600" }}>1 of 3</span></div><div style={{ display: "flex", justifyContent: "space-between" }}><span style={{ color: "#585B52" }}>Pass mark</span><span style={{ fontWeight: "600" }}>80%</span></div></div>
         <div style={{ fontSize: "14.5px", color: "#585B52" }}>You can't change answers after you submit.</div>

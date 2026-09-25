@@ -16,7 +16,7 @@ export default function MyProgress() {
     <Shell role="mr" active="p5" crumbs={<><Crumb to={() => navTo('p1')}>Practice with AI Doctor</Crumb> / My progress</>}
       actions={<Button small kind="primary" onClick={() => navTo('p2')}>New session</Button>}>
       <h1 className="page-title">My progress</h1>
-      <div className="page-sub">Scores come only from AI Doctor sessions and assessments — never from arbitrary ratings.</div>
+      <div className="page-sub">Scores come only from AI Doctor sessions and assessments, never from arbitrary ratings.</div>
 
       <div className="split" style={{ marginTop: 8 }}>
         <div>
@@ -37,7 +37,7 @@ export default function MyProgress() {
                 <Card key={r.id} style={{ padding: '12px 14px' }}>
                   <div style={{ fontSize: 13, color: C.ink2, minHeight: 34 }}>{r.name}</div>
                   <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                    <span style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-.03em' }}>{last}<span style={{ fontSize: 14, color: C.ink2 }}>%</span></span>
+                    <span style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-.015em' }}>{last}<span style={{ fontSize: 14, color: C.ink2 }}>%</span></span>
                     <Sparkline points={series} w={70} />
                   </div>
                 </Card>

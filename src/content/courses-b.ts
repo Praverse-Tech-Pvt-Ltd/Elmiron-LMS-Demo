@@ -2781,8 +2781,8 @@ export const COURSES_B: Course[] = [
             minutes: 5,
             summary: 'Review distributors regularly against agreed plans: sales, coverage, stock, compliance and market feedback.',
             example: {
-              title: 'Rahul\'s quarterly review with Gulf Crest Trading',
-              body: 'Gulf Crest is at 92 percent of forecast, but in-market stock covers only three weeks against an agreed six, and two regional hospital accounts have not been visited. Rahul reviews the figures with the distributor\'s commercial head, confirms that pharmacovigilance reports were submitted on time and agrees two actions: a revised order to rebuild stock cover and a coverage plan for the two accounts. Both are recorded in the review minutes and checked next quarter.',
+              title: 'Karan\'s quarterly review with Gulf Crest Trading',
+              body: 'Gulf Crest is at 92 percent of forecast, but in-market stock covers only three weeks against an agreed six, and two regional hospital accounts have not been visited. Karan reviews the figures with the distributor\'s commercial head, confirms that pharmacovigilance reports were submitted on time and agrees two actions: a revised order to rebuild stock cover and a coverage plan for the two accounts. Both are recorded in the review minutes and checked next quarter.',
             },
             points: [
               'Compare sales and stock against forecast',

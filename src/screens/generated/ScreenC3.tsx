@@ -17,7 +17,7 @@ export default function ScreenC3({ v }: { v: DemoValues }) {
       </div>
       <div style={{ flex: "1", padding: "0 30px 24px", overflow: "hidden", display: "grid", gridTemplateColumns: "minmax(0,1fr) 360px", gap: "16px" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", minHeight: "0" }}>
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}><div style={{ fontSize: "24px", fontWeight: "600", letterSpacing: "-.03em" }}>Question bank</div><div style={{ fontSize: "14px", color: "#585B52" }}>100 questions · {v.activeCount} active</div></div>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}><div style={{ fontSize: "24px", fontWeight: "600", letterSpacing: "-.015em" }}>Question bank</div><div style={{ fontSize: "14px", color: "#585B52" }}>100 questions · {v.activeCount} active</div></div>
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
             <div style={{ height: "36px", flex: "1", background: "#FFFFFF", border: "1px solid #8B8E84", borderRadius: "10px", padding: "0 12px", display: "flex", alignItems: "center", fontSize: "14px", color: "#585B52", boxSizing: "border-box" }}>Search questions</div>
             <span style={{ height: "36px", padding: "0 12px", background: "#F1EFE8", borderRadius: "10px", fontSize: "13.5px", fontWeight: "600", display: "flex", alignItems: "center" }}>Course: Elmiron — Product Training</span>

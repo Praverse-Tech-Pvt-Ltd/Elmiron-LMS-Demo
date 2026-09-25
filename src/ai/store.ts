@@ -34,7 +34,7 @@ export const DEFAULT_CONFIG: AdminConfig = {
 
 export interface UsageEntry { at: string; kind: 'doctor' | 'coach'; inputTokens: number; outputTokens: number; ms: number; ok: boolean; model: string }
 
-const K = { config: 'elmiron.ai.config.v1', sessions: 'elmiron.ai.sessions.v1', usage: 'elmiron.ai.usage.v1' };
+const K = { config: 'elmiron.ai.config.v1', sessions: 'elmiron.ai.sessions.v2', usage: 'elmiron.ai.usage.v2' };
 
 function read<T>(key: string, fallback: T): T {
   try { const v = localStorage.getItem(key); return v ? (JSON.parse(v) as T) : fallback; } catch { return fallback; }
@@ -75,7 +75,7 @@ export function logUsage(e: UsageEntry) {
 
 export interface HistoryPoint { attempt: number; date: string; scenario: string; total: number; dims: Partial<Record<DimensionId, number>>; mode: 'practice' | 'assessment'; critical: boolean }
 
-/** Rahul More's earlier sessions, before today's live ones. Percent scores per dimension. */
+/** Pratham Shrivastav's earlier sessions, before today's live ones. Percent scores per dimension. */
 export const SEEDED_HISTORY: HistoryPoint[] = [
   { attempt: 1, date: '02 Sep 2026', scenario: 'First meeting', total: 61, mode: 'practice', critical: false, dims: { opening: 70, need: 40, product: 65, science: 53, pitch: 60, objection: 47, communication: 70, compliance: 90 } },
   { attempt: 2, date: '09 Sep 2026', scenario: 'Product objection', total: 69, mode: 'practice', critical: false, dims: { opening: 80, need: 60, product: 75, science: 60, pitch: 70, objection: 53, communication: 70, compliance: 100 } },
@@ -83,9 +83,9 @@ export const SEEDED_HISTORY: HistoryPoint[] = [
   { attempt: 4, date: '22 Sep 2026', scenario: 'Scientific discussion', total: 86, mode: 'assessment', critical: false, dims: { opening: 90, need: 80, product: 90, science: 80, pitch: 90, objection: 80, communication: 90, compliance: 100 } },
 ];
 
-/** Team roll-up for the manager dashboard (brief §31). Rahul's live sessions are merged in at runtime. */
+/** Team roll-up for the manager dashboard (brief §31). Pratham's live sessions are merged in at runtime. */
 export const TEAM_PRACTICE = [
-  { id: 'rm', name: 'Rahul More', territory: 'South Mumbai', sessions: 4, avg: 74, latest: 86, trend: [61, 69, 78, 86], product: 90, objection: 80, communication: 90, compliance: 100, criticals: 0, cert: 'In progress · 3 of 5 met' },
+  { id: 'rm', name: 'Pratham Shrivastav', territory: 'South Mumbai', sessions: 4, avg: 74, latest: 86, trend: [61, 69, 78, 86], product: 90, objection: 80, communication: 90, compliance: 100, criticals: 0, cert: 'In progress · 3 of 5 met' },
   { id: 'ps', name: 'Priya Sethi', territory: 'Thane', sessions: 6, avg: 71, latest: 76, trend: [58, 66, 70, 72, 74, 76], product: 80, objection: 67, communication: 80, compliance: 100, criticals: 0, cert: 'In progress · 4 of 5 met' },
   { id: 'iq', name: 'Imran Qureshi', territory: 'Navi Mumbai', sessions: 2, avg: 55, latest: 58, trend: [52, 58], product: 60, objection: 47, communication: 70, compliance: 60, criticals: 1, cert: 'Requires retraining' },
   { id: 'ar', name: 'Anita Rane', territory: 'Dadar', sessions: 5, avg: 81, latest: 88, trend: [72, 77, 80, 84, 88], product: 95, objection: 87, communication: 90, compliance: 100, criticals: 0, cert: 'Elmiron Product Certified' },

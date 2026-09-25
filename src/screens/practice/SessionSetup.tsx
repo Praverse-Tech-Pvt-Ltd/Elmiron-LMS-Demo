@@ -113,7 +113,7 @@ export default function SessionSetup() {
               <div className="doctor-avatar"><span>Dr</span></div>
               <div>
                 <div style={{ fontSize: 13.5, color: C.ink2 }}>You'll be meeting</div>
-                <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: '-.015em' }}>{persona.name}</div>
+                <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: '-.007em' }}>{persona.name}</div>
               </div>
             </div>
             <dl className="summary-list">

@@ -42,7 +42,7 @@ function FinalAssessment({ course, onClose }: { course: Course; onClose: () => v
 
   return (
     <motion.div className="sheet-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <motion.div className="sheet wide" role="dialog" aria-modal="true" aria-label="Final assessment" initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 30, opacity: 0 }} transition={{ type: 'spring', stiffness: 340, damping: 32 }}>
+      <motion.div className="sheet wide" role="dialog" aria-modal="true" aria-label="Final assessment" initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 30, opacity: 0 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
         <div className="row" style={{ justifyContent: 'space-between', marginBottom: 12 }}>
           <div><div className="muted" style={{ fontSize: 13.5 }}>Final assessment · pass mark {pass}%</div><div style={{ fontSize: 18, fontWeight: 600 }}>{course.title}</div></div>
           <Button small onClick={onClose}>{done ? 'Close' : 'Exit'}</Button>
@@ -52,7 +52,7 @@ function FinalAssessment({ course, onClose }: { course: Course; onClose: () => v
             <div className="row" style={{ gap: 10, marginBottom: 14 }}><Bar pct={(i / questions.length) * 100} height={4} delay={0} /><span className="muted" style={{ fontSize: 13 }}>{i + 1} / {questions.length}</span></div>
             <AnimatePresence mode="wait">
               <motion.div key={i} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.22 }}>
-                <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-.02em', lineHeight: 1.35, marginBottom: 14 }}>{q.prompt}</div>
+                <div style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-.01em', lineHeight: 1.35, marginBottom: 14 }}>{q.prompt}</div>
                 <div className="stack" style={{ gap: 8 }}>
                   {q.choices.map((c, k) => (
                     <button key={k} type="button" className={'q-choice' + (picks[i] === k ? ' is-chosen' : '')} onClick={() => pick(k)}>
@@ -66,14 +66,14 @@ function FinalAssessment({ course, onClose }: { course: Course; onClose: () => v
         ) : (
           <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: 'center', padding: '12px 0' }}>
             <div style={{ fontSize: 13.5, color: C.ink2 }}>Your score</div>
-            <div style={{ fontSize: 56, fontWeight: 600, letterSpacing: '-.05em', color: score >= pass ? C.green : C.red }}>{score}%</div>
+            <div style={{ fontSize: 56, fontWeight: 600, letterSpacing: '-.025em', color: score >= pass ? C.green : C.red }}>{score}%</div>
             {score >= pass ? (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="cert-issued">
                 <span className="badge-seal lg">✓</span>
                 <div><strong>Passed.</strong> {course.certificate ?? 'Course certificate'} issued · {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
               </motion.div>
             ) : (
-              <div style={{ fontSize: 15, color: C.ink2 }}>Not cleared this time — the pass mark is {pass}%. Review the lessons flagged in the knowledge check and try again.</div>
+              <div style={{ fontSize: 15, color: C.ink2 }}>Not cleared this time. The pass mark is {pass}%. Review the lessons flagged in the knowledge check and try again.</div>
             )}
             <div className="stack" style={{ textAlign: 'left', marginTop: 16, gap: 6 }}>
               {questions.map((qq, k) => {
@@ -172,7 +172,7 @@ export default function CoursePage({ id }: { id?: string }) {
 
           {course.knowledgeCheck.length > 0 && (
             <>
-              <SectionTitle title="Knowledge check" sub="Not scored — see why each answer is strong or weak" />
+              <SectionTitle title="Knowledge check" sub="Not scored: see why each answer is strong or weak" />
               <div className="stack" style={{ gap: 12 }}>
                 {course.knowledgeCheck.map((q, i) => <Card key={i} style={{ padding: '16px 18px' }}><QuestionCard q={q} qkey={`${course.id}:kc:${i}`} number={i + 1} /></Card>)}
               </div>
@@ -183,7 +183,7 @@ export default function CoursePage({ id }: { id?: string }) {
         <div className="sticky-col">
           <Card className="raised" style={{ padding: 20 }}>
             <div className="row" style={{ justifyContent: 'space-between' }}>{statusPill(pct, final)}<span className="muted" style={{ fontSize: 13.5 }}>{lessons.length} lessons</span></div>
-            <div style={{ fontSize: 40, fontWeight: 600, letterSpacing: '-.045em', margin: '10px 0 4px' }}>{pct}%</div>
+            <div style={{ fontSize: 40, fontWeight: 600, letterSpacing: '-.022em', margin: '10px 0 4px' }}>{pct}%</div>
             <Bar pct={pct} />
             <Button kind="primary" style={{ width: '100%', height: 50, marginTop: 16, fontSize: 16 }} onClick={() => next ? navTo('l3', course.id, next.lesson.id) : setAssess(true)}>
               {pct === 0 ? 'Start course' : next ? 'Continue' : 'Take final assessment'}

@@ -28,7 +28,7 @@ interface Snap {
   seeded: boolean;
 }
 
-const KEY = 'elmiron.learn.v1';
+const KEY = 'elmiron.learn.v2';
 const empty: Snap = { done: {}, answers: {}, finals: {}, assignments: [], customCourses: [], pathAssignments: [], market: 'IN', seeded: false };
 
 function load(): Snap {
@@ -42,7 +42,7 @@ const set = (patch: Partial<Snap>) => { snap = { ...snap, ...patch }; save(); };
 export const useLearn = () => useSyncExternalStore(cb => { listeners.add(cb); return () => listeners.delete(cb); }, () => snap);
 export const getLearn = () => snap;
 
-/** Rahul's progress before today (matches the design's statuses and brief §56). */
+/** Pratham's progress before today (matches the design's statuses and brief §56). */
 export const SEED_PROGRESS: Record<string, number> = {
   'mr-induction': 100, 'doctor-cabin': 100, 'pharma-industry': 100, 'communication-skills': 100,
   'elmiron-product': 45, 'elmiron-masterclass': 70, 'product-detailing': 40, 'ucpmp-2024': 30,

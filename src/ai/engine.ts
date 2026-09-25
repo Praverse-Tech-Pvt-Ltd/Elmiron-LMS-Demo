@@ -254,7 +254,7 @@ export function mrTurn(state: EngineState, text: string): DoctorMove {
   if (s.close && ev.mrTurns >= 2) ev.closes = true;
 
   const unsupported = s.superiority || s.guarantee;
-  if (unsupported) { ev.unsupported.push(text.trim().slice(0, 140)); if (s.superiority) ev.superiority++; tags.push('compliance'); chips.push('Unsupported claim'); note = 'Unsupported claim — only approved statements can be made.'; }
+  if (unsupported) { ev.unsupported.push(text.trim().slice(0, 140)); if (s.superiority) ev.superiority++; tags.push('compliance'); chips.push('Unsupported claim'); note = 'Unsupported claim, only approved statements can be made.'; }
   if (s.stat && !s.approvedSource) { ev.stats++; tags.push('compliance'); chips.push('Unsupported claim'); note = 'A figure without an approved source counts as fabricated evidence.'; }
   if (s.disparage) { ev.disparage++; tags.push('compliance'); note = 'Do not criticise competitor products.'; }
   if (s.inducement) { ev.inducement = true; tags.push('compliance'); note = 'Offering anything of value in connection with prescribing is an inducement.'; }
@@ -274,27 +274,27 @@ export function mrTurn(state: EngineState, text: string): DoctorMove {
     if (b.event === 'safety') {
       if (s.report || (s.ack && /report|safety/i.test(text))) {
         ev.ae.recognised = true; resolve(); tags.push('strong');
-        if (s.investigate) { ev.ae.investigated = true; tags.push('compliance'); note = 'Report it — do not judge causality yourself.'; }
+        if (s.investigate) { ev.ae.investigated = true; tags.push('compliance'); note = 'Report it, do not judge causality yourself.'; }
         state.tone = 'Neutral';
-        return { text: pick(['Yes, please report it. What do you need from me?', 'Good — I would appreciate that. My staff can share the details your safety team needs.']), tone: state.tone, mrTags: tags, mrNote: note ?? 'Safety information recognised and escalated.', chips };
+        return { text: pick(['Yes, please report it. What do you need from me?', 'Good, I would appreciate that. My staff can share the details your safety team needs.']), tone: state.tone, mrTags: tags, mrNote: note ?? 'Safety information recognised and escalated.', chips };
       }
-      if (s.investigate) { ev.ae.investigated = true; tags.push('compliance'); note = 'Do not investigate or conclude causality — report it.'; }
+      if (s.investigate) { ev.ae.investigated = true; tags.push('compliance'); note = 'Do not investigate or conclude causality, report it.'; }
       if (p.tries === 0) {
-        p.tries++; ev.ae.missedOnce = true; tags.push('missed'); note ??= 'The doctor mentioned a possible adverse event — it must be acknowledged and reported.';
+        p.tries++; ev.ae.missedOnce = true; tags.push('missed'); note ??= 'The doctor mentioned a possible adverse event, it must be acknowledged and reported.';
         state.tone = 'Concerned';
-        return { text: s.investigate ? 'You are saying it is unrelated? I am not sure either of us can conclude that.' : 'Sorry — did you hear what I said about my patient?', tone: state.tone, mrTags: tags, mrNote: note, chips: [...chips, 'Recognise the safety information'] };
+        return { text: s.investigate ? 'You are saying it is unrelated? I am not sure either of us can conclude that.' : 'Sorry, did you hear what I said about my patient?', tone: state.tone, mrTags: tags, mrNote: note, chips: [...chips, 'Recognise the safety information'] };
       }
       ev.ae.ignored = true; resolve(false); tags.push('compliance'); note = 'The adverse event was not recognised or escalated.';
       state.tone = 'Concerned';
       return { text: 'Okay. I thought someone from your company would want to know about that.', tone: state.tone, mrTags: tags, mrNote: note, chips };
     }
     if (b.event === 'complaint') {
-      if (s.commitment) { ev.complaint.commitment = true; tags.push('compliance'); note = 'Do not promise outcomes or guess the cause — escalate.'; }
+      if (s.commitment) { ev.complaint.commitment = true; tags.push('compliance'); note = 'Do not promise outcomes or guess the cause, escalate.'; }
       if (s.complaintAck) {
         ev.complaint.recognised = true; resolve(); if (!s.commitment) tags.push('strong');
-        return { text: pick(['The batch number is on the strip — I can have my assistant share a photo.', 'Fine. I will ask the patient to keep the pack.']), tone: 'Neutral', mrTags: tags, mrNote: note ?? 'Product complaint recognised.', chips };
+        return { text: pick(['The batch number is on the strip, I can have my assistant share a photo.', 'Fine. I will ask the patient to keep the pack.']), tone: 'Neutral', mrTags: tags, mrNote: note ?? 'Product complaint recognised.', chips };
       }
-      if (p.tries === 0) { p.tries++; tags.push('missed'); return { text: 'So what happens with the damaged pack?', tone: 'Concerned', mrTags: tags, mrNote: note ?? 'This is a product complaint — escalate it.', chips: [...chips, 'Recognise the product complaint'] }; }
+      if (p.tries === 0) { p.tries++; tags.push('missed'); return { text: 'So what happens with the damaged pack?', tone: 'Concerned', mrTags: tags, mrNote: note ?? 'This is a product complaint, escalate it.', chips: [...chips, 'Recognise the product complaint'] }; }
       resolve(false); tags.push('missed');
       return { text: 'All right. Let us move on, then.', tone: 'Neutral', mrTags: tags, mrNote: 'The complaint was not escalated.', chips };
     }
@@ -305,24 +305,24 @@ export function mrTurn(state: EngineState, text: string): DoctorMove {
       }
       if (s.medical || /\b(approved (for|indication)|not approved|outside (the )?(approved|label|indication)|can(no|')t (discuss|recommend|comment))\b/i.test(text)) {
         ev.offlabel.handled = true; resolve(); tags.push('strong');
-        return { text: pick(['Fair enough. I will send the question to your medical team.', 'Understood — please have Medical Information contact me.']), tone: 'Neutral', mrTags: tags, mrNote: 'Off-label question handled correctly.', chips };
+        return { text: pick(['Fair enough. I will send the question to your medical team.', 'Understood, please have Medical Information contact me.']), tone: 'Neutral', mrTags: tags, mrNote: 'Off-label question handled correctly.', chips };
       }
-      if (p.tries === 0) { p.tries++; tags.push('missed'); return { text: 'So — can I use it for that or not?', tone: 'Curious', mrTags: tags, mrNote: 'Keep to the approved indication and refer the question.', chips }; }
+      if (p.tries === 0) { p.tries++; tags.push('missed'); return { text: 'So, can I use it for that or not?', tone: 'Curious', mrTags: tags, mrNote: 'Keep to the approved indication and refer the question.', chips }; }
       resolve(false); tags.push('missed');
       return { text: 'Okay, I will look into it myself.', tone: 'Neutral', mrTags: tags, chips };
     }
     if (b.event === 'outside') {
       if (s.medical) {
         ev.outside.deferred = true; resolve(); tags.push('strong');
-        return { text: pick(['Good, please do. I would rather have the right answer than a quick one.', 'Thank you — that is the correct approach.']), tone: 'Interested', mrTags: tags, mrNote: 'Correct: confirmed with the medical team rather than guessing.', chips };
+        return { text: pick(['Good, please do. I would rather have the right answer than a quick one.', 'Thank you, that is the correct approach.']), tone: 'Interested', mrTags: tags, mrNote: 'Correct: confirmed with the medical team rather than guessing.', chips };
       }
-      ev.outside.guessed = true; resolve(false); tags.push('missed'); note ??= 'This was outside approved information — the right answer is to confirm with the medical team.';
+      ev.outside.guessed = true; resolve(false); tags.push('missed'); note ??= 'This was outside approved information, the right answer is to confirm with the medical team.';
       return { text: 'Is that from the label? I would rather have the reference than an estimate.', tone: 'Skeptical', mrTags: tags, mrNote: note, chips };
     }
     if (b.event === 'dismissal') {
       if (s.ack || s.permission) {
         ev.calmHandling++; resolve(); tags.push('strong');
-        return { text: pick(['All right — one quick point, then.', 'Fine. You can leave the approved material.', 'Okay, maybe another time.']), tone: 'Neutral', mrTags: tags, mrNote: 'Calm, respectful handling.', chips };
+        return { text: pick(['All right, one quick point, then.', 'Fine. You can leave the approved material.', 'Okay, maybe another time.']), tone: 'Neutral', mrTags: tags, mrNote: 'Calm, respectful handling.', chips };
       }
       state.patience--; resolve(false); tags.push('missed');
       return { text: pick(persona.interruptions), tone: 'Impatient', mrTags: tags, mrNote: 'Acknowledge the doctor’s position before continuing.', chips: [...chips, 'Acknowledge first'] };
@@ -333,12 +333,12 @@ export function mrTurn(state: EngineState, text: string): DoctorMove {
         o.clarified = true; tags.push('strong');
         const clar: Record<string, string[]> = {
           Efficacy: ['Mostly they stop after a few weeks because nothing seems to change.', 'I suppose I did not give it very long.'],
-          Safety: ['Mainly the eye findings — patients read about them online.', 'I want to know what to monitor.'],
+          Safety: ['Mainly the eye findings, patients read about them online.', 'I want to know what to monitor.'],
           Price: ['It is the total cost over several months that worries them.', 'Most of my patients pay out of pocket.'],
           'Competitor preference': ['It works for most of my patients. A few still have symptoms.', 'I am used to it, frankly.'],
           Evidence: ['I want to know what was actually measured.', 'Anything published in a decent journal?'],
         };
-        return { text: pick(clar[o.category] ?? ['I just want a straight answer.']), tone: state.tone, mrTags: tags, mrNote: 'Good — clarified the objection before responding.', chips };
+        return { text: pick(clar[o.category] ?? ['I just want a straight answer.']), tone: state.tone, mrTags: tags, mrNote: 'Good, clarified the objection before responding.', chips };
       }
       const responded = s.facts.length > 0 || s.approvedSource || s.medical || s.ack;
       if (responded && !unsupported && !s.disparage && !(s.stat && !s.approvedSource)) {
@@ -394,7 +394,7 @@ export function mrTurn(state: EngineState, text: string): DoctorMove {
   if (s.words > budget) {
     ev.interruptions++; state.patience--; state.tone = 'Impatient';
     if (state.patience <= 0) return endWith(state, pick(persona.closings), tags, note, chips, 'The doctor ran out of time.');
-    return { text: pick(persona.interruptions), tone: state.tone, mrTags: tags, mrNote: note ?? 'The doctor interrupted — the answer ran too long for this persona.', chips };
+    return { text: pick(persona.interruptions), tone: state.tone, mrTags: tags, mrNote: note ?? 'The doctor interrupted, the answer ran too long for this persona.', chips };
   }
 
   // MR asked about the doctor's practice: a real doctor answers before moving on
@@ -404,7 +404,7 @@ export function mrTurn(state: EngineState, text: string): DoctorMove {
     const answer = pick(NEED_ANSWERS, state.askedLines);
     state.askedLines.push(answer);
     if (state.tone === 'Impatient') state.tone = 'Neutral';
-    return { text: answer, tone: state.tone, mrTags: tags, mrNote: 'Good — asked about the doctor’s patients.', chips };
+    return { text: answer, tone: state.tone, mrTags: tags, mrNote: 'Good, asked about the doctor’s patients.', chips };
   }
 
   // The MR closes the call. Compliance events still due (safety, off-label, complaint,
@@ -466,13 +466,13 @@ export function hintFor(state: EngineState, used: number): string {
   if (p) {
     const byEvent: Record<string, string> = {
       objection: 'Clarify the concern first, then respond with approved information and check that it helped.',
-      safety: 'Something the doctor said may be reportable safety information. Acknowledge it and explain it will be reported — do not judge the cause.',
-      complaint: 'This sounds like a product complaint. Note the batch number if available and escalate — no promises.',
+      safety: 'Something the doctor said may be reportable safety information. Acknowledge it and explain it will be reported, do not judge the cause.',
+      complaint: 'This sounds like a product complaint. Note the batch number if available and escalate, no promises.',
       offlabel: 'Stay within the approved indication. Unsolicited questions about other uses go to Medical Information.',
       outside: 'If it is outside your approved information, it is right to say you will confirm with the medical team.',
       dismissal: 'Acknowledge the doctor’s position and ask permission before continuing.',
       question: 'Answer the question directly from the approved product information.',
-      recall: 'This is in the prescribing information — dose, administration, monitoring or warnings.',
+      recall: 'This is in the prescribing information, dose, administration, monitoring or warnings.',
     };
     return byEvent[p.beat.event];
   }
@@ -615,7 +615,7 @@ function coachFeedback(state: EngineState, dims: DimensionScore[], critical: Cri
   if (ev.objections.some(o => o.clarified && o.responded)) strengths.push('Clarified the objection before answering it');
   if (ev.ae.recognised) strengths.push('Recognised and escalated the safety information');
   if (ev.offlabel.handled) strengths.push('Handled the off-label question correctly');
-  if (ev.outside.deferred) strengths.push('Did not guess — offered to confirm with the medical team');
+  if (ev.outside.deferred) strengths.push('Did not guess, offered to confirm with the medical team');
   if (ev.complaint.recognised && !ev.complaint.commitment) strengths.push('Treated the damaged pack as a product complaint');
   if (ev.calmHandling) strengths.push('Stayed calm and respectful when the doctor pushed back');
   if (ev.closes) strengths.push('Closed professionally with a follow-up');
@@ -623,18 +623,18 @@ function coachFeedback(state: EngineState, dims: DimensionScore[], critical: Cri
 
   const sorted = [...dims].sort((a, b) => a.score / a.max - b.score / b.max);
   sorted.slice(0, 3).forEach(d => { if (d.score / d.max < 0.8) d.notes.filter(n => !n.startsWith('Critical:')).slice(0, 2).forEach(n => improvements.push(n)); });
-  critical.forEach(c => improvements.unshift(`Critical — ${CRITICAL_NAMES[c]}. This requires retraining regardless of the overall score.`));
+  critical.forEach(c => improvements.unshift(`Critical: ${CRITICAL_NAMES[c]}. This requires retraining regardless of the overall score.`));
 
   if (ev.overlong) better.push({ situation: `${persona.name} with limited time`, principle: 'Lead with one approved message and offer more if they want it.', example: '"Doctor, briefly: Elmiron is indicated for bladder pain or discomfort associated with interstitial cystitis. Would it help if I left the approved dosing summary?"' });
-  if (!ev.needQuestions && scenario.group !== 'quick') better.push({ situation: 'Before the product discussion', principle: 'Understand the doctor’s patients first so the information you share is relevant.', example: '"Before I start — how often do you see patients with chronic bladder pain, and what is the biggest practical challenge?"' });
-  if (ev.objections.some(o => !o.clarified)) better.push({ situation: 'When an objection is raised', principle: 'Listen, clarify, respond with approved information, support it, and confirm.', example: '"Could I ask what you have seen with those patients? … The label recommends reassessing after 3 months — does that help with how you would review them?"' });
-  if (ev.unsupported.length || ev.stats) better.push({ situation: 'Making a claim', principle: 'Only approved claims — no absolutes, no figures from memory, no comparisons without approval.', example: '"What I can share is what the prescribing information states, and I can send you the approved reference."' });
+  if (!ev.needQuestions && scenario.group !== 'quick') better.push({ situation: 'Before the product discussion', principle: 'Understand the doctor’s patients first so the information you share is relevant.', example: '"Before I start, how often do you see patients with chronic bladder pain, and what is the biggest practical challenge?"' });
+  if (ev.objections.some(o => !o.clarified)) better.push({ situation: 'When an objection is raised', principle: 'Listen, clarify, respond with approved information, support it, and confirm.', example: '"Could I ask what you have seen with those patients? … The label recommends reassessing after 3 months, does that help with how you would review them?"' });
+  if (ev.unsupported.length || ev.stats) better.push({ situation: 'Making a claim', principle: 'Only approved claims, no absolutes, no figures from memory, no comparisons without approval.', example: '"What I can share is what the prescribing information states, and I can send you the approved reference."' });
   if (ev.offlabelPromoted || (ev.offlabel.raised && !ev.offlabel.handled)) better.push({ situation: 'A question about another condition', principle: 'Do not discuss unapproved uses; route unsolicited questions to Medical Information.', example: '"It is approved for bladder pain or discomfort associated with interstitial cystitis. For any other use, I can ask our Medical Information team to respond to you directly."' });
-  if (ev.ae.raised && (!ev.ae.recognised || ev.ae.missedOnce)) better.push({ situation: 'A patient reaction is mentioned', principle: 'Acknowledge, capture what the process requires, report within the company timeline — do not judge causality.', example: '"Thank you for telling me, doctor. I need to report this to our safety team — could I note a few details, without the patient’s identity?"' });
+  if (ev.ae.raised && (!ev.ae.recognised || ev.ae.missedOnce)) better.push({ situation: 'A patient reaction is mentioned', principle: 'Acknowledge, capture what the process requires, report within the company timeline, do not judge causality.', example: '"Thank you for telling me, doctor. I need to report this to our safety team, could I note a few details, without the patient’s identity?"' });
   if (ev.outside.guessed) better.push({ situation: 'A question outside approved information', principle: 'Saying "I will confirm" builds credibility; guessing destroys it.', example: '"I would like to confirm that with our medical team and get back to you by Friday."' });
-  if (ev.complaint.raised && (!ev.complaint.recognised || ev.complaint.commitment)) better.push({ situation: 'A damaged or unusual pack', principle: 'Record what is required, escalate through the complaint process, promise nothing.', example: '"Thank you — I will log this as a product complaint. If the batch number is on the strip, that helps our quality team."' });
+  if (ev.complaint.raised && (!ev.complaint.recognised || ev.complaint.commitment)) better.push({ situation: 'A damaged or unusual pack', principle: 'Record what is required, escalate through the complaint process, promise nothing.', example: '"Thank you, I will log this as a product complaint. If the batch number is on the strip, that helps our quality team."' });
 
-  // AI Coach narrative — separate from the doctor persona (brief §17)
+  // AI Coach narrative, separate from the doctor persona (brief §17)
   const coach: string[] = [];
   const diff = state.cfg.difficulty.toLowerCase();
   coach.push(`What happened: ${/^[aeiou]/.test(diff) ? 'an' : 'a'} ${diff} "${scenario.title}" call with a ${persona.name.toLowerCase()} (${state.specialty.name.toLowerCase()}). You spoke ${ev.mrTurns} time${ev.mrTurns === 1 ? '' : 's'}${state.endReason ? `, and the call ended because ${state.endReason.charAt(0).toLowerCase() + state.endReason.slice(1)}` : ''}.`);
@@ -646,7 +646,7 @@ function coachFeedback(state: EngineState, dims: DimensionScore[], critical: Cri
   if (why.length) coach.push(`Why the doctor reacted that way: ${why.join('; ')}.`);
   if (strengths.length) coach.push(`What you did well: ${strengths.slice(0, 3).join('; ').toLowerCase()}.`);
   if (improvements.length) coach.push(`What to improve: ${improvements.slice(0, 3).map(x => x.replace(/\.$/, '')).join('; ')}.`);
-  coach.push(`Next time: ${scenario.hints[0]} Remember the goal — ${scenario.goal.charAt(0).toLowerCase() + scenario.goal.slice(1)}`);
+  coach.push(`Next time: ${scenario.hints[0]} Remember the goal, ${scenario.goal.charAt(0).toLowerCase() + scenario.goal.slice(1)}`);
 
   const weak = sorted.filter(d => d.score / d.max < 0.85).slice(0, 3);
   const recommended = (weak.length ? weak : sorted.slice(0, 2)).map(d => DIM_COURSE[d.id]);

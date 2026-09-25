@@ -35,7 +35,7 @@ export default function ScreenA4({ v }: { v: DemoValues }) {
             </div>
           </div>
           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "20px" }}>
-            <div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Lesson 3.2 of 14 · Video · 12 min</div><div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.025em" }}>Sample content — pending medical review.</div></div>
+            <div><div style={{ fontSize: "13.5px", fontWeight: "500", color: "#585B52" }}>Lesson 3.2 of 14 · Video · 12 min</div><div style={{ fontSize: "21px", fontWeight: "600", letterSpacing: "-.013em" }}>Sample content — pending medical review.</div></div>
           </div>
           <div style={{ background: "#E7EFF4", borderRadius: "16px", padding: "14px 18px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}><span style={{ width: "18px", height: "18px", borderRadius: "50%", background: "#2A5570", color: "#FFFFFF", fontSize: "11px", fontWeight: "700", display: "flex", alignItems: "center", justifyContent: "center", flex: "none" }}>i</span><span style={{ fontSize: "15.5px", fontWeight: "600" }}>Watch at least 90% to complete this lesson — you've watched {v.watched}%</span></div>

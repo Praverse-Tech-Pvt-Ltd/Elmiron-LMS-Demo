@@ -44,12 +44,12 @@
 
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 26px 2px 12px; }
 .section-head:first-child { margin-top: 6px; }
-.st-title { font-size: 17px; font-weight: 600; letter-spacing: -.015em; }
+.st-title { font-size: 17px; font-weight: 600; letter-spacing: -.007em; }
 .st-sub { font-size: 14.5px; color: var(--ink-2); margin-left: 12px; }
-.page-title { font-size: 27px; font-weight: 600; letter-spacing: -.035em; line-height: 1.15; margin: 0; }
+.page-title { font-size: 27px; font-weight: 600; letter-spacing: -.018em; line-height: 1.15; margin: 0; }
 .page-sub { font-size: 16px; color: var(--ink-2); margin-top: 4px; }
 .muted { color: var(--ink-2); }
-.mono { font-family: 'DM Mono', monospace; }
+.mono { font-family: var(--font-mono); }
 .link { color: var(--green); font-weight: 600; cursor: pointer; font-size: 14.5px; background: none; border: none; padding: 0; }
 .link:hover { text-decoration: underline; }
 
@@ -91,7 +91,7 @@
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label, .field-label { font-size: 13.5px; font-weight: 500; color: var(--ink-2); }
 .input, .select, .textarea {
-  font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink); background: #fff;
+  font-family: var(--font-ui); font-size: 15px; color: var(--ink); background: #fff;
   border: 1px solid #8B8E84; border-radius: 12px; padding: 0 12px; height: 42px; outline: none; width: 100%;
   transition: border-color .18s var(--ease), box-shadow .2s var(--ease);
 }
@@ -131,3 +131,52 @@
   .grid-2, .grid-3, .grid-4 { grid-template-columns: minmax(0, 1fr); }
   .page-title { font-size: 23px; }
 }
+
+/* ---------- Loading skeleton (shown while a screen's code loads) ---------- */
+.skel-screen {
+  display: flex; width: 100%; height: max(calc(100vh - var(--tray-h)), 760px);
+  background: var(--paper); border-radius: 16px 16px 0 0; overflow: hidden;
+  animation: skel-in var(--dur) var(--ease) 150ms both;
+}
+@keyframes skel-in { from { opacity: 0; } to { opacity: 1; } }
+.skel-side { flex: none; background: var(--wash); padding: 24px 22px; display: flex; flex-direction: column; gap: 16px; }
+.skel-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.skel-mark { width: 24px; height: 24px; border-radius: 8px; background: #C9D4C8; }
+.skel-main { flex: 1; min-width: 0; padding: 20px 36px; display: flex; flex-direction: column; }
+.skel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+.skel {
+  display: block; height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg, #ECEAE3 0%, #F6F4EF 45%, #ECEAE3 90%) 0 0 / 300% 100%;
+  animation: skel-shimmer 1.4s var(--ease-soft) infinite;
+}
+.skel-side .skel { background: linear-gradient(90deg, #E3E0D8 0%, #EDEBE4 45%, #E3E0D8 90%) 0 0 / 300% 100%; }
+.skel.b { height: 11px; }
+.skel.pill { height: 30px; border-radius: 999px; }
+.skel.title { height: 26px; border-radius: 8px; }
+.skel.line { height: 12px; margin: 14px 0 0; }
+.skel-block { background: #fff; border-radius: 20px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(20, 21, 15, .04); margin-top: 20px; }
+.skel-block.hero { height: 150px; background: #E2E0D8; box-shadow: none; }
+.skel-row { display: flex; gap: 20px; }
+@keyframes skel-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@media (max-width: 860px) {
+  .skel-screen { flex-direction: column; height: auto; min-height: calc(100vh - var(--tray-h)); border-radius: 0; }
+  .skel-side { width: 100% !important; flex-direction: row; padding: 12px 16px; overflow: hidden; }
+  .skel-side .skel.b { display: none; }
+  .skel-main { padding: 16px; }
+  .skel-row { flex-direction: column; gap: 0; }
+}
+
+/* Buttons: loading state */
+.ui-btn.is-loading { cursor: progress; }
+.btn-spinner { width: 15px; height: 15px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; opacity: .8; animation: spin .7s linear infinite; }
+
+/* Sidebar section labels: headings, not links. Small caps-style label with tracking,
+   a hairline rule after the text, no pointer and no hover. #5F625A on the sidebar wash
+   keeps AA contrast at this size. */
+.nav-group-label {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11.5px; font-weight: 600; line-height: 1.2;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: #5F625A; cursor: default; user-select: none;
+}
+.nav-group-label::after { content: ""; flex: 1; height: 1px; background: #E1DFD7; }

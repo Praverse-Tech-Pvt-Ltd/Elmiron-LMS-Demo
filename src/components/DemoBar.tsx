@@ -32,7 +32,7 @@ export default function DemoBar({ screen, go }: { screen: ScreenId; go: (s: Scre
       className="demobar"
       initial={{ y: -70, opacity: 0, x: '-50%' }}
       animate={{ y: 0, opacity: 1, x: '-50%' }}
-      transition={{ type: 'spring', stiffness: 260, damping: 26, delay: 0.25 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
     >
       <AnimatePresence>
         {open && (
