@@ -3570,8 +3570,8 @@ export const COURSES_B: Course[] = [
             minutes: 3,
             summary: 'Samples allow doctors to become familiar with a product and gain clinical experience. They are never a reward, gift or inducement.',
             points: [
-              'Give samples only to qualified healthcare professionals',
-              'Follow the quantity and frequency limits in the SOP',
+              'Give samples only to doctors qualified to prescribe the product',
+              'Follow the quantity and frequency limits in the SOP. In India, UCPMP 2024 allows no more than 12 sample packs of a product per doctor per year, each no larger than the smallest pack sold, marked as a free sample not for sale, with total sample value capped at 2% of the company\'s domestic sales',
               'Never link samples to prescribing',
               'Samples must never be sold or bartered',
             ],
