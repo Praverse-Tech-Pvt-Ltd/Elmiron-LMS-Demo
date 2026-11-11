@@ -1,5 +1,7 @@
 import { navTo } from '../../state';
-import { useAiStore } from '../../ai/store';
+import { SEEDED_HISTORY, useAiStore } from '../../ai/store';
+import { ROLEPLAY_PASS_MARK, averagesFromPercents, overview, splitAreas } from '../../ai/evaluation';
+import StrengthsScope from '../../components/StrengthsScope';
 import { certificationStatus, trend } from '../../ai/session';
 import { RUBRIC } from '../../ai/types';
 import { Card, Crumb, Shell, SectionTitle, Tag, TrendChart, Sparkline, C, Button } from '../../components/ui';
@@ -10,7 +12,10 @@ export default function MyProgress() {
   const pts = trend(sessions);
   const knowledge = getLearn().finals['elmiron-masterclass']?.score ?? 86;
   const cert = certificationStatus(sessions, knowledge, true);
-  const engagement = pts.map(p => Math.round(((p.dims.opening ?? 0) + (p.dims.need ?? 0) + (p.dims.pitch ?? 0) + (p.dims.objection ?? 0) + (p.dims.communication ?? 0)) / 5));
+  const ov = overview(sessions);
+  const areas = splitAreas(averagesFromPercents(pts));
+  const seededPassed = SEEDED_HISTORY.filter(h => h.total >= ROLEPLAY_PASS_MARK && !h.critical).length;
+  const engagement =pts.map(p => Math.round(((p.dims.opening ?? 0) + (p.dims.need ?? 0) + (p.dims.pitch ?? 0) + (p.dims.objection ?? 0) + (p.dims.communication ?? 0)) / 5));
 
   return (
     <Shell role="mr" active="p5" crumbs={<><Crumb to={() => navTo('p1')}>Practice with AI Doctor</Crumb> / My progress</>}
@@ -44,6 +49,9 @@ export default function MyProgress() {
               );
             })}
           </div>
+
+          <SectionTitle title="Role-play evaluation" sub={`${ov.passed + seededPassed} of ${pts.length} passed · pass mark ${ROLEPLAY_PASS_MARK}`} />
+          <StrengthsScope strengths={areas.strengths} scope={areas.scope} strengthLines={ov.strengthLines.slice(0, 3)} scopeLines={ov.scopeLines.slice(0, 3)} sessions={pts.length} />
 
           <SectionTitle title="Sessions" sub={`${pts.length} in total`} />
           <div className="table-wrap">

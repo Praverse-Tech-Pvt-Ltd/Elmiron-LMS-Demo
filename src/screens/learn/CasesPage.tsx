@@ -7,15 +7,34 @@ import { SKILLS } from '../../content/types';
 import { Button, C, Card, Crumb, Shell, Tag } from '../../components/ui';
 import QuestionCard from '../../components/QuestionCard';
 import { openCourse } from './nav';
+import RolePlayEvaluation from '../../components/RolePlayEvaluation';
+import { useAiStore } from '../../ai/store';
+import { statusOf } from '../../ai/evaluation';
+import type { ScenarioId } from '../../ai/types';
+
+/** Library cases that can also be role-played live with the AI Doctor, and the scenario that plays them. */
+const LIVE_SCENARIO: Record<string, ScenarioId> = {
+  'case-busy-doctor': 'sixty-second',
+  'case-competitor-preference': 'competitor-preference',
+  'case-unknown-answer': 'outside-knowledge',
+  'case-price-concern': 'price-objection',
+  'case-evidence-request': 'scientific-discussion',
+  'case-not-interested': 'not-interested',
+  'case-cost-free-goods': 'price-objection',
+  'case-off-label': 'off-label',
+  'case-unexpected-reaction': 'adverse-event',
+  'case-product-complaint': 'product-complaint',
+};
 
 const KINDS = { All: null, 'Role-play': 'roleplay', 'Case': 'case', 'Market entry': 'market-entry' } as const;
 type KindKey = keyof typeof KINDS;
 
-export default function CasesPage() {
+export default function CasesPage({ params }: { params?: string[] }) {
   const { answers } = useLearn();
+  const { sessions } = useAiStore();
   const [kind, setKind] = useState<KindKey>('All');
   const [skill, setSkill] = useState<string>('all');
-  const [openId, setOpenId] = useState<string>(CASES[0]?.id ?? '');
+  const [openId, setOpenId] = useState<string>(CASES.find(c => c.id === params?.[0])?.id ?? CASES[0]?.id ?? '');
   const list = CASES.filter(c => (!KINDS[kind] || c.kind === KINDS[kind]) && (skill === 'all' || c.skill === skill));
   const doneCount = CASES.filter(c => answers[`case:${c.id}`] !== undefined).length;
   const current = list.find(c => c.id === openId) ?? list[0];
@@ -26,7 +45,7 @@ export default function CasesPage() {
       <div className="row" style={{ justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 className="page-title">Role-play &amp; cases</h1>
-          <div className="page-sub">Pick a response, then see what's strong, what's weak and what a better answer does. {doneCount} of {CASES.length} tried.</div>
+          <div className="page-sub">Pick a response, then see what's strong, what's weak and what a better answer does. {doneCount} of {CASES.length} tried. {Object.keys(LIVE_SCENARIO).length} can also be role-played live with the AI Doctor and evaluated.</div>
         </div>
       </div>
       <div className="row" style={{ margin: '16px 0 14px', gap: 12, flexWrap: 'wrap' }}>
@@ -45,6 +64,7 @@ export default function CasesPage() {
                 <button type="button" className={'case-item' + (current?.id === c.id ? ' is-on' : '')} onClick={() => setOpenId(c.id)}>
                   <span className={'lesson-state sm' + (answers[`case:${c.id}`] !== undefined ? ' ok' : '')}>{answers[`case:${c.id}`] !== undefined ? '✓' : ''}</span>
                   <span style={{ flex: 1, textAlign: 'left' }}>{c.title}</span>
+                  {LIVE_SCENARIO[c.id] && (() => { const st = statusOf(sessions, 'case', c.id); return st.attempts ? <Tag tone={st.passed ? 'green' : 'amber'}>{st.best!.feedback.total}</Tag> : null; })()}
                   <Tag tone={c.kind === 'market-entry' ? 'blue' : c.kind === 'roleplay' ? 'green' : 'wash'}>{c.kind === 'market-entry' ? 'Market' : c.kind === 'roleplay' ? 'Role-play' : 'Case'}</Tag>
                 </button>
               </motion.div>
@@ -62,6 +82,15 @@ export default function CasesPage() {
                 <h2 style={{ fontSize: 22, fontWeight: 600, letterSpacing: '-.013em', margin: '0 0 8px' }}>{current.title}</h2>
                 <div className="situation">{current.situation}</div>
                 <QuestionCard q={current.question} qkey={`case:${current.id}`} />
+                {LIVE_SCENARIO[current.id] && (
+                  <div style={{ marginTop: 16 }}>
+                    <RolePlayEvaluation
+                      origin={{ kind: 'case', id: current.id, title: current.title, courseId: current.courseId }}
+                      scenarioId={LIVE_SCENARIO[current.id]}
+                      intro="Now say it out loud: the AI Doctor plays this situation and pushes back on what you say."
+                    />
+                  </div>
+                )}
                 {current.courseId && courseById(current.courseId) && (
                   <div style={{ marginTop: 14, fontSize: 14, color: C.ink2 }}>Go deeper: <button type="button" className="link" onClick={() => openCourse(current.courseId!)}>{courseById(current.courseId)!.title}</button></div>
                 )}

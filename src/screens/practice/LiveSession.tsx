@@ -4,6 +4,8 @@ import { navTo } from '../../state';
 import { hintFor, mrTurn, redact, scoreSession, startSession, type EngineState } from '../../ai/engine';
 import { getPendingConfig, fmtTime, attemptsFor } from '../../ai/session';
 import { getAiStore, saveSession } from '../../ai/store';
+import { passed } from '../../ai/evaluation';
+import { markDone } from '../../content/learnStore';
 import { liveAvailable, liveCoach, liveDoctor } from '../../ai/live';
 import { RUBRIC, type Feedback, type SessionRecord, type Tone, type Turn } from '../../ai/types';
 import { Button, C, Tag } from '../../components/ui';
@@ -108,6 +110,8 @@ export default function LiveSession() {
       engine: live ? 'claude' : 'built-in', usage: live ? usage.current : undefined,
     };
     saveSession(record);
+    // A role-play started from a course lesson completes that lesson once it passes the evaluation.
+    if (cfg.origin?.kind === 'lesson' && cfg.origin.courseId && passed(record)) markDone(cfg.origin.courseId, cfg.origin.id);
     setTimeout(() => navTo('p4', record.id), 1500);
   }, [cfg, live]);
 

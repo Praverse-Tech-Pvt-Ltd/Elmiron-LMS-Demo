@@ -13,7 +13,12 @@ const voiceSupported = typeof window !== 'undefined' && ('webkitSpeechRecognitio
 
 export default function SessionSetup() {
   const [cfg, setCfg] = useState<SessionConfig>(getPendingConfig);
-  const set = (p: Partial<SessionConfig>) => setCfg(c => ({ ...c, ...p }));
+  // Switching to another scenario detaches the session from the lesson or case it was started for.
+  const set = (p: Partial<SessionConfig>) => setCfg(c => {
+    const n = { ...c, ...p };
+    if (p.scenarioId && p.scenarioId !== c.scenarioId) delete n.origin;
+    return n;
+  });
   const product = productById(cfg.productId);
   const specialties = SPECIALTIES.filter(s => product.specialties.includes(s.id));
   const scenario = scenarioById(cfg.scenarioId);
@@ -27,6 +32,15 @@ export default function SessionSetup() {
     <Shell role="mr" active="p1" crumbs={<><Crumb to={() => navTo('p1')}>Practice with AI Doctor</Crumb> / Set up a session</>}>
       <div className="split">
         <div className="stack" style={{ gap: 18 }}>
+          {cfg.origin && (
+            <div className="eval-banner pass" style={{ marginTop: 0 }}>
+              <span className="eval-mark">✓</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <strong>Evaluated role-play for {cfg.origin.kind === 'lesson' ? 'lesson' : 'case'}: {cfg.origin.title}</strong>
+                <div style={{ fontSize: 13.5 }}>The AI Coach scores this call and records the result, strengths and scope of improvement against it. Pass mark 75/100 with no critical compliance error.</div>
+              </div>
+            </div>
+          )}
           <div>
             <h1 className="page-title">Set up your practice call</h1>
             <div className="page-sub">Every choice changes how the doctor behaves. The dialogue varies each time, so there's nothing to memorise.</div>

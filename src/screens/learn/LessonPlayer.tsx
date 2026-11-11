@@ -6,7 +6,9 @@ import { markDone, seedIfNeeded, submitAssignment, useLearn } from '../../conten
 import type { Lesson } from '../../content/types';
 import { Button, C, Card, Crumb, Empty, Shell, Tag, useSaving } from '../../components/ui';
 import QuestionCard from '../../components/QuestionCard';
-import { presetFor, setPendingConfig } from '../../ai/session';
+import RolePlayEvaluation from '../../components/RolePlayEvaluation';
+import { useAiStore } from '../../ai/store';
+import { statusOf } from '../../ai/evaluation';
 import { SCENARIOS } from '../../ai/content';
 import type { ScenarioId } from '../../ai/types';
 import { KIND_LABEL, KindIcon } from './CoursePage';
@@ -86,6 +88,7 @@ function AssignmentBlock({ lesson, courseId }: { lesson: Lesson; courseId: strin
 
 export default function LessonPlayer({ courseId, lessonId }: { courseId?: string; lessonId?: string }) {
   const learn = useLearn();
+  const { sessions } = useAiStore();
   useEffect(() => { seedIfNeeded(allCourses()); }, []);
   const course = courseId ? courseById(courseId) : undefined;
   if (!course) return <Shell role="mr" active="a2" crumbs="Lesson"><Empty title="Lesson not found" body="Pick a course from the catalogue." action={<Button onClick={() => navTo('a2')}>Browse courses</Button>} /></Shell>;
@@ -98,6 +101,9 @@ export default function LessonPlayer({ courseId, lessonId }: { courseId?: string
   const isDone = done.has(lesson.id);
   const aiScenario = lesson.aiScenario && SCENARIOS.some(s => s.id === lesson.aiScenario) ? lesson.aiScenario as ScenarioId : null;
 
+  // A role-play lesson with an AI scenario is completed by passing its evaluated role-play, not by clicking past it.
+  const gated = lesson.kind === 'roleplay' && aiScenario !== null && !isDone && !statusOf(sessions, 'lesson', lesson.id).passed;
+  const skip = () => { if (next) navTo('l3', course.id, next.lesson.id); else navTo('l2', course.id); };
   const complete = () => { markDone(course.id, lesson.id); if (next) navTo('l3', course.id, next.lesson.id); else navTo('l2', course.id); };
 
   return (
@@ -145,15 +151,18 @@ export default function LessonPlayer({ courseId, lessonId }: { courseId?: string
             )}
             {lesson.question && <Card style={{ padding: '18px 20px' }}><QuestionCard q={lesson.question} qkey={`${course.id}:${lesson.id}`} /></Card>}
             {lesson.kind === 'assignment' && lesson.assignment && <AssignmentBlock lesson={lesson} courseId={course.id} />}
-            {lesson.kind === 'roleplay' && (
+            {lesson.kind === 'roleplay' && aiScenario && (
+              <RolePlayEvaluation origin={{ kind: 'lesson', id: lesson.id, courseId: course.id, title: lesson.title }} scenarioId={aiScenario} />
+            )}
+            {lesson.kind === 'roleplay' && !aiScenario && (
               <Card className="roleplay-card" style={{ padding: '18px 20px' }}>
                 <div className="row" style={{ gap: 14 }}>
                   <div className="doctor-avatar"><span>Dr</span></div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 16, fontWeight: 600 }}>Role-play this with the AI Doctor</div>
-                    <div className="muted" style={{ fontSize: 14 }}>{aiScenario ? `Scenario: ${SCENARIOS.find(s => s.id === aiScenario)!.title}. The doctor reacts to what you say, then the AI Coach scores you.` : 'Practise with a colleague, or pick any AI Doctor scenario.'}</div>
+                    <div style={{ fontSize: 16, fontWeight: 600 }}>Role-play this</div>
+                    <div className="muted" style={{ fontSize: 14 }}>Practise with a colleague, or pick any AI Doctor scenario.</div>
                   </div>
-                  <Button kind="primary" onClick={() => { markDone(course.id, lesson.id); setPendingConfig(presetFor(aiScenario ?? 'first-meeting')); navTo('p2'); }}>Practise now</Button>
+                  <Button kind="primary" onClick={() => navTo('p2')}>Choose a scenario</Button>
                 </div>
               </Card>
             )}
@@ -162,7 +171,9 @@ export default function LessonPlayer({ courseId, lessonId }: { courseId?: string
               <Button onClick={() => prev && navTo('l3', course.id, prev.lesson.id)} disabled={!prev}>Previous</Button>
               <div style={{ flex: 1 }} />
               {isDone && <motion.span initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="done-chip">✓ Completed</motion.span>}
-              <Button kind="primary" onClick={complete}>{next ? (isDone ? 'Next lesson' : 'Complete and continue') : 'Finish course'}</Button>
+              {gated
+                ? <><span className="muted" style={{ fontSize: 13.5 }}>Pass the role-play to complete this lesson</span><Button onClick={skip}>Skip for now</Button></>
+                : <Button kind="primary" onClick={complete}>{next ? (isDone ? 'Next lesson' : 'Complete and continue') : 'Finish course'}</Button>}
             </div>
           </motion.article>
         </AnimatePresence>
