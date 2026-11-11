@@ -8,14 +8,15 @@
 
    Enable by setting ANTHROPIC_API_KEY (and optionally AI_DOCTOR_MODEL). */
 
-import { buildCoachPrompt, buildDoctorPrompt } from '../src/ai/prompts';
-import { redact } from '../src/ai/engine';
-import { SCENARIOS, PERSONAS, PRODUCTS, SPECIALTIES } from '../src/ai/content';
-import type { SessionConfig, Turn } from '../src/ai/types';
+import { buildCoachPrompt, buildDoctorPrompt } from '../src/ai/prompts.js';
+import { redact } from '../src/ai/engine.js';
+import { SCENARIOS, PERSONAS, PRODUCTS, SPECIALTIES } from '../src/ai/content.js';
+import type { SessionConfig, Turn } from '../src/ai/types.js';
 
 declare const process: { env: Record<string, string | undefined> };
 
-const MODELS = ['claude-sonnet-5', 'claude-haiku-4-5-20251001', 'claude-opus-5-5'];
+// Current Claude model IDs. A stored choice not in this list falls back to the default.
+const MODELS = ['claude-sonnet-5-5', 'claude-haiku-5-5', 'claude-opus-5-5'];
 const MAX_TURNS = 40;
 const MAX_CHARS = 1500;
 

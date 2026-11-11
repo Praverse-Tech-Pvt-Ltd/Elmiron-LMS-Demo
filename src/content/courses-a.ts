@@ -191,7 +191,7 @@ const pharmaIndustry: Course = {
           },
           points: [
             "Planning, calls, safety reporting and records all matter.",
-            "Safety information is reported the same day.",
+            "Safety information is reported within the SOP timeframe, typically 24 hours or one working day.",
             "Market intelligence comes from legitimate observation.",
           ],
         },
@@ -3166,7 +3166,7 @@ const ethicalMarketing: Course = {
         { text: "A scientific discussion using approved material, within the approved indication.", quality: "best", feedback: "Correct. Legitimate purpose, approved content." },
         { text: "Giving a gift voucher after a good call.", quality: "noncompliant", feedback: "Gifts to healthcare professionals are not permitted." },
         { text: "Paying for the doctor's family dinner.", quality: "noncompliant", feedback: "Personal hospitality is an inducement." },
-        { text: "Visiting several times a week with the same message.", quality: "weak", feedback: "Not a breach, but it wastes the doctor's time and adds no value." },
+        { text: "Visiting several times a week with the same message.", quality: "weak", feedback: "Wastes the doctor's time and adds no value, and under some codes (for example ABPI Clause 17.3 in the UK) excessive call frequency is itself a breach." },
       ],
       principle: "Every interaction needs a legitimate purpose and nothing of personal value.",
     },
@@ -3508,7 +3508,7 @@ const ucpmp2024: Course = {
           points: [
             "CME needs a genuine educational purpose and transparent, verifiable guidelines.",
             "Sponsorship details must be disclosed as the code requires.",
-            "The code restricts events in foreign locations; check the current text.",
+            "The code prohibits CME and CPD events at foreign locations.",
             "Speaker arrangements and payments must be documented and approved.",
             "Your role: follow the approved process; never promise sponsorship.",
           ],

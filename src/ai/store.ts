@@ -23,7 +23,7 @@ export const DEFAULT_CONFIG: AdminConfig = {
   criticalEnabled: { offlabel: true, fabricated: true, superiority: true, 'ignored-ae': true, inducement: true },
   transcriptAccess: 'flagged',
   engine: 'auto',
-  model: 'claude-sonnet-5',
+  model: 'claude-sonnet-5-5',
   maxOutputTokens: 320,
   maxTurns: 12,
   priceIn: 3,

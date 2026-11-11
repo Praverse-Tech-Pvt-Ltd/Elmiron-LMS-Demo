@@ -4,7 +4,7 @@
    current exchange are retrieved (cost control, brief §34). Shared by the
    browser (preview) and the server endpoint (which builds the real request). */
 
-import { personaById, productById, scenarioById, specialtyById } from './content';
+import { personaById, productById, scenarioById, specialtyById } from './content.js';
 import type { ApprovedFact, SessionConfig, Turn } from './types';
 
 export interface PromptPayload { system: string; messages: { role: 'user' | 'assistant'; content: string }[] }
