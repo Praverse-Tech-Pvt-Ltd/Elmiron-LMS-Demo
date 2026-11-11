@@ -4,12 +4,12 @@
    The same scorer also runs as a safety net over live-AI sessions, so critical
    compliance checks never depend on a model's judgement alone. */
 
-import { personaById, productById, scenarioById, specialtyById } from './content';
+import { personaById, productById, scenarioById, specialtyById } from './content.js';
 import type {
   CriticalId, DimensionId, DimensionScore, Feedback, Persona, ProductPack, Scenario, ScenarioBeat,
   ScenarioId, SessionConfig, Specialty, Tag, Tone, Turn,
 } from './types';
-import { RUBRIC, CRITICAL_NAMES } from './types';
+import { RUBRIC, CRITICAL_NAMES } from './types.js';
 
 /* ---------------- utilities ---------------- */
 
