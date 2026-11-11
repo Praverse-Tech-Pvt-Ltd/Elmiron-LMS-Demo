@@ -85,11 +85,11 @@ export const SEEDED_HISTORY: HistoryPoint[] = [
 
 /** Team roll-up for the manager dashboard (brief §31). Pratham's live sessions are merged in at runtime. */
 export const TEAM_PRACTICE = [
-  { id: 'rm', name: 'Pratham Shrivastav', territory: 'South Mumbai', sessions: 4, avg: 74, latest: 86, trend: [61, 69, 78, 86], product: 90, objection: 80, communication: 90, compliance: 100, criticals: 0, cert: 'In progress · 3 of 5 met' },
-  { id: 'ps', name: 'Priya Sethi', territory: 'Thane', sessions: 6, avg: 71, latest: 76, trend: [58, 66, 70, 72, 74, 76], product: 80, objection: 67, communication: 80, compliance: 100, criticals: 0, cert: 'In progress · 4 of 5 met' },
-  { id: 'iq', name: 'Imran Qureshi', territory: 'Navi Mumbai', sessions: 2, avg: 55, latest: 58, trend: [52, 58], product: 60, objection: 47, communication: 70, compliance: 60, criticals: 1, cert: 'Requires retraining' },
-  { id: 'ar', name: 'Anita Rane', territory: 'Dadar', sessions: 5, avg: 81, latest: 88, trend: [72, 77, 80, 84, 88], product: 95, objection: 87, communication: 90, compliance: 100, criticals: 0, cert: 'Elmiron Product Certified' },
-  { id: 'sk', name: 'S. Kamble', territory: 'Andheri East', sessions: 3, avg: 77, latest: 79, trend: [74, 78, 79], product: 85, objection: 73, communication: 80, compliance: 100, criticals: 0, cert: 'In progress · 3 of 5 met' },
+  { id: 'rm', name: 'Pratham Shrivastav', territory: 'South Mumbai', sessions: 4, avg: 74, latest: 86, trend: [61, 69, 78, 86], product: 90, objection: 80, communication: 90, compliance: 100, criticals: 0, cert: 'In progress · 3 of 5 met', strength: 'Opens professionally and states a clear purpose', scope: 'Ask one more need-finding question before presenting' },
+  { id: 'ps', name: 'Priya Sethi', territory: 'Thane', sessions: 6, avg: 71, latest: 76, trend: [58, 66, 70, 72, 74, 76], product: 80, objection: 67, communication: 80, compliance: 100, criticals: 0, cert: 'In progress · 4 of 5 met', strength: 'Accurate, approved product information every time', scope: 'Clarify the objection before answering it' },
+  { id: 'iq', name: 'Imran Qureshi', territory: 'Navi Mumbai', sessions: 2, avg: 55, latest: 58, trend: [52, 58], product: 60, objection: 47, communication: 70, compliance: 60, criticals: 1, cert: 'Requires retraining', strength: 'Friendly, confident tone with the doctor', scope: 'Report adverse events at once; no product claims outside the PI' },
+  { id: 'ar', name: 'Anita Rane', territory: 'Dadar', sessions: 5, avg: 81, latest: 88, trend: [72, 77, 80, 84, 88], product: 95, objection: 87, communication: 90, compliance: 100, criticals: 0, cert: 'Elmiron Product Certified', strength: 'Evidence-led answers, confirms the doctor is satisfied', scope: 'Keep 60-second calls to one key message' },
+  { id: 'sk', name: 'S. Kamble', territory: 'Andheri East', sessions: 3, avg: 77, latest: 79, trend: [74, 78, 79], product: 85, objection: 73, communication: 80, compliance: 100, criticals: 0, cert: 'In progress · 3 of 5 met', strength: 'Concise, well-structured product pitch', scope: 'Cite the source when sharing data' },
 ];
 
 /** Organisation-level analytics for the admin (brief §39–40). */

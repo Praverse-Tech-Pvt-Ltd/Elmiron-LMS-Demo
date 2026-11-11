@@ -7,6 +7,7 @@ import { presetFor, setPendingConfig, fmtTime } from '../../ai/session';
 import { CRITICAL_NAMES, RUBRIC, type Tag as TurnTag } from '../../ai/types';
 import { Bar, Button, C, Card, Crumb, Empty, Ring, SectionTitle, Segmented, Shell, Tag } from '../../components/ui';
 import { courseById } from '../../content';
+import { ROLEPLAY_PASS_MARK, passed } from '../../ai/evaluation';
 
 const TAG_LABEL: Record<TurnTag, { label: string; tone: 'green' | 'amber' | 'red' | 'blue' | 'wash' }> = {
   strong: { label: 'Strong answer', tone: 'green' },
@@ -36,6 +37,13 @@ export default function SessionFeedback({ id }: { id?: string }) {
   const next = scenarioById(fb.nextScenario);
   const turns = filter === 'All' ? s.turns : s.turns.filter(t => t.tags?.length);
 
+  const ok = passed(s);
+  const origin = s.config.origin;
+  const backToOrigin = () => {
+    if (!origin) return;
+    if (origin.kind === 'lesson' && origin.courseId) navTo('l3', origin.courseId, origin.id);
+    else navTo('l5', origin.id);
+  };
   const again = () => { setPendingConfig(s.config); navTo('p3'); };
   const nextScenario = () => { setPendingConfig(presetFor(fb.nextScenario, { specialtyId: s.config.specialtyId, difficulty: s.config.difficulty, mode: 'practice' })); navTo('p2'); };
 
@@ -57,6 +65,18 @@ export default function SessionFeedback({ id }: { id?: string }) {
               <strong>Requires retraining.</strong> A critical compliance error overrides the conversation score: {fb.critical.map(c => CRITICAL_NAMES[c]).join(', ')}.
             </motion.div>
           )}
+          <motion.div className={'eval-banner ' + (ok ? 'pass' : 'fail')} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
+            <span className="eval-mark">{ok ? '✓' : '!'}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <strong>Role-play evaluation: {ok ? 'passed' : 'not passed'}</strong>
+              <div style={{ fontSize: 13.5 }}>
+                Pass mark {ROLEPLAY_PASS_MARK}/100 with no critical compliance error.
+                {s.config.origin ? ` ${ok ? 'Recorded against' : 'Counts towards'} "${s.config.origin.title}"${s.config.origin.kind === 'lesson' && ok ? ', lesson completed' : ''}.` : ''}
+                {!ok && !retrain && ` ${ROLEPLAY_PASS_MARK - fb.total} more points needed.`}
+              </div>
+            </div>
+            {origin && <Button small onClick={backToOrigin}>{origin.kind === 'lesson' ? 'Back to lesson' : 'Back to case'}</Button>}
+          </motion.div>
           <div className="row" style={{ gap: 8, marginTop: 14, flexWrap: 'wrap' }}>
             <Button onClick={() => transcriptRef.current?.scrollIntoView({ behavior: 'smooth' })}>Review conversation</Button>
             <Button kind="primary" onClick={again}>Practice again</Button>
@@ -87,11 +107,11 @@ export default function SessionFeedback({ id }: { id?: string }) {
 
           <div className="grid-2" style={{ marginTop: 16 }}>
             <Card style={{ padding: '16px 18px' }}>
-              <div className="fb-head good">What you did well</div>
+              <div className="fb-head good">Strengths</div>
               <ul className="fb-list">{(fb.strengths.length ? fb.strengths : ['Keep practising. Strengths will show here as you improve.']).map(x => <li key={x}>{x}</li>)}</ul>
             </Card>
             <Card style={{ padding: '16px 18px' }}>
-              <div className="fb-head improve">Areas to improve</div>
+              <div className="fb-head improve">Scope of improvement</div>
               <ul className="fb-list">{(fb.improvements.length ? fb.improvements : ['Nothing major. Try a harder difficulty next.']).map(x => <li key={x}>{x}</li>)}</ul>
             </Card>
           </div>

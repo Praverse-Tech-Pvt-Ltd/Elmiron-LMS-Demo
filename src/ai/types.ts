@@ -129,6 +129,15 @@ export interface SessionConfig {
   mode: Mode;
   channel: Channel;
   seconds: number;
+  /** Where this role-play was started from, so its evaluation flows back to that lesson or case. */
+  origin?: RolePlayOrigin;
+}
+
+export interface RolePlayOrigin {
+  kind: 'lesson' | 'case';
+  id: string;
+  title: string;
+  courseId?: string;
 }
 
 export type Tag = 'strong' | 'missed' | 'compliance' | 'excellent-objection' | 'redacted';

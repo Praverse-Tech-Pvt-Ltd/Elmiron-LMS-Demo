@@ -7,8 +7,63 @@ import { reviewAssignment, seedIfNeeded, useLearn, type Assignment } from '../..
 import { Bar, Button, C, Card, Crumb, Shell, Sparkline, Tabs, Tag, useSaving } from '../../components/ui';
 import { scenarioById } from '../../ai/content';
 import CountUp from '../../components/CountUp';
+import StrengthsScope from '../../components/StrengthsScope';
+import { ROLEPLAY_PASS_MARK, overview, splitAreas, type DimensionAverage } from '../../ai/evaluation';
+import { RUBRIC } from '../../ai/types';
 
-const TABS = ['AI Doctor practice', 'Assignments to review'] as const;
+type Member = (typeof TEAM_PRACTICE)[number] & { strength: string; scope: string };
+
+/** Per-MR strengths and scope of improvement, from the rubric dimensions the team roll-up keeps. */
+function memberAreas(m: Member): DimensionAverage[] {
+  const pick: [DimensionAverage['id'], number][] = [['product', m.product], ['objection', m.objection], ['communication', m.communication], ['compliance', m.compliance]];
+  return pick.map(([id, pct]) => ({ id, name: RUBRIC.find(r => r.id === id)!.name, pct, sessions: m.sessions })).sort((a, b) => b.pct - a.pct);
+}
+
+function EvaluationsTab({ team, live }: { team: Member[]; live: ReturnType<typeof overview> }) {
+  const teamAreas = splitAreas(
+    RUBRIC.filter(r => ['product', 'objection', 'communication', 'compliance'].includes(r.id)).map(r => {
+      const key = r.id as 'product' | 'objection' | 'communication' | 'compliance';
+      return { id: r.id, name: r.name, pct: Math.round(team.reduce((a, m) => a + m[key], 0) / team.length), sessions: team.length };
+    }).sort((a, b) => b.pct - a.pct),
+  );
+  return (
+    <div className="stack" style={{ gap: 16 }}>
+      <div>
+        <div style={{ fontSize: 15.5, fontWeight: 600, marginBottom: 8 }}>Team strengths and scope of improvement</div>
+        <StrengthsScope strengths={teamAreas.strengths} scope={teamAreas.scope} />
+      </div>
+      <div className="grid-2">
+        {team.map((m, i) => {
+          const passedN = m.trend.filter(t => t >= ROLEPLAY_PASS_MARK).length;
+          const { strengths, scope } = splitAreas(memberAreas(m));
+          const isLive = m.id === 'rm' && live.sessions > 0;
+          const strengthText = isLive ? live.strengthLines[0]?.text ?? m.strength : m.strength;
+          const scopeText = isLive ? live.scopeLines[0]?.text ?? m.scope : m.scope;
+          return (
+            <motion.div key={m.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+              <Card style={{ padding: '16px 18px', height: '100%' }}>
+                <div className="row" style={{ justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
+                  <div><div style={{ fontWeight: 600, fontSize: 15.5 }}>{m.name}</div><div className="muted" style={{ fontSize: 13 }}>{m.territory}</div></div>
+                  <div className="row" style={{ gap: 6 }}>
+                    {m.criticals > 0 && <Tag tone="red">{m.criticals} critical</Tag>}
+                    <Tag tone={passedN === m.trend.length ? 'green' : passedN ? 'blue' : 'amber'}>{passedN} of {m.trend.length} passed</Tag>
+                  </div>
+                </div>
+                <div className="rp-mini">
+                  <div className="rp-col good"><div className="fb-head good">Strength</div><div className="rp-dim"><strong>{strengths[0]?.name}</strong> · {strengths[0]?.pct}%</div><div style={{ fontSize: 13.5 }}>{strengthText}</div></div>
+                  <div className="rp-col improve"><div className="fb-head improve">Scope of improvement</div><div className="rp-dim"><strong>{scope[0]?.name}</strong> · {scope[0]?.pct}%</div><div style={{ fontSize: 13.5 }}>{scopeText}</div></div>
+                </div>
+                <div className="row" style={{ gap: 10, marginTop: 10 }}><Sparkline points={m.trend} /><span className="muted" style={{ fontSize: 13 }}>Latest {m.latest} · average {m.avg}{isLive ? ' · includes live sessions' : ''}</span></div>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+const TABS = ['AI Doctor practice', 'Role-play evaluations', 'Assignments to review'] as const;
 
 function ReviewCard({ a }: { a: Assignment }) {
   const [score, setScore] = useState(a.review?.score ?? 0);
@@ -49,7 +104,7 @@ export default function TeamPractice() {
   useEffect(() => { seedIfNeeded(allCourses()); }, []);
 
   // Merge Pratham's live sessions into the seeded team view.
-  const team = TEAM_PRACTICE.map(m => {
+  const team: Member[] = TEAM_PRACTICE.map(m => {
     if (m.id !== 'rm' || !sessions.length) return m;
     const live = [...sessions].reverse().map(s => s.feedback.total);
     const trend = [...m.trend, ...live];
@@ -125,6 +180,8 @@ export default function TeamPractice() {
                 </Card>
               </div>
             </>
+          ) : tab === 'Role-play evaluations' ? (
+            <EvaluationsTab team={team} live={overview(sessions)} />
           ) : (
             <div className="stack" style={{ gap: 12 }}>
               <div className="muted" style={{ fontSize: 14.5 }}>{pending} waiting · practical assignments from courses (pitches, territory plans, objection responses, distributor introductions).</div>

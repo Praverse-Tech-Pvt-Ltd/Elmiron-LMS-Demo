@@ -294,3 +294,26 @@
 @media (max-width: 860px) {
   .list-row .tag, .list-row .lr-meta { display: none; }
 }
+
+/* Role-play evaluation: inside lessons and cases, on the feedback page, and in progress / manager views */
+.rp-eval { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(31, 33, 28, .08); }
+.rp-eval-score { display: flex; align-items: center; gap: 16px; }
+.rp-col { background: #fff; border-radius: 12px; padding: 12px 14px; border: 1px solid rgba(31, 33, 28, .06); }
+.rp-col.good { box-shadow: inset 3px 0 0 var(--green); }
+.rp-col.improve { box-shadow: inset 3px 0 0 #B08A2E; }
+.rp-col .fb-list { margin: 4px 0 0; }
+.rp-dim { font-size: 13.5px; color: #585B52; margin-bottom: 2px; }
+.rp-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.rp-mini .rp-col { background: #FBFAF7; }
+.ss-col.good { box-shadow: inset 3px 0 0 var(--green), 0 1px 2px rgba(31, 33, 28, .05); }
+.ss-col.improve { box-shadow: inset 3px 0 0 #B08A2E, 0 1px 2px rgba(31, 33, 28, .05); }
+.eval-banner { display: flex; align-items: center; gap: 12px; margin-top: 12px; border-radius: 12px; padding: 10px 14px; font-size: 14.5px; line-height: 1.45; flex-wrap: wrap; }
+.eval-banner.pass { background: #E9F0E9; color: #35593A; }
+.eval-banner.fail { background: #F7EFDD; color: #7A5510; }
+.eval-mark { width: 26px; height: 26px; border-radius: 50%; display: inline-grid; place-items: center; font-weight: 700; color: #fff; flex: none; }
+.eval-banner.pass .eval-mark { background: #35593A; }
+.eval-banner.fail .eval-mark { background: #B08A2E; }
+@media (max-width: 640px) {
+  .rp-mini { grid-template-columns: 1fr; }
+  .rp-eval-score { gap: 12px; }
+}
